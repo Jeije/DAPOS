@@ -22,9 +22,9 @@ class Propulsion:
         P=thrust*self.Pspec
         return P
     
-    def minisp@(self, V_b ,c_d, n_c):
-        minisp=0.5*V_b*c_d/n_c/g0
-        return minisp
+    def minisp(self, V_b ,c_d, n_c):
+        isp=0.5*V_b*c_d/n_c/self.g0
+        return isp
 
         
     
@@ -38,14 +38,22 @@ if __name__ == "__main__":
     pr = Propulsion()
     
     
-    cd = np.linspace(2.0,3.2,6)
+    c_d = np.linspace(2.0,3.2,6)
     V_b= 7.8e3
-    n_c = np.linspace()
+    n_c = np.linspace(0.1,0.6,20)
     
+    minispvec=np.vectorize(pr.minisp)
     
+    out=[]
+    for x in range(len(c_d)):
+        out.append(minispvec(V_b,c_d[x],n_c))
+        plt.plot(n_c,out[x])
+        
     
+    print(out)
     
-    T,yout, xout=control.step_response(sys,return_x=True,transpose=True)
-    plt.figure(1)
-    plt.plot(T,xout)
-    plt.yscale('log')
+    plt.ylim(0,4000)
+    plt.xlim(0.2,0.6)
+    plt.ylabel("ISP (s)")
+    plt.xlabel("Collection efficiency (-)")
+    plt.show()
