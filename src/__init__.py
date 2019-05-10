@@ -1,1 +1,3 @@
-from power import *
+
+from .power import panel_area
+
