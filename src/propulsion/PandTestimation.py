@@ -12,6 +12,12 @@ class Propulsion:
     def __init__(self):
         self.isp = 3546            #s
         self.Pspec = 70e3          #W/N
+        self.g0 = 9.81#
+        
+    def thrust4mdot(self, mdot):
+        T = mdot*self.isp*self.g0
+        return T
+        
         
     
 
