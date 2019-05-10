@@ -49,7 +49,7 @@ def Drag_Thrust_Area_iteration(Isp, density,intake_eff, velocity, thrust_power):
         #compute the thrust produced at this area
         thrust = A_to_thrust(area)
         #print to see difference between drag and thrust
-        print (drag-thrust)
+        #print (drag-thrust)
         #set new testing values for next iteration
         drag_t = drag
         thrust_t = thrust
@@ -64,11 +64,11 @@ def Drag_Thrust_Area_iteration(Isp, density,intake_eff, velocity, thrust_power):
     plt.plot(areal,thrustl, "blue")
     plt.show()  
     
-    #print results 
-    print ("Area = ", area, "[m^2]")
-    print ("Thrust/Drag = ", drag, "[N]")
-    print ("Massflow =", area*density*velocity*intake_eff, "[kg/s]")
-    print ("Power required = ", thrust*thrust_power, "[W]")
+#    #print results 
+#    print ("Area = ", area, "[m^2]")
+#    print ("Thrust/Drag = ", drag, "[N]")
+#    print ("Massflow =", area*density*velocity*intake_eff, "[kg/s]")
+#    print ("Power required = ", thrust*thrust_power, "[W]")
     
     #return the results from function (area, thrust/drag, massflow, power required for engine)
     return area, drag, area*density*intake_eff,thrust*thrust_power

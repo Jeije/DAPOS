@@ -15,7 +15,7 @@ def panel_area(t_o, t_e, pr_day, pr_eclipse):
     eff_c = 0.99 #battery charging efficiency
     eff_dc = 0.99 #battery discharging efficiency
     #pr_day = 500 #power required during the day EOL [W]
-    pr_eclipse = pre_eclipse/eff_c/eff_dc #power required during eclipse EOL [W]
+    pr_eclipse = pr_eclipse/eff_c/eff_dc #power required during eclipse EOL [W]
     
     #EQUATIONS
     pbol = ((pr_day*t_d+pr_eclipse*t_e)/(t_d)/(d**T))/np.cos(theta) #bol power accounting for degradation, eclipse time, incidence angle
