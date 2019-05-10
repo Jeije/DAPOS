@@ -14,7 +14,7 @@ from Iterated_drag_surface import Drag_Thrust_Area_iteration
 def panel_area(t_o, t_e, pr_day, pr_eclipse):
     #INPUTS
     wm = 200 #[W/m^2] not really needed as we are mainly concerned with solar radiation and panel efficiencies
-    wkg = 1000 #[W/kg]
+    wkg = 80 #[W/kg]
     #t_o = 14095 #orbital period in [s]
     #t_e = 5920 #eclipse time [s]
     t_d = t_o - t_e #day time [s]
@@ -22,7 +22,7 @@ def panel_area(t_o, t_e, pr_day, pr_eclipse):
     theta = 0 #solar panel incidence angle [rad]
     T = 10 #mission lifetime [years]
     d = 0.99 #yearly degradation
-    eff = 0.09 #solar panel efficiency
+    eff = 0.28 #solar panel efficiency
     eff_c = 0.99 #battery charging efficiency
     eff_dc = 0.99 #battery discharging efficiency
     #pr_day = 500 #power required during the day EOL [W]
@@ -62,6 +62,7 @@ intake_eff = 0.4    #[-]
 velocity = 7800 #[m/s]
 thrust_power = 70*10**3   #[W/N]
 
+
 #find surface area, drag/thrust, massflow and power required for engine
 A, F, mdot, power_engine = Drag_Thrust_Area_iteration(Isp, density, intake_eff, velocity, thrust_power)
 
@@ -70,8 +71,8 @@ power_day = power_engine
 power_eclipse = power_engine
 
 #define orbit parameters 
-t_o = 14095
-t_e = 5920
+t_o = 3600*1.5
+t_e = 36.9*60
 
 #find maximum panel area and mass based on power requirments and orbit parameters 
 panel_A, panel_mass = panel_area(t_o, t_e, power_day, power_eclipse)
