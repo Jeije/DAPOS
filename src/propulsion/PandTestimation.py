@@ -17,7 +17,16 @@ class Propulsion:
     def thrust4mdot(self, mdot):
         T = mdot*self.isp*self.g0
         return T
-        
+    
+    def power4thrust(self, thrust):
+        P=thrust*self.Pspec
+        return P
+    
+    def minisp@(self, V_b ,c_d, n_c):
+        minisp=0.5*V_b*c_d/n_c/g0
+        return minisp
+    
+    def 
         
     
 
