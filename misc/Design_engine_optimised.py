@@ -5,10 +5,10 @@ Created on Fri May 10 09:47:33 2019
 @author: msjor
 """
 
-import numpy as np
-import matplotlib.pyplot as plt
+#import numpy as np
+#import matplotlib.pyplot as plt
 from Iterated_drag_surface import Drag_Thrust_Area_iteration
-from DAPOS.src.power import panel_area
+from power import *
 
 Isp = 3546 #[s]
 density = 1*10**-10  #[kg/m^3]
