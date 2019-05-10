@@ -8,7 +8,7 @@ Created on Fri May 10 09:47:33 2019
 #import numpy as np
 #import matplotlib.pyplot as plt
 from Iterated_drag_surface import Drag_Thrust_Area_iteration
-from power import *
+from .power import panel
 
 Isp = 3546 #[s]
 density = 1*10**-10  #[kg/m^3]
