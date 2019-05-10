@@ -1,11 +1,12 @@
 from nrlmsise_00_header import *
 from nrlmsise_00 import *
 
-def nlrmsise00_dens(alt):
-    output = [nrlmsise_output() for _ in range(17)]
-    Input = [nrlmsise_input() for _ in range(17)]
-    flags = nrlmsise_flags()
+import time
 
+def nlrmsise00_dens(alt):
+    output = [nrlmsise_output() for _ in range(2)]
+    Input = [nrlmsise_input() for _ in range(2)]
+    flags = nrlmsise_flags()
     flags.switches[0] = 1
     for i in range(1, 24):
         flags.switches[i]=1
@@ -24,3 +25,8 @@ def nlrmsise00_dens(alt):
     gtd7(Input[1], flags, output[1])
 
     return output[1].d[5]
+
+if __name__ == '__main__':
+    # start = time.clock()
+    print(nlrmsise00_dens(200))
+    # print(time.clock() - start)
