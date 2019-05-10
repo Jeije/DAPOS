@@ -83,6 +83,7 @@ Isp = 3546 #[s]
 intake_eff = 0.4    #[-]
 thrust_power = 64*10**3   #[W/N]
 area_correction = 1.1
+T_over_D = 1.05
 
 #communication parameters 
 freq = 36 #communication frequency [GHz]
@@ -126,6 +127,9 @@ A_range = []
 power_range = []
 panelA_range = []
 panelM_range = []
+drag_range = []
+thrust_range = []
+
 while A_i<=A:
     #compute forces for different possible areas of intake
     drag_i = A_to_Drag(A_i*area_correction)
@@ -135,27 +139,47 @@ while A_i<=A:
     power_i = thrust_i*thrust_power
     
     #define day and night power
-    power_day = power_i +P_comm+P_camera
-    power_eclipse = power_i
+    power_day_i = power_i +P_comm+P_camera
+    power_eclipse_i = power_i
     
     #compute panel area and mass needed for different intake areas
-    panelA_i, panelm_i =panel_area(t_o, t_e, power_day, power_eclipse)
+    panelA_i, panelm_i =panel_area(t_o, t_e, power_day_i, power_eclipse_i)
     drag_panel_i = panel_drag(panelA_i)
-    while abs(drag_i+drag_panel_i-thrust_i)>0.00001:
-        drag_panel = thrust_i-drag_i
-        area_panel = area_panel_drag(drag_panel)
+    
+    while np.abs((drag_i+drag_panel_i)*T_over_D-thrust_i)>0.0000001:
+        #compensate thrust for additonal drag created by the panels
+        thrust_tot = (drag_panel_i+drag_i)*T_over_D
+        #find ned power required to find new thrust
+        power_day = thrust_tot*thrust_power+P_comm+P_camera
+        power_eclipse = thrust_tot*thrust_power
+        #find ned panel area and mass needed for providing the needed power
+        panelA, panelM = panel_area(t_o, t_e, power_day, power_eclipse)
         
-        
+        #add new panel drag and thrust for iteration
+        drag_panel_i= panel_drag(panelA)
+        thrust_i = thrust_tot
 
-    
-    
+        
     A_range.append(A_i)
-    power_range.append(power_i/1000)
-    panelA_range.append(panelA_i)
-    panelM_range.append(panelm_i)
+    drag_range.append(drag_i+drag_panel_i)
+    thrust_range.append(thrust_i)
+    power_range.append(thrust_i*thrust_power/1000)
+    panelA_range.append(panelA)
+    panelM_range.append(panelM)
     A_i+=0.25
     
-plt.plot(A_range, power_range, "green")
-plt.plot(A_range, panelA_range, "black")
+plt.plot(A_range, power_range, "green", label="power [W] vs intake area [m^2]")
+plt.plot(A_range, panelA_range, "black", label = "panel area [m^2] vs intake area [m^2]")
+plt.legend()
+plt.show()
+
+plt.plot(A_range, drag_range, "red", label = "drag [N] vs intake area [m^2]")
+plt.plot(A_range, thrust_range, "blue", label = "thrust [N] vs intake area [m^2]")
+plt.legend()
+plt.show()
+
+plt.plot(panelA_range, drag_range, "yellow", label = "drag [N] vs solar panel area [m^2]")
+plt.plot(panelA_range, thrust_range, "orange", label = "thrust [N] vs solar panel area [m^2]")
+plt.legend()
 plt.show()
     
