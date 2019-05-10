@@ -129,6 +129,7 @@ panelA_range = []
 panelM_range = []
 drag_range = []
 thrust_range = []
+massf_range = []
 
 while A_i<=A:
     #compute forces for different possible areas of intake
@@ -159,7 +160,7 @@ while A_i<=A:
         drag_panel_i= panel_drag(panelA)
         thrust_i = thrust_tot
 
-        
+    massf_range.append(A_i*density*velocity*intake_eff) 
     A_range.append(A_i)
     drag_range.append(drag_i+drag_panel_i)
     thrust_range.append(thrust_i)
