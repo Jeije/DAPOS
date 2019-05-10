@@ -25,8 +25,7 @@ class Propulsion:
     def minisp@(self, V_b ,c_d, n_c):
         minisp=0.5*V_b*c_d/n_c/g0
         return minisp
-    
-    def 
+
         
     
 
@@ -39,7 +38,9 @@ if __name__ == "__main__":
     pr = Propulsion()
     
     
-    
+    cd = np.linspace(2.0,3.2,6)
+    V_b= 7.8e3
+    n_c = np.linspace()
     
     
     
