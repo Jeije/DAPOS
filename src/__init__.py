@@ -1,2 +1,3 @@
-from power import *
-from atmos_model import *
+
+from .power import panel_area
+

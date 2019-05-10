@@ -27,5 +27,5 @@ def panel_area(t_o, t_e, pr_day, pr_eclipse):
     
     #print('power =', psol, 'A=', A, 'm =', m)
     
-    return psol, A, m
+    return A, m
     
