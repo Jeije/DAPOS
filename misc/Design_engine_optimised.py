@@ -14,7 +14,7 @@ from Iterated_drag_surface import Drag_Thrust_Area_iteration
 def panel_area(t_o, t_e, pr_day, pr_eclipse):
     #INPUTS
     wm = 200 #[W/m^2] not really needed as we are mainly concerned with solar radiation and panel efficiencies
-    wkg = 1000 #[W/kg]
+    wkg = 80 #[W/kg]
     #t_o = 14095 #orbital period in [s]
     #t_e = 5920 #eclipse time [s]
     t_d = t_o - t_e #day time [s]
@@ -22,7 +22,7 @@ def panel_area(t_o, t_e, pr_day, pr_eclipse):
     theta = 0 #solar panel incidence angle [rad]
     T = 10 #mission lifetime [years]
     d = 0.99 #yearly degradation
-    eff = 0.09 #solar panel efficiency
+    eff = 0.28 #solar panel efficiency
     eff_c = 0.99 #battery charging efficiency
     eff_dc = 0.99 #battery discharging efficiency
     #pr_day = 500 #power required during the day EOL [W]
@@ -53,25 +53,62 @@ def thrust_to_A(T):
 def A_to_thrust(A):
     return density*A*velocity*intake_eff*Isp*9.81
 
+def panel_drag(A_p):
+    return 0.3*A_p*0.5*density*velocity**2
+
+def area_panel_drag(D_p):
+    return D_p*2/0.3/density/velocity**2
+
+def comms(h, freq, G_trans, D_reciever, Ts, R):
+    dish_eff = 0.55
+    rain = 4+3/13*(freq*10**-9-27)
+    space = 147.55-20*np.log10(h*10**3)-20*np.log10(freq)
+    G_rec = -159.59+20*np.log10(D_reciever)+20*np.log10(freq)+10*np.log10(dish_eff)
+    line = 0.89
+    G_trans = G_trans
+    E_N = 7
+    
+    return 10**((E_N-line-G_trans-space-rain-G_rec-228.6+10*np.log10(Ts)+10*np.log10(R))/10)
 
 ################################    main     #############################
-#input values s/c
-Isp = 3546 #[s]
+#define orbit parameters 
+t_o = 3600*1.5  #orbital period
+t_e = 36.9*60   #eclipse period
+h = 225   #orbital altitude #[km]
 density = 1*10**-10  #[kg/m^3]
-intake_eff = 0.4    #[-]
 velocity = 7800 #[m/s]
-thrust_power = 70*10**3   #[W/N]
 
-#find surface area, drag/thrust, massflow and power required for engine
+#propulsion parameters
+Isp = 3546 #[s]
+intake_eff = 0.4    #[-]
+thrust_power = 64*10**3   #[W/N]
+area_correction = 1.1
+
+#communication parameters 
+freq = 36 #communication frequency [GHz]
+freq = freq*10**9 #communications frequency [Hz]
+G_trans = 15 #gain satellite antenna [dBi]
+D_reciever = 1.5 #diameter reciever on ground [m]
+Ts = 600 #system noise temperature [K]
+datarate_imaging = 2632*10**6 #[bps]
+compression_rat = 3/5   #[-]
+data_orbit = datarate_imaging*(t_o-t_e)*compression_rat     #data produced during orbit [bits]
+contact_time = 0.015*t_o       #[s]
+R = data_orbit/contact_time    #data rate [bps]
+
+#1Mb/s 
+
+#find intake area, drag/thrust, massflow and power required for engine
 A, F, mdot, power_engine = Drag_Thrust_Area_iteration(Isp, density, intake_eff, velocity, thrust_power)
 
-#define power requirments
-power_day = power_engine
-power_eclipse = power_engine
+#find power required for communication system 
+P_comm = comms(h, freq, G_trans, D_reciever, Ts, R)
 
-#define orbit parameters 
-t_o = 14095
-t_e = 5920
+#power needed for other subsystems (from power budget)
+P_camera = 10.
+#define power requirments
+power_day = power_engine+ P_comm +P_camera
+power_eclipse = power_engine
 
 #find maximum panel area and mass based on power requirments and orbit parameters 
 panel_A, panel_mass = panel_area(t_o, t_e, power_day, power_eclipse)
@@ -80,9 +117,10 @@ print ("Intake surface area (maximum) =", A, "[m^2]")
 print ("Panel surface area (for max intake) = ", panel_A, "[m^2]")
 print ("Thrust provided (for max intake) = ", F,  "[N]")
 print ("power used by engine (for max intake) = ", power_engine, "[W]")
+print ("power used by communication system = ", P_comm, "[W]")
+
 
 #indentify range of possible intake areas and plot results for entire range
-
 A_i = 0.
 A_range = []
 power_range = []
@@ -90,18 +128,27 @@ panelA_range = []
 panelM_range = []
 while A_i<=A:
     #compute forces for different possible areas of intake
-    drag_i = A_to_Drag(A_i)
+    drag_i = A_to_Drag(A_i*area_correction)
     thrust_i = A_to_thrust(A_i)
     
     #compute engine powers required at respective intake areas
     power_i = thrust_i*thrust_power
     
     #define day and night power
-    power_day = power_i
+    power_day = power_i +P_comm+P_camera
     power_eclipse = power_i
     
     #compute panel area and mass needed for different intake areas
     panelA_i, panelm_i =panel_area(t_o, t_e, power_day, power_eclipse)
+    drag_panel_i = panel_drag(panelA_i)
+    while abs(drag_i+drag_panel_i-thrust_i)>0.00001:
+        drag_panel = thrust_i-drag_i
+        area_panel = area_panel_drag(drag_panel)
+        
+        
+
+    
+    
     A_range.append(A_i)
     power_range.append(power_i/1000)
     panelA_range.append(panelA_i)
