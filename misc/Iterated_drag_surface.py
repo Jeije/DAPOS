@@ -14,7 +14,7 @@ massf_thrust = 1/(Isp*9.81)
 density = 1*10**-10   #[kg/m^3]
 velocity = 7800     #[m/s]
 intake_eff = 0.4    #[-]
-thrust_power = 20*10**3 #[W/N]
+thrust_power = 70*10**3 #[W/N]
 
 def A_to_Drag(A):
     return density*(velocity**2)*(1.+np.pi/6.)*np.sqrt(A/np.pi)*A
