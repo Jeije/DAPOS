@@ -1,6 +1,4 @@
-from nrlmsise_00_header import *
 from nrlmsise_00 import *
-
 import time
 
 def nlrmsise00_dens(alt):
