@@ -26,8 +26,9 @@ def Drag_Thrust_Area_iteration(Isp, density,intake_eff, velocity, thrust_power):
         return density*A*velocity*intake_eff/massf_thrust
     
     #intial estimate to be able to start the iteration later
-    A_init = 0.0001   #[m^2]
-    drag_init = A_to_Drag(A_init)
+    A_init = 0.0001   #[m^2]]
+    area_correction = 1.1   #[-] Area used for drag/area used for intake
+    drag_init = A_to_Drag(A_init*area_correction)
     thrust_init = A_to_thrust(A_init)
     
     #set testing values to intial values
@@ -45,17 +46,18 @@ def Drag_Thrust_Area_iteration(Isp, density,intake_eff, velocity, thrust_power):
         #set drag equal to the thrust to move towards intersection
         drag = thrust_t
         #compute new area based on this drag value
+        #NOTE: this area is the frontal area not the intake area!
         area =Drag_to_A(drag)
         #compute the thrust produced at this area
-        thrust = A_to_thrust(area)
+        thrust = A_to_thrust(area/area_correction)
         #print to see difference between drag and thrust
         #print (drag-thrust)
         #set new testing values for next iteration
         drag_t = drag
         thrust_t = thrust
             
-          
-        areal.append(area)
+        #We want to add the intake areas not the frontal area to this list
+        areal.append(area/area_correction)
         dragl.append(drag)
         thrustl.append(thrust)
         
@@ -79,7 +81,7 @@ def Drag_Thrust_Area_iteration(Isp, density,intake_eff, velocity, thrust_power):
     #drag_list = []
     #thrust_list = []
     #for i in area_list:
-    #    drag_list.append(A_to_Drag(i))
+    #    drag_list.append(A_to_Drag(i*area_correction))
     #    thrust_list.append(A_to_thrust(i))
     #    
     #plt.plot(area_list, drag_list, "red")
