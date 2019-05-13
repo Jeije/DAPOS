@@ -81,6 +81,20 @@ if __name__ == "__main__":
         
         
         plt.show()
+        
+    elif thing==3:
+        isp=3872.98 #s
+        V_b=7.8e3 #m/s
+        thrustl=[]
+        hl= range(150e3,260e3,10e3)
+        for h in hl:
+            thrust = pr.rho(h)*pr.V_b(h)*A_f*eff_c*isp
+            thrustl.append(thrust)
+            
+        plt.plot(hl,thrustl)
+        plt.show()
+    
     else:
+        
         print("8==D")
         
