@@ -8,4 +8,4 @@ def cam_res(alt, res):
 
     return vleores
 
-print(cam_res(3000000, 1))
+print(cam_res(500000, 0.9))

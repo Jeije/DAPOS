@@ -1,1 +1,1 @@
-from nrlmsise_00 import *
+from nrlmsise_00_dens import nlrmsise00_dens
