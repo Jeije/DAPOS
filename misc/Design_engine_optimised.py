@@ -81,7 +81,7 @@ velocity = 7800 #[m/s]
 #propulsion parameters
 Isp = 3546 #[s]
 intake_eff = 0.4    #[-]
-thrust_power = 64*10**3   #[W/N]
+thrust_power = 1/0.0156*1000.  #[W/N]
 area_correction = 1.1
 T_over_D = 1.05
 
@@ -114,10 +114,13 @@ power_eclipse = power_engine
 #find maximum panel area and mass based on power requirments and orbit parameters 
 panel_A, panel_mass = panel_area(t_o, t_e, power_day, power_eclipse)
 
+print ("Maximum intake case:")
 print ("Intake surface area (maximum) =", A, "[m^2]")
 print ("Panel surface area (for max intake) = ", panel_A, "[m^2]")
 print ("Thrust provided (for max intake) = ", F,  "[N]")
 print ("power used by engine (for max intake) = ", power_engine, "[W]")
+
+print (" ")
 print ("power used by communication system = ", P_comm, "[W]")
 
 
@@ -167,20 +170,41 @@ while A_i<=A:
     power_range.append(thrust_i*thrust_power/1000)
     panelA_range.append(panelA)
     panelM_range.append(panelM)
-    A_i+=0.25
-    
+    A_i+=0.01
+
+thrust_chosen = 0.006  #[N]
+thrust_diff = []
+for i in range(len(thrust_range)):
+    thrust_diff.append(thrust_range[i]-thrust_chosen)
+index = thrust_diff.index(min(np.abs(thrust_diff)))
+
+print ("  ")
+print ("For a chosen thrust level of:", thrust_chosen)
+print ("mass flow [kg/s] =", massf_range[index])
+print ("Intake area [m^2] = ", A_range[index])
+print ("Drag [N] =", drag_range[index])
+print ("Power for propulsion [kW] =", power_range[index])
+print ("Solar panel area [m^2] = ", panelA_range[index])
+print ("Solar panel mass [kg] = ", panelM_range[index]) 
+   
 plt.plot(A_range, power_range, "green", label="power [W] vs intake area [m^2]")
 plt.plot(A_range, panelA_range, "black", label = "panel area [m^2] vs intake area [m^2]")
 plt.legend()
+plt.grid()
 plt.show()
 
 plt.plot(A_range, drag_range, "red", label = "drag [N] vs intake area [m^2]")
 plt.plot(A_range, thrust_range, "blue", label = "thrust [N] vs intake area [m^2]")
 plt.legend()
+plt.grid()
 plt.show()
 
 plt.plot(panelA_range, drag_range, "yellow", label = "drag [N] vs solar panel area [m^2]")
 plt.plot(panelA_range, thrust_range, "orange", label = "thrust [N] vs solar panel area [m^2]")
 plt.legend()
+plt.grid()
 plt.show()
+
+
+
     
