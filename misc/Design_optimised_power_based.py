@@ -36,6 +36,16 @@ def panel_area(t_o, t_e, pr_day, pr_eclipse):
     
     return A, m
 
+def comms_mass(power_transmitter, area_antenna, dens_antenna):
+   specific_power = 2.9 #W/kg
+   dens_trans = 0.75*10**-3 #kg/m3
+   mass_trans = power_transmitter/specific_power  #kg
+   vol_trans = mass_trans/dens_trans  #m3
+   mass_amp = 0.07*power_transmitter+0.634 #kg
+   mass_antenna = dens_antenna * area_antenna #kg, antenna on board of spacecraft
+   total_mass = (mass_antenna + mass_amp + mass_trans)*1.3
+
+   return total_mass, vol_trans
 #area to drag and power relations 
 def A_to_Drag(A):
     return density*(velocity**2)*(1.+np.pi/6.*np.sqrt(A/np.pi))*A
@@ -67,7 +77,7 @@ def thrust_power(T):
 ################################    main     #############################
 #define orbit parameters 
 t_o = 3600*1.5  #orbital period
-t_e = t_o*0.17777777   #eclipse period (0.17777 to 0.3222222)
+t_e = t_o*0.17777   #eclipse period (0.17777 to 0.3222222)
 h = 250   #orbital altitude #[km]
 density = 1*10**-10  #[kg/m^3]
 velocity = 7800 #[m/s]
@@ -93,7 +103,7 @@ R = data_orbit/contact_time    #data rate [bps]
 
 #other input parameters
 batt_dens = 250     #[Wh/kg]
-aspect_ratio = 10    #[-]
+aspect_ratio = 5    #[-]
 coating_t = 100*10**-9  #[m]
 coating_rho = 2800#[kg/m^3]
 
@@ -159,4 +169,4 @@ print ("Total power required during operations [W] =", power_thrust+P_camera+P_c
 print ("Total power required during eclipse [W] =", power_thrust+P_comm+P_misc)
 print (" ")
 print ("----------------------------------Other---------------------------------------------")
-print ("Intake length [m] = ", np.sqrt(intakeA/np.pi)*aspect_ratio)
+print ("Intake length [m] = ", np.sqrt(intakeA)*aspect_ratio)
