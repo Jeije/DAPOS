@@ -29,6 +29,9 @@ class Propulsion:
     def minisp(self, V_b ,c_d, n_c):
         isp=0.5*V_b*c_d/n_c/self.g0
         return isp
+    
+    def rho(self, h):
+            i=next(x for x in self.altlist)
 
         
     
@@ -40,7 +43,7 @@ it will only run if you run this python file (response_model.py)
 """
 if __name__ == "__main__":
     pr = Propulsion()
-    thing=2
+    thing=3
     
 
 
@@ -83,15 +86,30 @@ if __name__ == "__main__":
         plt.show()
         
     elif thing==3:
-        isp=3872.98 #s
+        c_e=3872.98 #s
         V_b=7.8e3 #m/s
+        c_d=2.5
+        A_f=1
+        eff_c=0.2
+        P_misc=200
         thrustl=[]
-        hl= range(150e3,260e3,10e3)
-        for h in hl:
-            thrust = pr.rho(h)*pr.V_b(h)*A_f*eff_c*isp
+        hl= pr.altlist
+        dragl= []
+        powerl = []
+        FperP= 14.147593e-3
+        for h in range(len(hl)):
+            thrust = pr.denslist[h]*V_b*A_f*eff_c*c_e
             thrustl.append(thrust)
+            drag = pr.denslist[h]*V_b**2*c_d*0.5*A_f
+            dragl.append(drag)
+            P_engine= thrust/FperP
+            power = P_engine+P_misc
+            powerl.append(power)
             
-        plt.plot(hl,thrustl)
+        plt.semilogx(pr.denslist,thrustl)
+        plt.semilogx(pr.denslist,dragl)
+        plt.ylabel('Thurst and drag in N')
+        plt.xlabel('Density in kg/m3')
         plt.show()
     
     else:
