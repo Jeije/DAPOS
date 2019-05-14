@@ -10,19 +10,19 @@ import numpy as np
 def panel_area(t_o, t_e, pr_day, pr_eclipse):
     #INPUTS
     wm = 200 #[W/m^2] not really needed as we are mainly concerned with solar radiation and panel efficiencies
-    wkg = 80 #[W/kg]
+    wkg = 100 #[W/kg]
     #t_o = 14095 #orbital period in [s]
     #t_e = 5920 #eclipse time [s]
     t_d = t_o - t_e #day time [s]
-    sr = 1400 #solar radiation [W/m^2]
+    sr = 1358 #solar radiation [W/m^2]
     theta = 0 #solar panel incidence angle [rad]
     T = 10 #mission lifetime [years]
-    d = 0.99 #yearly degradation
-    eff = 0.19 #solar panel efficiency
-    eff_c = 0.99 #battery charging efficiency
-    eff_dc = 0.99 #battery discharging efficiency
-    #pr_day = 500 #power required during the day EOL [W]
-    pr_eclipse = pr_eclipse/eff_c/eff_dc #power required during eclipse EOL [W]
+    d = 0.9725 #yearly degradation
+    eff = 0.28 #solar panel efficiency
+    eff_c = 0.9 #battery charging efficiency
+    eff_dc = 0.85 #battery discharging efficiency
+    pr_day = pr_day/eff_c #power required during the day EOL [W]
+    pr_eclipse = pr_eclipse/eff_dc #power required during eclipse EOL [W]
     
     #EQUATIONS
     pbol = ((pr_day*t_d+pr_eclipse*t_e)/(t_d)/(d**T))/np.cos(theta) #bol power accounting for degradation, eclipse time, incidence angle
@@ -36,12 +36,20 @@ def panel_area(t_o, t_e, pr_day, pr_eclipse):
     
     return A, m
 
+def comms_mass(power_transmitter, area_antenna, dens_antenna):
+   specific_power = 2.9 #W/kg
+   dens_trans = 0.75*10**-3 #kg/m3
+   mass_trans = power_transmitter/specific_power  #kg
+   vol_trans = mass_trans/dens_trans  #m3
+   mass_amp = 0.07*power_transmitter+0.634 #kg
+   mass_antenna = dens_antenna * area_antenna #kg, antenna on board of spacecraft
+   total_mass = (mass_antenna + mass_amp + mass_trans)*1.3
+
+   return total_mass, vol_trans
 #area to drag and power relations 
 def A_to_Drag(A):
-    return density*(velocity**2)*(1.+np.pi/6.)*np.sqrt(A/np.pi)*A
+    return density*(velocity**2)*(1.+np.pi/6.*np.sqrt(A/np.pi))*A
 
-def Drag_to_A(D):
-    return np.cbrt((D/(density*velocity**2*(1+np.pi/6)))**2*np.pi)
 
 def panel_drag(A_p):
     return 0.3*A_p*0.5*density*velocity**2
@@ -53,13 +61,13 @@ def massf_to_A(mf):
     return mf/intake_eff/density/velocity
 
 def comms(h, freq, G_trans, D_reciever, Ts, R):
-    dish_eff = 0.55
-    rain = 4+3/13*(freq*10**-9-27)
+    dish_eff = 0.5
+    rain = 4+3/13*(freq*10**(-9)-27)
     space = 147.55-20*np.log10(h*10**3)-20*np.log10(freq)
     G_rec = -159.59+20*np.log10(D_reciever)+20*np.log10(freq)+10*np.log10(dish_eff)
     line = 0.89
     G_trans = G_trans
-    E_N = 7
+    E_N = 10
     
     return 10**((E_N-line-G_trans-space-rain-G_rec-228.6+10*np.log10(Ts)+10*np.log10(R))/10)
 
@@ -69,10 +77,10 @@ def thrust_power(T):
 ################################    main     #############################
 #define orbit parameters 
 t_o = 3600*1.5  #orbital period
-t_e = 36.9*60   #eclipse period
+t_e = t_o*0.17777   #eclipse period (0.17777 to 0.3222222)
 h = 250   #orbital altitude #[km]
 density = 1*10**-10  #[kg/m^3]
-velocity = 7787 #[m/s]
+velocity = 7800 #[m/s]
 
 #propulsion parameters
 intake_eff = 0.35    #[-]
@@ -84,15 +92,20 @@ massf_req = massf_req/(10**6) #[kg/s]
 #communication parameters 
 freq = 36 #communication frequency [GHz]
 freq = freq*10**9 #communications frequency [Hz]
-G_trans = 15 #gain satellite antenna [dBi]
-D_reciever = 1.5 #diameter reciever on ground [m]
-Ts = 600 #system noise temperature [K]
+G_trans = 5 #gain satellite antenna [dBi]
+D_reciever = 1. #diameter reciever on ground [m]
+Ts = 700 #system noise temperature [K]
 datarate_imaging = 2632*10**6 #[bps]
-compression_rat = 3/5   #[-]
+compression_rat = 1/10  #[-]
 data_orbit = datarate_imaging*(t_o-t_e)*compression_rat     #data produced during orbit [bits]
-contact_time = 0.015*t_o       #[s]
+contact_time = 0.25*t_o       #[s]
 R = data_orbit/contact_time    #data rate [bps]
 
+#other input parameters
+batt_dens = 250     #[Wh/kg]
+aspect_ratio = 5    #[-]
+coating_t = 100*10**-9  #[m]
+coating_rho = 2800#[kg/m^3]
 
 #find power required for communication system 
 P_comm = comms(h, freq, G_trans, D_reciever, Ts, R)
@@ -134,9 +147,26 @@ while np.abs((drag_sat+drag_panel)*T_over_D-thrust)>0.0000000001:
     drag_panel = panel_drag(panelA)
 
 #print resulting design
+print ("---------------------------------General performance---------------------------------")
 print ("massflow required for engine operations [kg/s]:", massf_req)  
 print ("Intake area [m^2] = ", intakeA)
-print ("Panel area [m^2] and mass [kg] = ", panelA,"|",  panelM)
-print ("Power required to operate engine [W]= ", power_thrust)
+print ("Panel area [m^2]= ", panelA)
 print ("Thrust, drag [N] and T/D", thrust, "|", drag_panel+drag_sat, "|", thrust/(drag_panel+drag_sat))
-print ("Total power required [W] =", power_thrust+P_camera+P_comm+P_misc)
+print (" ")
+print ("---------------------------------Mass budget----------------------------------------")
+print ("Panel mass [kg] = ", panelM)
+print ("Battery mass [kg] = ", power_eclipse*t_e/3600/(batt_dens)*10/0.9)
+print ("Power management system [kg]=", 0.33333*(panelM+ power_eclipse*t_e/3600/(batt_dens)*10/0.9))
+print ("Power system total [kg] = ", (panelM+power_eclipse*t_e/3600/(batt_dens)*10/0.9)*1.333333)
+coating_A = panelA*2+frontalA*2*aspect_ratio
+print ("Additional mass due to coating [kg] = ", coating_A*coating_t*coating_rho)
+print (" ")
+print ("----------------------------------Power budget---------------------------------------")
+print ("Power required to operate engine [W]= ", power_thrust)
+print ("Power required for communications [W] =", P_comm)
+print ("Power required for payload operations [W] =", P_camera)
+print ("Total power required during operations [W] =", power_thrust+P_camera+P_comm+P_misc)
+print ("Total power required during eclipse [W] =", power_thrust+P_comm+P_misc)
+print (" ")
+print ("----------------------------------Other---------------------------------------------")
+print ("Intake length [m] = ", np.sqrt(intakeA)*aspect_ratio)
