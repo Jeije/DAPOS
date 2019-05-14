@@ -77,7 +77,7 @@ def thrust_power(T):
 ################################    main     #############################
 #define orbit parameters 
 t_o = 3600*1.5  #orbital period
-t_e = t_o*0.17777   #eclipse period (0.17777 to 0.3222222)
+t_e = t_o*0.322222   #eclipse period (0.17777 to 0.3222222)
 h = 250   #orbital altitude #[km]
 density = 1*10**-10  #[kg/m^3]
 velocity = 7800 #[m/s]
@@ -170,3 +170,4 @@ print ("Total power required during eclipse [W] =", power_thrust+P_comm+P_misc)
 print (" ")
 print ("----------------------------------Other---------------------------------------------")
 print ("Intake length [m] = ", np.sqrt(intakeA)*aspect_ratio)
+print ("Width of the solar panels [m] (GOCE style) =", panelA/np.sqrt(intakeA)/aspect_ratio/2)
