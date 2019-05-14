@@ -75,7 +75,7 @@ density = 1*10**-10  #[kg/m^3]
 velocity = 7787 #[m/s]
 
 #propulsion parameters
-intake_eff = 0.4    #[-]
+intake_eff = 0.35    #[-]
 area_correction = 1.1
 T_over_D = 1.1
 massf_req = 7/45.37 #[mg/s]
