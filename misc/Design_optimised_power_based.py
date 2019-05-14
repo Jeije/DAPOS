@@ -75,16 +75,21 @@ def thrust_power(T):
     return (T+0.00069068)/0.0000156
 
 ################################    main     #############################
+#body or not
+body = True
 #define orbit parameters 
 t_o = 3600*1.5  #orbital period
-t_e = t_o*0.322222   #eclipse period (0.17777 to 0.3222222)
+t_e = t_o*0.177777   #eclipse period (0.17777 to 0.3222222)
 h = 250   #orbital altitude #[km]
 density = 1*10**-10  #[kg/m^3]
 velocity = 7800 #[m/s]
 
 #propulsion parameters
-intake_eff = 0.35    #[-]
-area_correction = 1.1
+intake_eff = 0.40    #[-]
+if body:
+    area_correction = 1.15
+else:
+    area_correction = 1.1
 T_over_D = 1.1
 massf_req = 7/45.37 #[mg/s]
 massf_req = massf_req/(10**6) #[kg/s]
@@ -106,6 +111,8 @@ batt_dens = 250     #[Wh/kg]
 aspect_ratio = 5    #[-]
 coating_t = 100*10**-9  #[m]
 coating_rho = 2800#[kg/m^3]
+body_percent = 0.75 #[-] (percentage of the body that can be effectively used for solar panels)
+
 
 #find power required for communication system 
 P_comm = comms(h, freq, G_trans, D_reciever, Ts, R)
@@ -126,13 +133,24 @@ thrust = drag_sat*T_over_D
 power_init = thrust_power(thrust)
 
 #size solar panels for intial requirements
+length_intake = np.sqrt(intakeA)*aspect_ratio
+panel_body = length_intake*np.sqrt(frontalA/np.pi)*body_percent*2
+
 power_day_i = power_init+P_comm+P_camera+P_misc
 power_eclipse_i = power_init+P_comm+P_misc
 panelA_i, panelM_i = panel_area(t_o, t_e, power_day_i, power_eclipse_i)
 
+if panel_body>panelA_i:
+    panel_body = panelA_i
+    
 #added drag due to the solar panels
-drag_panel = panel_drag(panelA_i)
+if body:
+    drag_panel = panel_drag(panelA_i-panel_body)
+else:
+    drag_panel = panel_drag(panelA_i)
 
+panelA = panelA_i
+power_thrust = power_init
 #iterate to find total power requirement
 while np.abs((drag_sat+drag_panel)*T_over_D-thrust)>0.0000000001:
     #set thrust to counteract new drag force
@@ -144,13 +162,18 @@ while np.abs((drag_sat+drag_panel)*T_over_D-thrust)>0.0000000001:
     #size solar panels at new power
     panelA, panelM = panel_area(t_o, t_e, power_day, power_eclipse)
     #compute new drag
-    drag_panel = panel_drag(panelA)
+    if body:
+        drag_panel = panel_drag(panelA-panel_body)
+    else:
+        drag_panel = panel_drag(panelA)
 
 #print resulting design
 print ("---------------------------------General performance---------------------------------")
 print ("massflow required for engine operations [kg/s]:", massf_req)  
 print ("Intake area [m^2] = ", intakeA)
-print ("Panel area [m^2]= ", panelA)
+print ("Total panel area [m^2]= ", panelA)
+print ("Panel area on body [m^2] = ", panel_body*body)
+print ("Panel area on arrays [m^2] = ", panelA-panel_body*body)
 print ("Thrust, drag [N] and T/D", thrust, "|", drag_panel+drag_sat, "|", thrust/(drag_panel+drag_sat))
 print (" ")
 print ("---------------------------------Mass budget----------------------------------------")
@@ -169,5 +192,5 @@ print ("Total power required during operations [W] =", power_thrust+P_camera+P_c
 print ("Total power required during eclipse [W] =", power_thrust+P_comm+P_misc)
 print (" ")
 print ("----------------------------------Other---------------------------------------------")
-print ("Intake length [m] = ", np.sqrt(intakeA)*aspect_ratio)
+print ("Intake length [m] = ", length_intake)
 print ("Width of the solar panels [m] (GOCE style) =", panelA/np.sqrt(intakeA)/aspect_ratio/2)
