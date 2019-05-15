@@ -9,6 +9,7 @@ import numpy as np
 
 ############################################# Functions ###############################################
 
+
 def panel_area(t_o, t_e, pr_day, pr_eclipse, theta = 0):
     """COmpute the panel area needed for operations
     
@@ -124,3 +125,66 @@ def CD_cylinder(A):
         A = frontal area [m^2]"""
     CD = (1.+np.pi/6.*np.sqrt(A/np.pi))*2
     return CD
+
+def orbit(lower_limit, upper_limit):
+    """Calculates orbit data.
+
+    For a circular orbit, the lower and upper limit should be the same. The
+    output variables are the same no matter the orbit type, but in the case of
+    a circular orbit, some output variables will be the same (e.g. semi-major
+    axis, apocentre radius and pericentre radius)
+
+    INPUT:
+        lower_limit = lowest orbital altitude [km]
+        upper_limit = highest orbital altitude [km]
+
+    OUTPUT:
+        a     = semi-major axis [km]
+        r_a   = appocentre radius [km]
+        r_p   = pericentre radius [km]
+        r     = orbital radius [km]
+        V_orb = orbital velocity [km/s]
+        P_orb = orbital period [s]
+    """
+    ## constants
+
+    # Earth data
+    R_e         = 6378.1           # km, Earth's radius
+    g_0         = 0.00981          # km/s^2, Earth's surface gravity
+    mu          = 398600.44        # km^3/s^2, Earth's gravitational constant
+    G_e         = 6.6725*10**(-11) # Nm^2/kg, universal gravitational constant
+    w_e         = 7.3*10**(-5)     # ????
+
+    # 'simulation' parameters
+    N           = 720              # -, number of steps per orbit
+
+    ## calculations, for the formulas, see AE2230 equations by heart and
+    ## lecture slides.
+    theta  = np.linspace(0, 2*np.pi, N)              # rad, orbit angle
+    a      = (lower_limit + upper_limit + 2 * R_e)/2 # km, semi-major axis
+    r_a    = upper_limit + R_e                       # km, appocentre r
+    r_p    = lower_limit + R_e                       # km, pericentre r
+    e      = r_a/a - 1                               # -, eccentricity
+    r      = a * (1 - e*e) / (1 + e * np.cos(theta)) # km, orbit radius
+    h      = r - R_e                                 # km, orbit height
+    V_orb  = np.sqrt( mu * ( (2/r) - (1/a) ) )       # km/s, orbital V
+    P_orb  = 2 * np.pi * np.sqrt(a**3 / mu)          # s, orbital period
+    E_tot  = -mu / (2 * a) * 1e6                     # J/kg, specific energy
+
+
+    if lower_limit == upper_limit:
+        V_ang   = 2.*np.pi*/P                     # rad/s
+
+        T_ecl   = (r/np.pi)*P                     # s max eclipse time
+        s_node  = 2.*np.pi*(P/1436.07)            # rad  long btw successive ascending/descending nodes
+
+        i_ss    = np.arccos(-0.098922*(1+ h/R_e)**(3.5)) #inclination of ss orbit.Larger than 90 deg: retrograde
+        prec    = -2.06474 * 10. **14 *r**(-7./2.)*np.cos(i_ss) # rad/day node precession rate: rate of rotation in inertial space
+        r_day   = 1436.07/P       # [-] revolutions per sidereal day
+        V_gt    = 2.*np.pi*R_e/P                 # m/s ground track velocity
+        DV_al   = (np.pi*(C_D)*A/m)*rho *r *V_circ/P # m/s per year. Mean DV to mainstain altitude
+        phi     = -th +np.arccos(R_e*np.cos(th)/(R_e+h)) #semi angle over which it is visible by groundstation
+        w_ex    = np.sqrt(w_e**2. + V_ang**2. - 2.*w_e*V_ang*np.cos(i_ss))
+        tau     = 2.*phi/w_es
+
+    return a, r_a, r_p, r, e, V_orb, P_orb
