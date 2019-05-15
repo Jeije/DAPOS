@@ -48,11 +48,12 @@ def comms_mass(power_transmitter, area_antenna, dens_antenna):
    return total_mass, vol_trans
 #area to drag and power relations 
 def A_to_Drag(A):
-    return density*(velocity**2)*(1.+np.pi/6.*np.sqrt(A/np.pi))*A
-
+    #return density*(velocity**2)*(1.+np.pi/6.*np.sqrt(A/np.pi))*A
+    return density*(velocity**2)*A*0.5*2.6
 
 def panel_drag(A_p):
-    return 0.3*A_p*0.5*density*velocity**2
+    #return 0.3*A_p*0.5*density*velocity**2
+    return 0.05*A_p/length_intake/2*density*velocity**2
 
 def area_panel_drag(D_p):
     return D_p*2/0.3/density/velocity**2
