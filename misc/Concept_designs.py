@@ -352,7 +352,19 @@ panel_t = 0.05      #[m]
 
 ######################################## Complete designs of the concepts ###############################
 if concepts[0]:
-
+    #input of the concept
+    #environmental inptus
+    h = 250                 #[km] altitude
+    density = 1*10**-10     #[kg/m^3] density for which the system is designed
+    
+    #communication inputs
+    frequency = 36*10**9    #[Hz] frequency at which communincation is done
+    G_trans = 5             #[dB] gain of the transmitter used
+    D_rec = 1               #[m] diameter of the reciever antenna
+    Ts = 700                #[K] system noise temperature
+    E_N = 10                #[dB] signal to noise ratio desired for communications
+    R = 0
+    P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N)
     print ("-----------------------------------------------------------------------")
 
 if concepts[1]:
