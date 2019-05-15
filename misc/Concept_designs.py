@@ -120,7 +120,7 @@ def power_thrust(P):
     #returns the thrust provided [N] based on a linear relation between thrust and power
     return -0.00069068+0.0000156*P
 
-def CD_cylinder(A):
+def CD(A):
     """"Compute C_D [-] of a cylinder in a rarified flow
         A = frontal area [m^2]"""
     CD = (1.+np.pi/6.*np.sqrt(A/np.pi))*2
@@ -247,23 +247,115 @@ def cam_res(alt, res):
 
     return vleores
 
+def sizing(dens, massf_req, velocity, area_rat, P_other_day, P_other_ecl, intake_eff, T_D, aspect_rat, body_frac):
+    """Size the intake, power system and propulsion system for a given operating condition
+
+    INPUT
+    dens = density the system needs to operate at [kg/m^3]
+    massf_req = required massflow for the engine to function [SCCM]
+    velocity = orbital velocity the spacecraft is operating at [m/s]
+    area_rat = ratio between frontal area and intake area [m^2]
+    P_other_day = power needed for all subsystems other than the propulsion systems during day[W]
+    P_other_ecl = power needed for all subsystems other than the propulsion systems during eclipse[W]
+    intake_eff = intake efficiency [-]
+    T_D = required thrust over drag ratio [-]
+    aspect_rat = aspect ratio of the spacecraft (L/outer diameter)
+    body_frac = fraction of the projected area of the side of the satellite that can be used for solar panels [-]
+
+    OUTPUT
+    thrust = thrust provided by the engine [N]
+    drag = drag created by the spacecraft [N]
+    panelA = total solar panel area needed [m^2]
+    panelA_out = panel area placed outside of the body [m^2]
+    panelA - panelA_out = panel area placed on the body of the spacecraft [m^2]
+    panelM = solar panel mass [kg]
+    intakeA = area of the intake to meet required massflow [m^2]
+    frontalA = frontal area of the satellite [m^2]
+    length = length of the satellite body [m]
+    width_panel = length the solar panels extend outside the body [m]"""
+
+    #change massflow to kg/s
+    massf_req= 7/45.37/(10**6)
+
+    #compute intake and frontal area based on the required massflow
+    intakeA = massf_req/dens/velocity/intake_eff
+    frontalA = intakeA*area_rat
+
+    #compute size of the spacecraft and body solar panels based on the intake size
+    length = np.sqrt(frontalA/np.pi)*2*aspect_rat
+    panel_body_space = length*np.sqrt(frontalA/np.pi)*2*body_frac
+
+    #compute drag and thrust related to the body of the satellite
+    drag_sat = drag(dens, velocity, CD_cyl, frontalA)
+    thrust = drag_sat*T_D
+
+    #Compute the required solar panel area to provide the thrust for satellite
+    P_day = thrust_power(thrust) + P_other_day
+    P_ecl = thrust_power(thrust) + P_other_ecl
+    panelA, panelM = panel_area(t_o, t_e, P_day, P_ecl)
+
+    #test to see if panels can be placed entirely on the body
+    panelA_out =0.
+    width_panel = panelA_out/length/2
+    if panelA<panel_body_space:
+        return thrust, drag_sat, panelA,panelA_out, panelA-panelA_out, panelM, intakeA, frontalA, length, width_panel
+
+    else:
+        #find panel area that has to be placed outside of the body
+        panelA_out = panelA-panel_body_space
+        #find width of said panel area (two rectangular panels along entire body length)
+        width_panel = panelA_out/length/2
+        #find drag caused by the extending solar panels
+        drag_panel = drag(dens, velocity, CD_plate, width_panel*panel_t)
+
+        #iterate until design converges
+        while np.abs(((drag_sat+drag_panel)*T_D-thrust))>0.00000001:
+
+            #set thrust to compensate for additional drag
+            thrust = (drag_sat+drag_panel)*T_D
+
+            #compute powers and panel areas needed for this thrust
+            P_day = thrust_power(thrust) + P_other_day
+            P_ecl = thrust_power(thrust) +P_other_ecl
+            panelA, panelM = panel_area(t_o, t_e, P_day, P_ecl)
+
+            #place panels on body
+            panelA_out = panelA-panel_body_space
+            width_panel = panelA_out/length/2
+
+            #find drag created by newly sized panels
+            drag_panel = drag(dens, velocity, CD_plate, width_panel*panel_t)
+
+
+        return thrust, drag_sat+drag_panel, panelA,panelA_out, panelA-panelA_out, panelM, intakeA, frontalA, length, width_panel
+
+
+
+
+
 ############################### Select concepts to be solved for #######################################
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
 concepts = [True, True, True]
+names = ["Paylöd", "Grav", "supposedly cool"]
+
 
 ######################################## General inputs #################################################
-CD_plate = 0.3      #[-]
+#drag coefficients of different shapes, based on the projected area
+accomodation = 0.95     #[-]    Accomodation factor
+incidence = 0           #[rad]
+CD_cyl = 2.6    #[-]            CD of cylinder of l/D =1, alpha= 0.95, T = 600K
+CD_plate = 2+4*accomodation*np.sin(incidence)/3      #[-]            CD of flat plate, diffuse reflections
+panel_t = 0.05      #[m]
+
 
 ######################################## Complete designs of the concepts ###############################
 if concepts[0]:
-    print ("one")
+
+    print ("-----------------------------------------------------------------------")
 
 if concepts[1]:
-    print ("two")
-
+    print ("-----------------------------------------------------------------------")
 if concepts[2]:
-    print ("three")
-
-print(orbit(150, 150, 40, 1.5*1e-10, 3.5*1e-3, 3.0*1e-3, True))
+    print ("-----------------------------------------------------------------------")
