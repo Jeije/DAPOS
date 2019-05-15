@@ -87,7 +87,7 @@ velocity = 7800 #[m/s]
 #propulsion parameters
 intake_eff = 0.40    #[-]
 if body:
-    area_correction = 1.15
+    area_correction = 1.2
 else:
     area_correction = 1.1
 T_over_D = 1.1
