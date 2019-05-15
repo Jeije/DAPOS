@@ -65,7 +65,7 @@ def comms_mass(power_transmitter, area_antenna, dens_antenna):
 
    return total_mass, vol_trans
 
-def orbit(lower_limit, upper_limit):
+def orbit(lower_limit, upper_limit, B, rho, T, D, sun_sync, N=720):
     """Calculates orbit data.
 
     For a circular orbit, the lower and upper limit should be the same. The
@@ -73,17 +73,31 @@ def orbit(lower_limit, upper_limit):
     a circular orbit, some output variables will be the same (e.g. semi-major
     axis, apocentre radius and pericentre radius)
 
+    In the case of an elliptical orbit, r and V_orb will be arrays of N
+    entries, where N is the number of steps into which the orbit is divided.
+
+    An inclination will only be calculated for a sun-synchronous orbit, as it
+    is not unique for a different orbit.
+
     INPUT:
         lower_limit = lowest orbital altitude [km]
         upper_limit = highest orbital altitude [km]
+        B           = ballistic coefficient [kg/m^2]
+        rho         = density [kg/m^3]
+        T           = Thrust [N]
+        D           = Drag [N]
+        sun_sync    = sun-synchronous orbit [True or False]
 
     OUTPUT:
-        a     = semi-major axis [km]
-        r_a   = appocentre radius [km]
-        r_p   = pericentre radius [km]
-        r     = orbital radius [km]
-        V_orb = orbital velocity [km/s]
-        P_orb = orbital period [s]
+        a           = semi-major axis [km]
+        r_a         = appocentre radius [km]
+        r_p         = pericentre radius [km]
+        r           = orbital radius [km]
+        V_orb       = orbital velocity [km/s]
+        P_orb       = orbital period [s]
+        T_ecl       = eclipse time [s] (first order crude estimate)
+        delta_V_tot = required delta V per orbit for station keeping [m/s]
+        i_deg       = inclination [deg] (sun-synchronous orbits only)
     """
     ## constants
 
@@ -92,10 +106,8 @@ def orbit(lower_limit, upper_limit):
     g_0         = 0.00981          # km/s^2, Earth's surface gravity
     mu          = 398600.44        # km^3/s^2, Earth's gravitational constant
     G_e         = 6.6725*10**(-11) # Nm^2/kg, universal gravitational constant
-    w_e         = 7.3*10**(-5)     # ????
-
-    # 'simulation' parameters
-    N           = 720              # -, number of steps per orbit
+    P_ES        = 365.25 * 86400   # s, period of Earth around the sun
+    J_2         = 1082 * 1e-6      # ?, J2 effect in gravity field
 
     ## calculations, for the formulas, see AE2230 equations by heart and
     ## lecture slides.
@@ -106,27 +118,32 @@ def orbit(lower_limit, upper_limit):
     e      = r_a/a - 1                               # -, eccentricity
     r      = a * (1 - e*e) / (1 + e * np.cos(theta)) # km, orbit radius
     h      = r - R_e                                 # km, orbit height
+    n      = 2 * np.pi / T_orb # s^-1, mean motion
     V_orb  = np.sqrt( mu * ( (2/r) - (1/a) ) )       # km/s, orbital V
     P_orb  = 2 * np.pi * np.sqrt(a**3 / mu)          # s, orbital period
     E_tot  = -mu / (2 * a) * 1e6                     # J/kg, specific energy
+    T_ecl  = np.arcsin(R_e / a) * P_orb              # s, eclipse time (first order estimate (2D, sun at inf, circular orb))
 
+    # required delta V for station keeping per orbit (formula from SMAD)
+    Per         = P_orb / (3600 * 24 * 365) # yr, period
+    delta_T_tot = (theta/n)[np.where( T < D )] # s, time when T < D
+    delta_T = np.hstack( (np.diff(delta_T_tot[np.where(delta_T_tot < T_orb/
+              2)]), np.diff(delta_T_tot[np.where(delta_T_tot > T_orb/2)]) ) )
 
-    if lower_limit == upper_limit:
-        V_ang   = 2.*np.pi*/P                     # rad/s
+    loss_part = np.where(np.logical_or(delta_T_tot < T_orb/2, delta_T_tot > T_orb/2))
+    delta_V_req = np.pi * (1/B) * rho * (r * V_orb * 1e6) / Per # m/s/yr
+    delta_V_mss = delta_V_req / (3600 * 24 * 365)               # m/s/s
+    delta_V_tot = sum( delta_V_mss[loss_part][1:-1] * delta_T ) # m/s, total
 
-        T_ecl   = (r/np.pi)*P                     # s max eclipse time
-        s_node  = 2.*np.pi*(P/1436.07)            # rad  long btw successive ascending/descending nodes
+    if sun_sync:
+        # inclination for a syn-synchronous orbit, see AE2230 slide 1 p. 57
+        i     = np.arccos(-2/3 * P_orb/P_ES * 1/(J_2 * (R_e / r_p)**2)) # rad
+        i_deg = np.rad2deg(i) # deg
 
-        i_ss    = np.arccos(-0.098922*(1+ h/R_e)**(3.5)) #inclination of ss orbit.Larger than 90 deg: retrograde
-        prec    = -2.06474 * 10. **14 *r**(-7./2.)*np.cos(i_ss) # rad/day node precession rate: rate of rotation in inertial space
-        r_day   = 1436.07/P       # [-] revolutions per sidereal day
-        V_gt    = 2.*np.pi*R_e/P                 # m/s ground track velocity
-        DV_al   = (np.pi*(C_D)*A/m)*rho *r *V_circ/P # m/s per year. Mean DV to mainstain altitude
-        phi     = -th +np.arccos(R_e*np.cos(th)/(R_e+h)) #semi angle over which it is visible by groundstation
-        w_ex    = np.sqrt(w_e**2. + V_ang**2. - 2.*w_e*V_ang*np.cos(i_ss))
-        tau     = 2.*phi/w_es
+        return a, r_a, r_p, r, e, V_orb, P_orb, T_ecl, delta_V_tot, i_deg
 
-    return a, r_a, r_p, r, e, V_orb, P_orb
+    return a, r_a, r_p, r, e, V_orb, P_orb, T_ecl, delta_V_tot
+
 def comms(h, freq, G_trans, D_reciever, Ts, R, E_N):
     """Link budget in order to calculate the power required for the transmitter
     h = altitude [km]
