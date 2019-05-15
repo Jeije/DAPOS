@@ -209,3 +209,22 @@ def cam_res(alt, res):
     vleores = [2*x*np.tan(theta) for x in vleo]
 
     return vleores
+   
+############################### Select concepts to be solved for #######################################
+#Concept 1: payload performance with constant density
+#Concept 2: Low orbit with gravity measurement
+#Concept 3: Highly elliptic orbit concept
+concepts = [True, True, True]
+
+######################################## General inputs #################################################
+CD_plate = 0.3      #[-]
+
+######################################## Complete designs of the concepts ###############################
+if concepts[0]:
+    print ("one")
+    
+if concepts[1]:
+    print ("two")
+    
+if concepts[2]:
+    print ("three")
