@@ -120,7 +120,7 @@ def power_thrust(P):
     #returns the thrust provided [N] based on a linear relation between thrust and power
     return -0.00069068+0.0000156*P
 
-def CD_cylinder(A):
+def CD(A):
     """"Compute C_D [-] of a cylinder in a rarified flow
         A = frontal area [m^2]"""
     CD = (1.+np.pi/6.*np.sqrt(A/np.pi))*2
@@ -232,12 +232,20 @@ def cam_res(alt, res):
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
 concepts = [True, True, True]
+names = ["Paylöd", "Grav", "supposedly cool"]
 
 ######################################## General inputs #################################################
-CD_plate = 0.3      #[-]
+#drag coefficients of different shapes, based on the projected area
+accomodation = 0.95     #[-]    Accomodation factor
+incidence = 0           #[rad]
+CD_cyl = 2.6    #[-]            CD of cylinder of l/D =1, alpha= 0.95, T = 600K
+CD_plate = 2+4*accomodation*np.sin(incidence)/3      #[-]            CD of flat plate, diffuse reflections
+solar_t = 0.05      #[m]
+
 
 ######################################## Complete designs of the concepts ###############################
 if concepts[0]:
+    
     print ("one")
 
 if concepts[1]:
