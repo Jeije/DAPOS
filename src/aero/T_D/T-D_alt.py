@@ -20,9 +20,9 @@ k = 100
 
 T_D = 1.0
 collection_eff = np.array([[0.35]])
-isp =  np.array([[3500]])#s
+isp =  np.array([[4000]])#s
 g = 9.81 #m/s
-P =  700 #W
+P =  1000 #W
 T_P = 14.147593*10**(-6) #N/W
 T = T_P*P #N
 massflow = T/(g*collection_eff*isp) #[kg/s]
@@ -40,23 +40,28 @@ D = np.zeros((k,o,w))
 P = np.zeros((k,o,w))
 CD = np.zeros((k,o,w))
 S = np.zeros((k,o,w))
+dens = np.zeros(k)
 
 for b in range(k):
     alt = altitude[b]
-    rho = nlrmsise00_dens(alt)
+    dens[b] = nlrmsise00_dens(alt)
+    rho = dens[b]
     D_design = T/T_D
     V = sqrt(G*Earth_M/(Earth_R+alt))        #[m/s]
 
     Intake = massflow*(rho*V)**(-1)
+    non_intake = 0.2
+    if Intake < 1:
+        s = Intake + non_intake
+    else:
+        s = 1.2* Intake
     
-    
-    s = 1.3* Intake
     S[b][:][:] = s
     
     Cd = np.zeros((o,w))
     for i in range(o):
         for j in range(w):
-            Cd[i][j] = 2*(1+(pi/6)*sqrt(s[i][j]/pi)) 
+            Cd[i][j] = 0.9*2*(1+(pi/6)*sqrt(s[i][j]/pi)) 
     CD[b][:][:] = Cd
 
     D[b][:][:] = 0.5*(rho*s)*Cd*(V**2)
@@ -69,7 +74,7 @@ for t in range(w):
     plt.axhline(y=D_design, color='k' , linestyle='-')
     #axhline(D_design)
     plt.ylim((0,.02))  
-    plt.xlim(150,250)
+    plt.xlim(180,200)
 
 #    plt.plot(altitude,D[:,o-2,t], color='m', label='efficiency = 0.40')
 #    plt.plot(altitude,D[:,0-3,t], color='y', label='efficiency = 0.35')
