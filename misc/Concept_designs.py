@@ -126,7 +126,7 @@ def CD_cylinder(A):
     CD = (1.+np.pi/6.*np.sqrt(A/np.pi))*2
     return CD
 
-def orbit(lower_limit, upper_limit):
+def orbit(lower_limit, upper_limit, B, rho, T, D, sun_sync, N=720):
     """Calculates orbit data.
 
     For a circular orbit, the lower and upper limit should be the same. The
@@ -148,6 +148,7 @@ def orbit(lower_limit, upper_limit):
         T           = Thrust [N]
         D           = Drag [N]
         sun_sync    = sun-synchronous orbit [True or False]
+        N           = number of sections to divide orbit into (optional)
 
     OUTPUT:
         a           = semi-major axis [km]
