@@ -111,7 +111,7 @@ batt_dens = 250     #[Wh/kg]
 aspect_ratio = 5    #[-]
 coating_t = 100*10**-9  #[m]
 coating_rho = 2800#[kg/m^3]
-body_percent = 0.75 #[-] (percentage of the body that can be effectively used for solar panels)
+body_percent = 0.8 #[-] (percentage of the body that can be effectively used for solar panels)
 
 
 #find power required for communication system 
