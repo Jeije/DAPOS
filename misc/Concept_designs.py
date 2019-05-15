@@ -126,7 +126,8 @@ def CD_cylinder(A):
     CD = (1.+np.pi/6.*np.sqrt(A/np.pi))*2
     return CD
 
-def orbit(lower_limit, upper_limit, B, rho, T, D, sun_sync, N=720):
+def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
+          D=None, N=720):
     """Calculates orbit data.
 
     For a circular orbit, the lower and upper limit should be the same. The
@@ -143,11 +144,11 @@ def orbit(lower_limit, upper_limit, B, rho, T, D, sun_sync, N=720):
     INPUT:
         lower_limit = lowest orbital altitude [km]
         upper_limit = highest orbital altitude [km]
-        B           = ballistic coefficient [kg/m^2]
-        rho         = density [kg/m^3]
-        T           = Thrust [N]
-        D           = Drag [N]
         sun_sync    = sun-synchronous orbit [True or False]
+        B           = ballistic coefficient [kg/m^2] (elliptical orbits only)
+        rho         = density [kg/m^3] (elliptical orbits only)
+        T           = Thrust [N] (elliptical orbits only)
+        D           = Drag [N] (elliptical orbits only)
         N           = number of sections to divide orbit into (optional)
 
     OUTPUT:
@@ -158,13 +159,12 @@ def orbit(lower_limit, upper_limit, B, rho, T, D, sun_sync, N=720):
         V_orb       = orbital velocity [km/s]
         P_orb       = orbital period [s]
         T_ecl       = eclipse time [s] (first order crude estimate)
-        delta_V_tot = required delta V per orbit for station keeping [m/s]
+        delta_V_tot = required delta V per orbit for station keeping [m/s] (elliptical orbits only)
         i_deg       = inclination [deg] (sun-synchronous orbits only)
     """
     ## constants
-
     # Earth data
-    R_e         = 6378.1           # km, Earth's radius
+    R_e         = 6378.1           # km, Earth's radius (max)
     g_0         = 0.00981          # km/s^2, Earth's surface gravity
     mu          = 398600.44        # km^3/s^2, Earth's gravitational constant
     G_e         = 6.6725*10**(-11) # Nm^2/kg, universal gravitational constant
@@ -178,33 +178,53 @@ def orbit(lower_limit, upper_limit, B, rho, T, D, sun_sync, N=720):
     r_a    = upper_limit + R_e                       # km, appocentre r
     r_p    = lower_limit + R_e                       # km, pericentre r
     e      = r_a/a - 1                               # -, eccentricity
+    p      = a * (1 - e*e)                           # km, semi-latus rectum
     r      = a * (1 - e*e) / (1 + e * np.cos(theta)) # km, orbit radius
     h      = r - R_e                                 # km, orbit height
-    n      = 2 * np.pi / T_orb # s^-1, mean motion
     V_orb  = np.sqrt( mu * ( (2/r) - (1/a) ) )       # km/s, orbital V
     P_orb  = 2 * np.pi * np.sqrt(a**3 / mu)          # s, orbital period
+    n      = 2 * np.pi / P_orb                       # s^-1, mean motion
+    time   = theta/n                                 # s, time from 0
     E_tot  = -mu / (2 * a) * 1e6                     # J/kg, specific energy
-    T_ecl  = np.arcsin(R_e / a) * P_orb              # s, eclipse time (first order estimate (2D, sun at inf, circular orb))
+    T_ecl  = np.arcsin(R_e / a) * P_orb              # s, eclipse time (max, 2D, circular
 
-    # required delta V for station keeping per orbit (formula from SMAD)
-    Per         = P_orb / (3600 * 24 * 365) # yr, period
-    delta_T_tot = (theta/n)[np.where( T < D )] # s, time when T < D
-    delta_T = np.hstack( (np.diff(delta_T_tot[np.where(delta_T_tot < T_orb/
-              2)]), np.diff(delta_T_tot[np.where(delta_T_tot > T_orb/2)]) ) )
+    if lower_limit == upper_limit:
+        # required delta V for station keeping per orbit (formula from SMAD)
+        Per         = P_orb / (3600 * 24 * 365) # yr, period
+        delta_T_tot = (theta/n)[np.where( T < D )] # s, time when T < D
+        delta_T = np.hstack( (np.diff(delta_T_tot[np.where(delta_T_tot < P_orb/
+                  2)]), np.diff(delta_T_tot[np.where(delta_T_tot > P_orb/2)]) ) )
+        loss_part = np.where(np.logical_or(delta_T_tot < P_orb/2, delta_T_tot > P_orb/2))
+        delta_V_req = np.pi * (1/B) * rho * (r * V_orb * 1e6) / Per # m/s/yr
+        delta_V_mss = delta_V_req / (3600 * 24 * 365)               # m/s/s
+        delta_V_tot = sum( delta_V_mss[loss_part][1:-1] * delta_T ) # m/s, tot
 
-    loss_part = np.where(np.logical_or(delta_T_tot < T_orb/2, delta_T_tot > T_orb/2))
-    delta_V_req = np.pi * (1/B) * rho * (r * V_orb * 1e6) / Per # m/s/yr
-    delta_V_mss = delta_V_req / (3600 * 24 * 365)               # m/s/s
-    delta_V_tot = sum( delta_V_mss[loss_part][1:-1] * delta_T ) # m/s, total
+    else:
+        delta_V_tot = None
 
     if sun_sync:
-        # inclination for a syn-synchronous orbit, see AE2230 slide 1 p. 57
+        # inclination for a syn-synchronous orbit, see AE2230 lecture 1 p. 57
         i     = np.arccos(-2/3 * P_orb/P_ES * 1/(J_2 * (R_e / r_p)**2)) # rad
         i_deg = np.rad2deg(i) # deg
 
-        return a, r_a, r_p, r, e, V_orb, P_orb, T_ecl, delta_V_tot, i_deg
+        # eclipse calculations (3D, maximum eclipse because R_e is max
+        # (flattening), atmospheric inteference not taken into account (not
+        # relevant for one orbit either, but it is for longer periods),
+        # shadow region being a cone not taken into account either)
+        # S = shadow function, beta_ is +- 90° (- cw, + ccw) for sun-
+        # synchronous orbits and goes down to 0° for equitorial orbits.
+        alpha_ = 1
+        beta_  = -np.pi/2 # rad, for sun-synchronous only
+        cosPsi = alpha_ * np.cos(theta) + beta_ * np.cos(theta)
+        Psi    = np.arccos(cosPsi)
+        S      = R_e*R_e*(1 + e*np.cos(theta))**2 + p*p*(cosPsi)**2 - p*p
+        T_in_e = time[np.where(np.logical_and(Psi > np.pi/2, S >= 0))]
+        T_ecl  = max(T_in_e) - min(T_in_e)               # s, eclipse time
 
-    return a, r_a, r_p, r, e, V_orb, P_orb, T_ecl, delta_V_tot
+    else:
+        i_deg = None
+
+    return a, r_a, r_p, r, e, V_orb, P_orb, T_ecl, delta_V_tot, i_deg
 
 def drag(rho, V, CD, S):
     """Comupte the drag for a generic shape
@@ -245,3 +265,5 @@ if concepts[1]:
 
 if concepts[2]:
     print ("three")
+
+print(orbit(150, 150, 40, 1.5*1e-10, 3.5*1e-3, 3.0*1e-3, True))
