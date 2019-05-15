@@ -25,6 +25,6 @@ def nlrmsise00_dens(alt):
     return output[1].d[5]
 
 if __name__ == '__main__':
-    # start = time.clock()
+    start = time.clock()
     print(nlrmsise00_dens(200))
-    # print(time.clock() - start)
+    print(time.clock() - start)
