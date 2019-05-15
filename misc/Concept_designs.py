@@ -99,3 +99,9 @@ def power_thrust(P):
     P = power [W]"""
     #returns the thrust provided [N] based on a linear relation between thrust and power 
     return -0.00069068+0.0000156*P
+
+def CD_cylinder(A):
+    """"Compute C_D of a cylinder in a rarified flow
+        A = frontal area [m^2]"""
+    CD = (1.+np.pi/6.*np.sqrt(A/np.pi))*2
+    return CD
