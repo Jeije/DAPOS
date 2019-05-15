@@ -10,7 +10,7 @@ import numpy as np
 ############################################# Functions ###############################################
 
 def panel_area(t_o, t_e, pr_day, pr_eclipse, theta = 0):
-     """t_o = orbital time [sec]
+    """t_o = orbital time [sec]
         t_e = eclipse time [sec]
         pr_day = power required during the day [W]
         pr_eclipse = power required during eclipse [W]
@@ -46,7 +46,7 @@ def panel_area(t_o, t_e, pr_day, pr_eclipse, theta = 0):
     return A, m
 
 def comms_mass(power_transmitter, area_antenna, dens_antenna):
-    """power_transmitter = power required by the transmitter on the spacecraft [W]
+   """power_transmitter = power required by the transmitter on the spacecraft [W]
        Area of the antenna [m^2]
        dens_antenna = density of the antenna [kg/m^2], typical values 5-8""" 
    #transmitter characteristics    
@@ -66,3 +66,36 @@ def comms_mass(power_transmitter, area_antenna, dens_antenna):
 
    return total_mass, vol_trans
 
+def comms(h, freq, G_trans, D_reciever, Ts, R, E_N):
+    """Link budget in order to calculate the power required for the transmitter
+    h = altitude [km]
+    freq = frequency used for communication [Hz]
+    G_trans = gain of the transmitting antenna of the spacecraft [dB]
+    D_reciever = diameter of the recieving antenna [m]
+    Ts = system noise temperature [K]
+    R = data rate during communications [bps]
+    E_N = signal to noise ratio [dB]"""
+    
+    #Characterisics of the system
+    dish_eff = 0.5  #efficiency of the dish of the recieving station
+
+    #Losses and gains 
+    line = 0.89     #line losses [dB]
+    rain = 4+3/13*(freq*10**(-9)-27)    #rain attentuation losses [dB], TO BE ADAPTED FOR ALL f
+    space = 147.55-20*np.log10(h*10**3)-20*np.log10(freq)   #space losses [dB]
+    G_rec = -159.59+20*np.log10(D_reciever)+20*np.log10(freq)+10*np.log10(dish_eff) #gain of the recieving antenna [dB]
+    G_trans = G_trans
+    
+    return 10**((E_N-line-G_trans-space-rain-G_rec-228.6+10*np.log10(Ts)+10*np.log10(R))/10)
+
+def thrust_power(T):
+    """Compute the power required to provide a certain thrust for RIT ion thruster
+        T = thrust [N]"""
+    #returns the power required [W] based on a linear relation between thrust and power 
+    return (T+0.00069068)/0.0000156
+
+def power_thrust(P):
+    """Compute the thrust created at a certain power setting for RIT ion thruster
+    P = power [W]"""
+    #returns the thrust provided [N] based on a linear relation between thrust and power 
+    return -0.00069068+0.0000156*P
