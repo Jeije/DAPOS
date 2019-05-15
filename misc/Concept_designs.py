@@ -202,3 +202,10 @@ def drag(rho, V, CD, S):
     
     D = 0.5*rho*S*V**2*CD
     return D
+
+def cam_res(alt, res):
+    theta = np.arctan(res/2/alt)
+    vleo = [100000, 110000, 120000, 130000, 140000, 150000, 160000, 170000, 180000, 190000, 200000, 210000, 220000, 230000, 240000, 250000]
+    vleores = [2*x*np.tan(theta) for x in vleo]
+
+    return vleores
