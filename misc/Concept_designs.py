@@ -48,13 +48,21 @@ def panel_area(t_o, t_e, pr_day, pr_eclipse, theta = 0):
 def comms_mass(power_transmitter, area_antenna, dens_antenna):
     """power_transmitter = power required by the transmitter on the spacecraft [W]
        Area of the antenna [m^2]
-       dens_antenna = density of the antenna [kg/m^3], typical values of the """ 
+       dens_antenna = density of the antenna [kg/m^2], typical values 5-8""" 
+   #transmitter characteristics    
    specific_power = 2.9 #W/kg
    dens_trans = 0.75*10**-3 #kg/m3
    mass_trans = power_transmitter/specific_power  #kg
    vol_trans = mass_trans/dens_trans  #m3
+   
+   #mass of the amplifier 
    mass_amp = 0.07*power_transmitter+0.634 #kg
+   
+   #Antenna characterisics
    mass_antenna = dens_antenna * area_antenna #kg, antenna on board of spacecraft
+   
+   #Combine to find mass total communications system
    total_mass = (mass_antenna + mass_amp + mass_trans)*1.3
 
    return total_mass, vol_trans
+
