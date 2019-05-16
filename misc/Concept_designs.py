@@ -170,7 +170,7 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
     mu          = 398600.44        # km^3/s^2, Earth's gravitational constant
     G_e         = 6.6725*10**(-11) # Nm^2/kg, universal gravitational constant
     P_ES        = 365.25 * 86400   # s, period of Earth around the sun
-    J_2         = 1082 * 1e-6      # ?, J2 effect in gravity field
+    J_2         = 1.082 * 1e-3     # -, J2 effect in gravity field
 
     ## calculations, for the formulas, see AE2230 equations by heart and
     ## lecture slides.
@@ -187,8 +187,7 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
     n      = 2 * np.pi / P_orb                       # s^-1, mean motion
     time   = theta/n                                 # s, time from 0
     E_tot  = -mu / (2 * a) * 1e6                     # J/kg, specific energy
-    T_ecl  = np.arcsin(R_e / a)/np.pi * P_orb              # s, eclipse time (max, 2D, circular
-    
+    T_ecl  = np.arcsin(R_e / a) / np.pi * P_orb              # s, eclipse time (max, 2D, circular
 
     if lower_limit != upper_limit:
         # required delta V for station keeping per orbit (formula from SMAD)
@@ -215,13 +214,13 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
         # shadow region being a cone not taken into account either)
         # S = shadow function, beta_ is +- 90° (- cw, + ccw) for sun-
         # synchronous orbits and goes down to 0° for equitorial orbits.
-        alpha_ = 1
-        beta_  = -np.pi/2 # rad, for sun-synchronous only
-        cosPsi = alpha_ * np.cos(theta) + beta_ * np.cos(theta)
-        Psi    = np.arccos(cosPsi)
-        S      = R_e*R_e*(1 + e*np.cos(theta))**2 + p*p*(cosPsi)**2 - p*p
-        T_in_e = time[np.where(np.logical_and(Psi > np.pi/2, S >= 0))]
-        T_ecl  = max(T_in_e) - min(T_in_e)               # s, eclipse time
+        #alpha_ = np.pi/2 - theta # not sure yet
+        #beta_  = -np.pi/2 # rad, for sun-synchronous only
+        #cosPsi = alpha_ * np.cos(theta) + beta_ * np.cos(theta)
+        #Psi    = np.arccos(cosPsi)
+        #S      = R_e*R_e*(1 + e*np.cos(theta))**2 + p*p*(cosPsi)**2 - p*p
+        #T_in_e = time[np.where(np.logical_and(Psi > np.pi/2, S >= 0))]
+        #T_ecl  = max(T_in_e) - min(T_in_e)               # s, eclipse time
 
     else:
         i_deg = None
@@ -244,12 +243,12 @@ def drag(rho, V, CD, S):
 
 def cam_res(alt, res, alt_orbit):
     """Find the camera resolutions at a certain altitude
-    
-    INPUT 
+
+    INPUT
     alt= altitude for which the camera resolution is known [m]
     res= known camera resolution [m/pixel]
     alt_orbit = altitude of operating orbit [m]
-    
+
     OUTPUT
     vleores = resoltuion at operating altitude [m/pixel]"""
     theta = np.arctan(res/2/alt)
@@ -366,7 +365,7 @@ if concepts[0]:
     #environmental inptus
     h = 250                 #[km] altitude
     density = 1*10**-10     #[kg/m^3] density for which the system is designed
-    
+
     #communication inputs
     frequency = 36*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
@@ -375,23 +374,23 @@ if concepts[0]:
     E_N = 10                #[dB] signal to noise ratio desired for communications
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
-    
+
     #camera specifications
     cam_alt = 500           #[km] altitude at which the camera selected was tested
     res = 0.6               #[m/pixel] resolution obtained at the tested altitude
     P_pay = 10              #[W] power required to operate payload
     M_pay = 10              #[kg] mass of the payload
-    
+
     #propulsion parameters
     massf_req = 7           #[SCCM] massflow required for a functional engine
     intake_eff = 0.4        #[-] intake efficicency
     T_D = 1.1               #[-] Thrust to drag ratio
-    
+
     #geometrical parameters
     aspect_rat = 5          #[-] Aspect ratio of the intake, assumed to be equal for the outer shell
     body_frac = 0.8         #[-] Fraction of body that can be used for solar panels
     area_rat = 1.2          #[-] Ratio between intake area and frontal area
-    
+
     #power parameters
     P_misc = 200            #[W] power required for other subsystems
     battery_dens = 250      #[Wh/kg] power density of the batteries (only for <100W/kg)
@@ -402,35 +401,35 @@ if concepts[0]:
     #Design specfification computation
     #compute camera resolution performance
     cam_perf = cam_res(cam_alt, res, h)
-    
+
     #compute orbital parameters from desired orbit
     a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
     #compute data rate required
     R = 40*10**6                   #[bps] data rate required during communications
-    
+
     #compute power required for communications
     P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N)
-    
+
     #compute mass assigned to the communication system
     M_comm, V_comm = comms_mass(P_comms, A_antenna, rho_antenna)
-    
+
     #find power required during eclipse and day
     P_other_day = P_comms+P_pay+P_misc
     P_other_ecl = P_comms+P_misc
-    
+
     #Size the solar panels, intake, also compute drag and thrust
     thrust, drag_tot, panelA_tot, panelA_out, panelA_body, panelM, intakeA, frontalA, length, width_panel = sizing(density, massf_req, V[1]*1000., area_rat, P_other_day, P_other_ecl, intake_eff, T_D, aspect_rat, body_frac)
-           
+
     #battery mass required
     M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/3600/battery_dens/DOD
-    
+
     if M_batt*100<P_other_ecl+thrust_power(thrust):
         print ("BATTERIES CANT PROVIDE REQUIRED POWER< USE LESS BATTERY PACKS")
-    
+
     else:
         M_batt = M_batt*number_batt
-          
+
         #result presentation
         print ("-------------------------------Result for", names[0],"---------------------------")
         print (" ")
@@ -457,7 +456,7 @@ if concepts[0]:
         print ("Achieved payload resolution =", cam_perf, "[m/pixel]")
         print ("Total solar panel area = ", panelA_tot, "[m^2]" )
 
-    
+
 if concepts[1]:
     #input of the concept
     #environmental inptus
