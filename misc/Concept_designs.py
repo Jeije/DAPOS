@@ -460,7 +460,6 @@ if concepts[0]:
     
     #Ground station parameters
     #ESA SVALBARD https://www.esa.int/Our_Activities/Navigation/Galileo/Galileo_IOV_ground_stations_Svalbard
-    #SvalSat and KSAT's Troll Satellite Station (TrollSat) in Antarctica are the only ground stations that can see a low altitude polar orbiting satellite (e.g., in sun-synchronous orbit) on every revolution as the earth rotates.
     longitude_ground= 15.399 #[deg] Lt ground station (ESA Svalbard)
     latitude_ground= 78.228 #[deg] delta_t ground station (ESA Svalbard)
     elevation_min=5 #[deg] minimum elevation angle above the horizon to make contact with ground
