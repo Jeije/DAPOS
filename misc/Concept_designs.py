@@ -16,12 +16,10 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-from nrlmsise_00_dens import nlrmsise00_dens
-
 ############################################# Functions ###############################################
 
 
-def panel_area(t_o, t_e, pr_day, pr_eclipse, theta = 0):
+def panel_area(t_o, t_e, pr_day, pr_eclipse):
     """COmpute the panel area needed for operations
 
     INPUTS
@@ -304,6 +302,8 @@ def sizing(dens, massf_req, velocity, area_rat, P_other_day, P_other_ecl, intake
 
     #compute intake and frontal area based on the required massflow
     intakeA = massf_req/dens/velocity/intake_eff
+    if intakeA<min_intake:
+        intakeA = min_intake
     frontalA = intakeA*area_rat
 
     #compute size of the spacecraft and body solar panels based on the intake size
@@ -423,18 +423,18 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
-concepts = [False, False, True]
-names = ["Paylöd", "Grav", "supposedly cool"]
+concepts = [True, False, False]
+names = ["Paylöd", "Grävt", "supposedly cool"]
 
 
 ######################################## General inputs #################################################
 #drag coefficients of different shapes, based on the projected area
 accomodation = 0.95     #[-]    Accomodation factor
 incidence = 0           #[rad]
-CD_cyl = 2.6    #[-]            CD of cylinder of l/D =1, alpha= 0.95, T = 600K
-CD_plate = 2+4*accomodation*np.sin(incidence)/3      #[-]            CD of flat plate, diffuse reflections
-panel_t = 0.05      #[m]
-
+CD_cyl = 2.6            #[-]            CD of cylinder of l/D =1, alpha= 0.95, T = 600K
+CD_plate = 2.35         #[-]            CD of flat plate, diffuse reflections
+panel_t = 0.05          #[m]
+min_intake = 0.         #[m^2] minimum intake area
 
 ######################################## Complete designs of the concepts ###############################
 if concepts[0]:
@@ -475,6 +475,7 @@ if concepts[0]:
     battery_deg = 0.8       #[-] battery degradation factor over lifetime
     DOD = 0.25              #[-] depth of discharge
     number_batt = 2        #[-] number of battery packs
+    theta = np.pi/6     # [rad] incidence angle of solar panels
 
     #Ground station parameters
     #ESA SVALBARD https://www.esa.int/Our_Activities/Navigation/Galileo/Galileo_IOV_ground_stations_Svalbard
@@ -491,7 +492,7 @@ if concepts[0]:
     cam_perf = cam_res(cam_alt, res, h)
 
     #compute orbital parameters from desired orbit
-    a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
+    a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, True)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
 
     #compute contact time
@@ -555,7 +556,7 @@ if concepts[0]:
 if concepts[1]:
     #input of the concept
     #environmental inptus
-    selected = 5
+    selected = 3
     hlist = [140, 150, 160, 170, 180, 190, 200] ##list of considered altitude
     denslist  = [3.1*10**-9, 2*10**-9, 1.1*10**-9, 9.4*10**-10, 6.5*10**-10, 4*10**-10, 2.5*10**-10] #list of maxmimum densities at the presented altitudes
     dens_ratios = [0.7529, 0.678486, 0.60714, 0.54016, 0.4783, 0.422, 0.371698]
@@ -583,13 +584,14 @@ if concepts[1]:
     body_frac = 0.8         #[-] Fraction of body that can be used for solar panels
     area_rat = 1.2          #[-] Ratio between intake area and frontal area
 
+
     #power parameters
     P_misc = 200            #[W] power required for other subsystems
     battery_dens = 250      #[Wh/kg] power density of the batteries (only for <100W/kg)
     battery_deg = 0.8       #[-] battery degradation factor over lifetime
     DOD = 0.25              #[-] depth of discharge
     number_batt = 2        #[-] number of battery packs
-
+    theta  = 0              #[rad] incidence angle
     #Ground station parameters
     #ESA SVALBARD https://www.esa.int/Our_Activities/Navigation/Galileo/Galileo_IOV_ground_stations_Svalbard
     #SvalSat and KSAT's Troll Satellite Station (TrollSat) in Antarctica are the only ground stations that can see a low altitude polar orbiting satellite (e.g., in sun-synchronous orbit) on every revolution as the earth rotates.
