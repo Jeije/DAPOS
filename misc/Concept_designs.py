@@ -548,7 +548,7 @@ if concepts[1]:
     #communication inputs
     frequency = 8*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
-    D_rec = 1               #[m] diameter of the reciever antenna
+    D_rec = 3               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     rain= 2                 #rain attentuation losses [dB]
     E_N = 10                #[dB] signal to noise ratio desired for communications
@@ -595,7 +595,7 @@ if concepts[1]:
     cam_perf = cam_res(cam_alt, res, h)
     
     #compute orbital parameters from desired orbit
-    a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
+    a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, True)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
     
     #compute contact time
