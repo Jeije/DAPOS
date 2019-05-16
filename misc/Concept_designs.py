@@ -423,7 +423,7 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
-concepts = [True, False, False]
+concepts = [False, True , False]
 names = ["Paylöd", "Grävt", "supposedly cool"]
 
 
@@ -444,20 +444,20 @@ if concepts[0]:
     density = 1*10**-10     #[kg/m^3] density for which the system is designed
 
     #communication inputs
-    frequency = 36*10**9    #[Hz] frequency at which communincation is done
-    G_trans = 5             #[dB] gain of the transmitter used
-    D_rec = 3               #[m] diameter of the reciever antenna
+    frequency = 19.7*10**9    #[Hz] frequency at which communincation is done
+    G_trans = 10             #[dB] gain of the transmitter used
+    D_rec = 5               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
-    rain = 2
+    rain = -5
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
 
     #camera specifications
     cam_alt = 500           #[km] altitude at which the camera selected was tested
     res = 0.6               #[m/pixel] resolution obtained at the tested altitude
-    P_pay = 10              #[W] power required to operate payload
-    M_pay = 10              #[kg] mass of the payload
+    P_pay = 20              #[W] power required to operate payload
+    M_pay = 20              #[kg] mass of the payload
 
     #propulsion parameters
     massf_req = 7           #[SCCM] massflow required for a functional engine
@@ -519,7 +519,7 @@ if concepts[0]:
 
     #battery mass required
     M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/3600/battery_dens/DOD
-
+    print (M_batt*100-P_other_ecl-thrust_power(thrust))
     if M_batt*100<P_other_ecl+thrust_power(thrust):
         print ("BATTERIES CANT PROVIDE REQUIRED POWER< USE LESS BATTERY PACKS")
 
@@ -538,7 +538,7 @@ if concepts[0]:
         print ("                                -Mass budget-                        ")
         print ("Mass for solar panels =", panelM, "[kg]")
         print ("Mass for batteries =", M_batt, "[kg]")
-        print ("Mass for power management system = ", 0.333333*(panelM+M_batt), "[kg]")
+        print ("Mass for power management system = ", 0.25*(panelM+M_batt)/(1-0.25), "[kg]")
         print ("Mass for communication system =", M_comm, "[kg]")
         print ("Mass for payload =", M_pay, "[kg]")
         print (" ")
@@ -556,7 +556,7 @@ if concepts[0]:
 if concepts[1]:
     #input of the concept
     #environmental inptus
-    selected = 3
+    selected = 6
     hlist = [140, 150, 160, 170, 180, 190, 200] ##list of considered altitude
     denslist  = [3.1*10**-9, 2*10**-9, 1.1*10**-9, 9.4*10**-10, 6.5*10**-10, 4*10**-10, 2.5*10**-10] #list of maxmimum densities at the presented altitudes
     dens_ratios = [0.7529, 0.678486, 0.60714, 0.54016, 0.4783, 0.422, 0.371698]
@@ -566,22 +566,23 @@ if concepts[1]:
     R_e         = 6378.1           # km, Earth's radius (max)
 
     #communication inputs
-    frequency = 36*10**9    #[Hz] frequency at which communincation is done
-    G_trans = 5             #[dB] gain of the transmitter used
-    D_rec = 3               #[m] diameter of the reciever antenna
+    frequency = 19.7*10**9    #[Hz] frequency at which communincation is done
+    G_trans = 10             #[dB] gain of the transmitter used
+    D_rec = 5               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
+    rain = -5
 
     #propulsion parameters
-    massf_req = 7/dens_rat           #[SCCM] massflow required for a functional engine
+    massf_req = 7./dens_rat           #[SCCM] massflow required for a functional engine
     intake_eff = 0.4        #[-] intake efficicency
     T_D = 1.1               #[-] Thrust to drag ratio
 
     #geometrical parameters
     aspect_rat = 5          #[-] Aspect ratio of the intake, assumed to be equal for the outer shell
-    body_frac = 0.8         #[-] Fraction of body that can be used for solar panels
+    body_frac = 0.9         #[-] Fraction of body that can be used for solar panels
     area_rat = 1.2          #[-] Ratio between intake area and frontal area
 
 
@@ -643,8 +644,9 @@ if concepts[1]:
 
     #battery mass required
     M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/3600/battery_dens/DOD
-
+    print (M_batt*100-P_other_ecl-thrust_power(thrust))
     if M_batt*100<P_other_ecl+thrust_power(thrust):
+
         print ("BATTERIES CANT PROVIDE REQUIRED POWER< USE LESS BATTERY PACKS")
 
     else:
