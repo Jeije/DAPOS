@@ -590,6 +590,7 @@ if concepts[1]:
     DOD = 0.25              #[-] depth of discharge
     number_batt = 2        #[-] number of battery packs
     theta  = 0              #[rad] incidence angle
+    
     #Ground station parameters
     #ESA SVALBARD https://www.esa.int/Our_Activities/Navigation/Galileo/Galileo_IOV_ground_stations_Svalbard
     #SvalSat and KSAT's Troll Satellite Station (TrollSat) in Antarctica are the only ground stations that can see a low altitude polar orbiting satellite (e.g., in sun-synchronous orbit) on every revolution as the earth rotates.
