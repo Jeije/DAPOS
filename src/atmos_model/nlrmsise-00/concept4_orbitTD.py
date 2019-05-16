@@ -12,8 +12,8 @@ from nrlmsise_00_dens import nlrmsise00_dens
 
 ## INPUT DATA -----------------------------------------------------------------
 # orbit data
-lower_limit     = 160       # km
-upper_limit     = 400       # km
+lower_limit     = 160       # km (heating and molecular flow reasons)
+upper_limit     = 400       # km (no air and debris considerations)
 
 # Earth data
 R_e             = 6370      # km, Earth's radius
@@ -22,7 +22,7 @@ mu              = 398600.44 # km^3/s^2, Earth's gravitational constant
 
 # engine and vehicle data
 m_tot           = 100       # kg, spacecraft total mass
-power_vs_thrust = 64        # W/mN
+#power_vs_thrust = 64        # W/mN
 P_max           = 500       # W, maximum power
 
 Isp             = 3.5*1e3   # s, Isp
@@ -64,11 +64,11 @@ m_d_r  = 1.54*1e-07                              # kg/s, minimum mass flow (Mart
 print("Ballistic coefficient = {} kg/m^2".format(B))
 print()
 
-for P_max in np.linspace(100, 1500, 15):
+for P_max in np.linspace(300, 1200, 19):
 
     print("Power = {} W".format(round(P_max, 1)))
 
-    T_max  = P_max/power_vs_thrust/1000              # N, maximum thrust
+    T_max  = P_max*0.0000156 - 0.00069068            # N, maximum thrust
 
     print("Maximum thrust produced = {} mN".format(round(T_max*1000, 1)))
 
@@ -85,7 +85,7 @@ for P_max in np.linspace(100, 1500, 15):
     TD_new = T/D
 
     # power
-    Power  = power_vs_thrust*T*1000 # W, required engine power
+    Power  = (T + 0.00069068) / 0.0000156 # W, required engine power
 
 
     # decay estimations (altitude loss and delta V per orbit)
