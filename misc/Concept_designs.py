@@ -14,6 +14,8 @@ Created on Wed May 15 09:44:48 2019
 ############################################# Imports #################################################
 import numpy as np
 
+import matplotlib.pyplot as plt
+
 ############################################# Functions ###############################################
 
 
@@ -112,10 +114,10 @@ def comms(h, freq, G_trans, D_reciever, Ts, R, E_N, rain):
     space = 147.55-20*np.log10(h*10**3)-20*np.log10(freq)   #space losses [dB]
     G_rec = -159.59+20*np.log10(D_reciever)+20*np.log10(freq)+10*np.log10(dish_eff) #gain of the recieving antenna [dB]
     G_trans = G_trans
-    
+
     #[103] A New Approach for Enhanced Communication to LEO Satellites
     E_opt= 45.-0.00446*h #[deg]     optimal elevation angle for communications
-    
+
     P= 10.**((E_N-line-G_trans-space-rain-G_rec-228.6+10.*np.log10(Ts)+10.*np.log10(R))/10.) #[W]
 
     return P
@@ -362,43 +364,43 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
     longitude_sub = [deg] longitude of subsatellite point (groundtrack) GET DATA FROM ORBIT MODEL
     latitude_sub = [deg] latitude of subsatellite point (groundtrack) GET DATA FROM ORBIT MODEL
     elevation_min = [deg] minimum elevation angle at which the ground station is visible
-    
+
     OUTPUT
-    
+
     elevation = [deg] istantaneous elevation angle to the horizon of the ground station
     contact_time = [sec] contact time with the ground station
-    
+
     """
 
     #INSTANTANEOUS POSITION OF S/C
     #FROM SMAD PAG 109-111
-    
+
     R_E= 6378 #[km]
-    rho_rad= np.arcsin(R_E/(R_E+h)) #[rad] angular radius of Earth 
+    rho_rad= np.arcsin(R_E/(R_E+h)) #[rad] angular radius of Earth
     rho=np.rad2deg(rho_rad) #[deg]
     lambda_0=90-rho #[deg] angular radius measured at the centre of the earth of the region as seen from s/c
     lambda_0_rad= np.deg2rad(lambda_0) #[rad]
-    D_max= R_E*np.tan(lambda_0_rad)#[km] distance to the horizon 
+    D_max= R_E*np.tan(lambda_0_rad)#[km] distance to the horizon
     Delta_L= np.abs(longitude_sub-longitude_ground)
     latitude_sub_rad=np.deg2rad(latitude_sub)
     latitude_ground_rad=np.deg2rad(latitude_ground)
     Delta_L_rad=np.deg2rad(Delta_L)
-    lambda_Earth_rad= np.arccos(   np.sin(latitude_sub_rad)*np.sin(latitude_ground_rad)+np.cos(latitude_sub_rad)*np.cos(latitude_ground_rad)*np.cos(Delta_L_rad)   ) #[rad] earth centered angle, measured from subsatellite point to target        
+    lambda_Earth_rad= np.arccos(   np.sin(latitude_sub_rad)*np.sin(latitude_ground_rad)+np.cos(latitude_sub_rad)*np.cos(latitude_ground_rad)*np.cos(Delta_L_rad)   ) #[rad] earth centered angle, measured from subsatellite point to target
     lambda_Earth=np.rad2deg(lambda_Earth_rad) #[deg]
     eta_rad= np.arctan(  np.sin(rho_rad)*np.sin(lambda_Earth_rad)/(1-np.sin(rho_rad)*np.cos(lambda_Earth_rad))   ) #[rad] angle from nadir
     eta= np.rad2deg(eta_rad)  #[deg] angle from nadir
     elevation= 90- eta -lambda_Earth   #[deg] elevation angle
     D=R_E*np.sin(lambda_Earth_rad)/np.sin(eta_rad) #[km]
-    
+
     elevation_min_rad=np.deg2rad(elevation_min)
-    
+
     #FROM NOW ON: ASSUMPTION OF CIRCULAR ORBIT
-    
+
     etaMAX_rad= np.arcsin(  np.sin(rho_rad)*np.cos(elevation_min_rad)   ) #[rad] angle from nadir
     etaMAX= np.rad2deg(etaMAX_rad)  #[deg] angle from nadir
     lambdaMAX= 90-etaMAX-elevation_min
     elevation_max= 180-elevation_min
-    
+
     if incl !=None:
         lat_pole= 90-incl #[deg]
         lat_pole_rad=np.deg2rad(lat_pole)
@@ -412,7 +414,7 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
     lambdaMIN_rad=np.deg2rad(lambdaMIN)
     lambdaMAX_rad=np.deg2rad(lambdaMAX)
     contact_time =(t_o/180)*np.rad2deg(np.arccos(np.cos(lambdaMAX_rad)/np.cos(lambdaMIN_rad))) #[s] Contact time with the ground station
-    
+
     return elevation, contact_time
 
 
@@ -447,7 +449,7 @@ if concepts[0]:
     D_rec = 3               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
-    rain = 2                
+    rain = 2
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
 
@@ -474,16 +476,16 @@ if concepts[0]:
     DOD = 0.25              #[-] depth of discharge
     number_batt = 2        #[-] number of battery packs
     theta = np.pi/6     # [rad] incidence angle of solar panels
-    
+
     #Ground station parameters
     #ESA SVALBARD https://www.esa.int/Our_Activities/Navigation/Galileo/Galileo_IOV_ground_stations_Svalbard
     longitude_ground= 15.399 #[deg] Lt ground station (ESA Svalbard)
     latitude_ground= 78.228 #[deg] delta_t ground station (ESA Svalbard)
     elevation_min=5 #[deg] minimum elevation angle above the horizon to make contact with ground
-    
-    # ground track parameters TO BE UPDATED ONCE WE HAVE A MODEL    
-    longitude_sub= 185 #20 #[deg] Ls subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model 
-    latitude_sub= 10#90 #[deg] delta_s subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model 
+
+    # ground track parameters TO BE UPDATED ONCE WE HAVE A MODEL
+    longitude_sub= 185 #20 #[deg] Ls subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model
+    latitude_sub= 10#90 #[deg] delta_s subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model
 
     #Design specfification computation
     #compute camera resolution performance
@@ -492,10 +494,10 @@ if concepts[0]:
     #compute orbital parameters from desired orbit
     a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, True)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
-    
+
     #compute contact time
     elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min, incl, concepts)
-   
+
     #compute data rate required
     datarate_imaging = 2632.*10.**6. #[bps]
     compression_rat = 3./5.   #[-]
@@ -571,18 +573,18 @@ if concepts[1]:
     E_N = 10                #[dB] signal to noise ratio desired for communications
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
-        
+
     #propulsion parameters
     massf_req = 7/dens_rat           #[SCCM] massflow required for a functional engine
     intake_eff = 0.4        #[-] intake efficicency
     T_D = 1.1               #[-] Thrust to drag ratio
-    
+
     #geometrical parameters
     aspect_rat = 5          #[-] Aspect ratio of the intake, assumed to be equal for the outer shell
     body_frac = 0.8         #[-] Fraction of body that can be used for solar panels
     area_rat = 1.2          #[-] Ratio between intake area and frontal area
 
-    
+
     #power parameters
     P_misc = 200            #[W] power required for other subsystems
     battery_dens = 250      #[Wh/kg] power density of the batteries (only for <100W/kg)
@@ -597,61 +599,57 @@ if concepts[1]:
     longitude_ground= 15.399 #[deg] Lt ground station (ESA Svalbard)
     latitude_ground= 78.228 #[deg] delta_t ground station (ESA Svalbard)
     elevation_min=5 #[deg] minimum elevation angle above the horizon to make contact with ground
-    
-    # ground track parameters TO BE UPDATED ONCE WE HAVE A MODEL    
-    longitude_sub= 185 #20 #[deg] Ls subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model 
-    latitude_sub= 10#90 #[deg] delta_s subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model 
 
 
     #Design specfification computation
-    
+
     #compute orbital parameters from desired orbit
     a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, True)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
-    
-    #compute eclipse time based on sun-synchronous dusk-dawn 
+
+    #compute eclipse time based on sun-synchronous dusk-dawn
     H = R_e/(R_e+h)
     d_j = np.arccos(H)
     j = (incl-90)/180*np.pi
     d_1 = (d_j-j)*180/np.pi
     d_2 = (-d_j-j)*180/np.pi
     alpha_1 = np.arccos(np.sin(d_j)/np.sin(23.44/180*np.pi+j))
-    alpha_2 = np.arccos(np.sin(d_j)/np.sin(23.44/180*np.pi-j))  
+    alpha_2 = np.arccos(np.sin(d_j)/np.sin(23.44/180*np.pi-j))
     t_e_1 = alpha_1/np.pi*t_o
     t_e_2 = alpha_2/np.pi*t_o
     t_e = max(t_e_1, t_e_2)
-    
+
     #compute contact time
     elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min, incl, concepts)
-   
+
     #compute data rate required
     datarate_imaging = 2632.*10.**6. #[bps]
     compression_rat = 3./5.   #[-]
     data_orbit = datarate_imaging*(t_o-t_e)*compression_rat     #data produced during orbit [bits]
     R = data_orbit/contact_time    #[bps] data rate required during communications
-    
+
     #compute power required for communications
     P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N, rain)
-    
+
     #compute mass assigned to the communication system
     M_comm, V_comm = comms_mass(P_comms, A_antenna, rho_antenna)
-    
+
     #find power required during eclipse and day
     P_other_day = P_comms+P_misc
     P_other_ecl = P_comms+P_misc
-    
+
     #Size the solar panels, intake, also compute drag and thrust
     thrust, drag_tot, panelA_tot, panelA_out, panelA_body, panelM, intakeA, frontalA, length, width_panel = sizing(density, massf_req, V[1]*1000., area_rat, P_other_day, P_other_ecl, intake_eff, T_D, aspect_rat, body_frac)
-           
+
     #battery mass required
     M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/3600/battery_dens/DOD
-    
+
     if M_batt*100<P_other_ecl+thrust_power(thrust):
         print ("BATTERIES CANT PROVIDE REQUIRED POWER< USE LESS BATTERY PACKS")
-    
+
     else:
         M_batt = M_batt*number_batt
-        
+
     #result presentation
     print ("-------------------------------Result for", names[1],"at", h, "km","---------------------------")
     print (" ")
@@ -679,3 +677,144 @@ if concepts[1]:
 
 if concepts[2]:
     print ("-----------------------------------------------------------------------")
+
+    ## INPUT DATA -------------------------------------------------------------
+    # orbit data
+    lower_limit     = 120       # km
+    upper_limit     = 600       # km
+
+    # engine and vehicle data
+    m_tot           = 100       # kg, spacecraft total mass
+    power_vs_thrust = 64        # W/mN
+    P_max           = 500       # W, maximum power
+
+    Isp             = 3.5*1e3   # s, Isp
+
+    eta             = 0.35      # -, collection efficiency
+    A_in            = 0.65      # m^2, intake area
+    A_f             = 1.0       # m^2, frontal area
+    C_D             = 2.5       # -, drag coefficient
+
+    # simulation data
+    N               = 720       # -, number of points per orbit
+
+
+
+    ## CALCULATED DATA --------------------------------------------------------
+    print()
+    print("Altitude range from",lower_limit,"km to",upper_limit,"km")
+
+    fig, ax = plt.subplots(1, 2)
+    fig.suptitle("Performance graphs for altitudes from {} km to {} km".format(lower_limit, upper_limit))
+
+    # engine and vehicle parameters
+    B      = m_tot/(C_D*A_f)               # kg/m^2, ballistic coefficient
+
+    # orbit parameters
+    (a, r_a, r_p, r, e, V_orb, P_orb,
+    T_ecl, delta_V_tot, i_deg) = orbit(lower_limit, upper_limit, True,
+                                       B, rho, T, D, N)
+    m_d_r  = 1.54*1e-07                    # kg/s, minimum mass flow (Martijn)
+
+    print("Ballistic coefficient = {} kg/m^2".format(B))
+    print()
+
+    for P_max in np.linspace(100, 1500, 15):
+
+        print("Power = {} W".format(round(P_max, 1)))
+
+        T_max  = P_max/power_vs_thrust/1000              # N, maximum thrust
+
+        print("Maximum thrust produced = {} mN".format(round(T_max*1000, 1)))
+
+        # atmospheric data
+        alts   = np.linspace(lower_limit, upper_limit, int(N/2))
+        rho_oneside = np.array([nlrmsise00_dens(alt) for alt in alts])
+        rho    = np.hstack((rho_oneside, rho_oneside[::-1]))
+
+        m_dot  = rho * A_in * V_orb*1000                 # kg/s, mass flow
+
+        # thrust and drag
+        T      = np.ones(N) * T_max
+        D      = C_D * 0.5 * rho * (V_orb*V_orb*1e6) * A_f # N, drag
+        TD_new = T/D
+
+        # power
+        Power  = power_vs_thrust*T*1000 # W, required engine power
+
+
+        # decay estimations (altitude loss and delta V per orbit)
+        Per = T_orb / (3600 * 24 * 365) # yr, orbital period
+        decay_rate = -2*np.pi * (1/B) * rho * (r*r*1e6) / Per # m/yr, orbital decay rate
+        decay_rate_s = decay_rate / (3600 * 24 * 365) # m/s, orbital decay rate
+
+        n = 2 * np.pi / T_orb # s^-1, mean motion
+        delta_T_tot = (theta/n)[np.where( T < D )] # s, time spend where T < D
+        delta_T = np.hstack( (np.diff(delta_T_tot[np.where(delta_T_tot < T_orb/2)]),
+                              np.diff(delta_T_tot[np.where(delta_T_tot > T_orb/2)]) ) )
+
+        loss_part = np.where(np.logical_or(delta_T_tot < T_orb/2, delta_T_tot > T_orb/2))
+        decay = sum( decay_rate_s[loss_part][1:-1] * delta_T ) # m, total decay (simple 'integration')
+
+
+        delta_V_req = np.pi * (1/B) * rho * (r * V_orb * 1e6) / Per # m/s/yr, required delta V for orbit keeping
+        delta_V_mss = delta_V_req / (3600 * 24 * 365)               # m/s/s, required delta V for orbit keeping
+        delta_V_tot = sum( delta_V_mss[loss_part][1:-1] * delta_T ) # m/s, total delta V
+
+
+        # possible delta V accounting for drag and minimum mass flow
+        index       = np.where( T > D )
+        t_TD1       = (theta/n)[index]            # s, time where T > D
+        prod_del_V  = 0                           # m/s, total delta V produced
+        h_min       = 0
+        h_max       = 0
+
+        for i in range(len(t_TD1)-1):
+            rho_req  = m_d_r / ( A_in * V_orb[index][i]*1000)
+            rho_real = rho[index][i]
+
+            if rho_real >= rho_req:
+                # YES WE CAN (THRUST)!
+                Drag = D[index][i]
+                F_r  = T_max - Drag
+                prod_del_V += F_r * (t_TD1[i+1] - t_TD1[i])
+
+                h_thrust = h[index][i]
+                if h_min == 0:
+                    h_min = h_thrust
+                elif h_max < h_thrust:
+                    h_max = h_thrust
+
+
+        # required thrust time assuming constant maximum thrust
+        #t_req     = m_tot * delta_V_tot / T_max   # s, thrust time required
+        #t_TD1     = (theta/n)[np.where( T > D )]  # s, time where T > D
+        #t_TD1_tot = max(t_TD1) - min(t_TD1)       # s, total time spent with T > D
+
+        print("Maximum altitude with T < D = {} km".format(round(max(h[np.where(D - T > 0)]), 1)))
+        print("Estimated altitude decay = {} km".format(round(decay/1000, 3)))
+        print("Estimated total delta V required = {} m/s".format(round(delta_V_tot, 2)))
+        print("Estimated total producable delta V = {} m/s".format(round(prod_del_V, 2)))
+        print("Altitude range in with losses are compensated = {} km to {} km".format(round(h_min, 1), round(h_max, 1)))
+        #print("Estimated thrust time required at max thrust = {} s".format(round(t_req, 1)))
+        #print("Estimated time with T > D = {} s".format(round(t_TD1_tot, 1)))
+        print()
+
+
+    ## PLOTTING ---------------------------------------------------------------
+        ax[0].plot(h, TD_new, label="P = {} W".format(round(P_max, 1)))
+
+        ax[1].plot(h, T)
+
+
+
+    ax[0].set(xlabel="orbit altitude [km]", ylabel="T/D-ratio [-]", ylim=[-0.1, 1.1],
+              xlim=[lower_limit, 300], title="T/D-ratios")
+
+    ax[1].plot(h, D, color="black", label="Drag")
+    ax[1].set(xlabel="orbit altitude [km]", ylabel="Force [N]", ylim=[-0.001, 0.03],
+              title="Drag and maximum thrust")
+
+    fig.legend()
+
+    plt.show()
