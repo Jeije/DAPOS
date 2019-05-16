@@ -395,15 +395,17 @@ if concepts[0]:
     #power parameters
     P_misc = 200            #[W] power required for other subsystems
     battery_dens = 250      #[Wh/kg] power density of the batteries (only for <100W/kg)
-    battery_deg = 0.9       #[-] battery degradation factor over lifetime
-    
+    battery_deg = 0.8       #[-] battery degradation factor over lifetime
+    DOD = 0.25              #[-] depth of discharge
+    number_batt = 2        #[-] number of battery packs
+
     #Design specfification computation
     #compute camera resolution performance
     cam_perf = cam_res(cam_alt, res, h)
     
     #compute orbital parameters from desired orbit
     a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
-    
+    cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
     #compute data rate required
     R = 40*10**6                   #[bps] data rate required during communications
     
@@ -421,35 +423,39 @@ if concepts[0]:
     thrust, drag_tot, panelA_tot, panelA_out, panelA_body, panelM, intakeA, frontalA, length, width_panel = sizing(density, massf_req, V[1]*1000., area_rat, P_other_day, P_other_ecl, intake_eff, T_D, aspect_rat, body_frac)
            
     #battery mass required
-    M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/60/battery_dens
+    M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/3600/battery_dens/DOD
     
+    if M_batt*100<P_other_ecl+thrust_power(thrust):
+        print ("BATTERIES CANT PROVIDE REQUIRED POWER< USE LESS BATTERY PACKS")
     
-      
-    #result presentation
-    print ("-------------------------------Result for", names[0],"---------------------------")
-    print (" ")
-    print ("                                -Power budget-                        ")
-    print ("Power to operate engine = ",  thrust_power(thrust), "[W]")
-    print ("Power for communication system = ", P_comms, "[W]")
-    print ("Power for payload operations = ", P_pay, "[W]")
-    print ("Power for other subsystems = ", P_misc, "[W]")
-    print (" ")
-    print ("                                -Mass budget-                        ")
-    print ("Mass for solar panels =", panelM, "[kg]")
-    print ("Mass for batteries =", M_batt, "[kg]")
-    print ("Mass for power management system = ", 0.333333*(panelM+M_batt), "[kg]")
-    print ("Mass for communication system =", M_comm, "[kg]")
-    print ("Mass for payload =", M_pay, "[kg]")
-    print (" ")
-    print ("                                -System characteristics-                        ")
-    print ("Intake size =", intakeA, "[m^2]")
-    print ("Frontal area =", frontalA, "[m^2]")
-    print ("Thrust provided by the engine =", thrust, "[N]")
-    print ("Drag experienced by the system =", drag_tot, "[N]")
-    print ("Length of the satellite = ", length, "[m]")
-    print ("Width of solar panels extending from body = ", width_panel, "[m]")
-    print ("Achieved payload resolution =", cam_perf, "[m/pixel]")
-    print ("Total solar panel area = ", panelA_tot, "[m^2]" )
+    else:
+        M_batt = M_batt*number_batt
+          
+        #result presentation
+        print ("-------------------------------Result for", names[0],"---------------------------")
+        print (" ")
+        print ("                                -Power budget-                        ")
+        print ("Power to operate engine = ",  thrust_power(thrust), "[W]")
+        print ("Power for communication system = ", P_comms, "[W]")
+        print ("Power for payload operations = ", P_pay, "[W]")
+        print ("Power for other subsystems = ", P_misc, "[W]")
+        print (" ")
+        print ("                                -Mass budget-                        ")
+        print ("Mass for solar panels =", panelM, "[kg]")
+        print ("Mass for batteries =", M_batt, "[kg]")
+        print ("Mass for power management system = ", 0.333333*(panelM+M_batt), "[kg]")
+        print ("Mass for communication system =", M_comm, "[kg]")
+        print ("Mass for payload =", M_pay, "[kg]")
+        print (" ")
+        print ("                                -System characteristics-                        ")
+        print ("Intake size =", intakeA, "[m^2]")
+        print ("Frontal area =", frontalA, "[m^2]")
+        print ("Thrust provided by the engine =", thrust, "[N]")
+        print ("Drag experienced by the system =", drag_tot, "[N]")
+        print ("Length of the satellite = ", length, "[m]")
+        print ("Width of solar panels extending from body = ", width_panel, "[m]")
+        print ("Achieved payload resolution =", cam_perf, "[m/pixel]")
+        print ("Total solar panel area = ", panelA_tot, "[m^2]" )
 
     
 if concepts[1]:
