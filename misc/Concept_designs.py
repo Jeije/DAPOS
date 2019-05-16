@@ -169,7 +169,7 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
     mu          = 398600.44        # km^3/s^2, Earth's gravitational constant
     G_e         = 6.6725*10**(-11) # Nm^2/kg, universal gravitational constant
     P_ES        = 365.25 * 86400   # s, period of Earth around the sun
-    J_2         = 1082 * 1e-6      # ?, J2 effect in gravity field
+    J_2         = 1.082 * 1e-3     # -, J2 effect in gravity field
 
     ## calculations, for the formulas, see AE2230 equations by heart and
     ## lecture slides.
@@ -186,9 +186,9 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
     n      = 2 * np.pi / P_orb                       # s^-1, mean motion
     time   = theta/n                                 # s, time from 0
     E_tot  = -mu / (2 * a) * 1e6                     # J/kg, specific energy
-    T_ecl  = np.arcsin(R_e / a) * P_orb              # s, eclipse time (max, 2D, circular
+    T_ecl  = np.arcsin(R_e / a) / np.pi * P_orb              # s, eclipse time (max, 2D, circular
 
-    if lower_limit == upper_limit:
+    if lower_limit != upper_limit:
         # required delta V for station keeping per orbit (formula from SMAD)
         Per         = P_orb / (3600 * 24 * 365) # yr, period
         delta_T_tot = (theta/n)[np.where( T < D )] # s, time when T < D
@@ -213,13 +213,13 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
         # shadow region being a cone not taken into account either)
         # S = shadow function, beta_ is +- 90° (- cw, + ccw) for sun-
         # synchronous orbits and goes down to 0° for equitorial orbits.
-        alpha_ = 1
-        beta_  = -np.pi/2 # rad, for sun-synchronous only
-        cosPsi = alpha_ * np.cos(theta) + beta_ * np.cos(theta)
-        Psi    = np.arccos(cosPsi)
-        S      = R_e*R_e*(1 + e*np.cos(theta))**2 + p*p*(cosPsi)**2 - p*p
-        T_in_e = time[np.where(np.logical_and(Psi > np.pi/2, S >= 0))]
-        T_ecl  = max(T_in_e) - min(T_in_e)               # s, eclipse time
+        #alpha_ = np.pi/2 - theta # not sure yet
+        #beta_  = -np.pi/2 # rad, for sun-synchronous only
+        #cosPsi = alpha_ * np.cos(theta) + beta_ * np.cos(theta)
+        #Psi    = np.arccos(cosPsi)
+        #S      = R_e*R_e*(1 + e*np.cos(theta))**2 + p*p*(cosPsi)**2 - p*p
+        #T_in_e = time[np.where(np.logical_and(Psi > np.pi/2, S >= 0))]
+        #T_ecl  = max(T_in_e) - min(T_in_e)               # s, eclipse time
 
     else:
         i_deg = None
