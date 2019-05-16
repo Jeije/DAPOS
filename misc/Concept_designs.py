@@ -457,6 +457,17 @@ if concepts[0]:
     battery_deg = 0.8       #[-] battery degradation factor over lifetime
     DOD = 0.25              #[-] depth of discharge
     number_batt = 2        #[-] number of battery packs
+    
+    #Ground station parameters
+    #ESA SVALBARD https://www.esa.int/Our_Activities/Navigation/Galileo/Galileo_IOV_ground_stations_Svalbard
+    #SvalSat and KSAT's Troll Satellite Station (TrollSat) in Antarctica are the only ground stations that can see a low altitude polar orbiting satellite (e.g., in sun-synchronous orbit) on every revolution as the earth rotates.
+    longitude_ground= 15.399 #[deg] Lt ground station (ESA Svalbard)
+    latitude_ground= 78.228 #[deg] delta_t ground station (ESA Svalbard)
+    elevation_min=5 #[deg] minimum elevation angle above the horizon to make contact with ground
+    
+    # ground track parameters TO BE UPDATED ONCE WE HAVE A MODEL    
+    longitude_sub= 185 #20 #[deg] Ls subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model 
+    latitude_sub= 10#90 #[deg] delta_s subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model 
 
     #Design specfification computation
     #compute camera resolution performance
@@ -465,8 +476,15 @@ if concepts[0]:
     #compute orbital parameters from desired orbit
     a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
+    
+    #compute contact time
+    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min)
+   
     #compute data rate required
-    R = 40*10**6                   #[bps] data rate required during communications
+    datarate_imaging = 2632.*10.**6. #[bps]
+    compression_rat = 3./5.   #[-]
+    data_orbit = datarate_imaging*(t_o-t_e)*compression_rat     #data produced during orbit [bits]
+    R = data_orbit/contact_time    #[bps] data rate required during communications
 
     #compute power required for communications
     P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N, rain)
@@ -583,14 +601,12 @@ if concepts[1]:
     
     #compute contact time
     elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min)
-    
    
     #compute data rate required
     datarate_imaging = 2632.*10.**6. #[bps]
     compression_rat = 3./5.   #[-]
     data_orbit = datarate_imaging*(t_o-t_e)*compression_rat     #data produced during orbit [bits]
     R = data_orbit/contact_time    #[bps] data rate required during communications
-
     
     #compute power required for communications
     P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N, rain)
