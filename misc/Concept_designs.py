@@ -397,7 +397,7 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
     lambdaMAX= 90-etaMAX-elevation_min
     elevation_max= 180-elevation_min
     
-    if concepts[1]:
+    if incl !=None:
         lat_pole= 90-incl #[deg]
         lat_pole_rad=np.deg2rad(lat_pole)
         long_pole= 100 #L_node-90
@@ -405,7 +405,7 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
         Dlong_rad= np.deg2rad(Dlong)
         lambdaMIN= np.arcsin(    np.sin(lat_pole_rad)*np.sin(latitude_ground_rad)+np.cos(lat_pole_rad)*np.cos(latitude_ground_rad)*np.cos(Dlong_rad)     )
         print(lambdaMIN)
-    if concepts[0]:
+    if incl == None:
         lambdaMIN=7 #[deg]   #assumption (can be calculated using the inclination and ascending node of the S/C from SMAD p 116)
     lambdaMIN_rad=np.deg2rad(lambdaMIN)
     lambdaMAX_rad=np.deg2rad(lambdaMAX)
@@ -419,7 +419,7 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
-concepts = [False, True, False]
+concepts = [True, True, False]
 names = ["Paylöd", "Grav", "supposedly cool"]
 
 
@@ -442,7 +442,7 @@ if concepts[0]:
     #communication inputs
     frequency = 36*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
-    D_rec = 5               #[m] diameter of the reciever antenna
+    D_rec = 3               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
     rain = 2                
@@ -563,7 +563,7 @@ if concepts[1]:
     #communication inputs
     frequency = 36*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
-    D_rec = 1               #[m] diameter of the reciever antenna
+    D_rec = 3               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
