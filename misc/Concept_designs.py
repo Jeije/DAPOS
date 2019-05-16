@@ -156,6 +156,7 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
         r_a         = appocentre radius [km]
         r_p         = pericentre radius [km]
         r           = orbital radius [km]
+        e           = eccentricity [-]
         V_orb       = orbital velocity [km/s]
         P_orb       = orbital period [s]
         T_ecl       = eclipse time [s] (first order crude estimate)
@@ -191,7 +192,7 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
     if lower_limit != upper_limit:
         # required delta V for station keeping per orbit (formula from SMAD)
         Per         = P_orb / (3600 * 24 * 365) # yr, period
-        delta_T_tot = (theta/n)[np.where( T < D )] # s, time when T < D
+        delta_T_tot = (theta/n)[np.where(T<D)] # s, time when T < D
         delta_T = np.hstack( (np.diff(delta_T_tot[np.where(delta_T_tot < P_orb/
                   2)]), np.diff(delta_T_tot[np.where(delta_T_tot > P_orb/2)]) ) )
         loss_part = np.where(np.logical_or(delta_T_tot < P_orb/2, delta_T_tot > P_orb/2))
@@ -240,10 +241,18 @@ def drag(rho, V, CD, S):
     D = 0.5*rho*S*V**2*CD
     return D
 
-def cam_res(alt, res):
+def cam_res(alt, res, alt_orbit):
+    """Find the camera resolutions at a certain altitude
+
+    INPUT
+    alt= altitude for which the camera resolution is known [m]
+    res= known camera resolution [m/pixel]
+    alt_orbit = altitude of operating orbit [m]
+
+    OUTPUT
+    vleores = resoltuion at operating altitude [m/pixel]"""
     theta = np.arctan(res/2/alt)
-    vleo = [100000, 110000, 120000, 130000, 140000, 150000, 160000, 170000, 180000, 190000, 200000, 210000, 220000, 230000, 240000, 250000]
-    vleores = [2*x*np.tan(theta) for x in vleo]
+    vleores = 2*alt_orbit*np.tan(theta)
 
     return vleores
 
@@ -352,8 +361,101 @@ panel_t = 0.05      #[m]
 
 ######################################## Complete designs of the concepts ###############################
 if concepts[0]:
+    #input of the concept
+    #environmental inptus
+    h = 250                 #[km] altitude
+    density = 1*10**-10     #[kg/m^3] density for which the system is designed
 
-    print ("-----------------------------------------------------------------------")
+    #communication inputs
+    frequency = 36*10**9    #[Hz] frequency at which communincation is done
+    G_trans = 5             #[dB] gain of the transmitter used
+    D_rec = 1               #[m] diameter of the reciever antenna
+    Ts = 700                #[K] system noise temperature
+    E_N = 10                #[dB] signal to noise ratio desired for communications
+    A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
+    rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
+
+    #camera specifications
+    cam_alt = 500           #[km] altitude at which the camera selected was tested
+    res = 0.6               #[m/pixel] resolution obtained at the tested altitude
+    P_pay = 10              #[W] power required to operate payload
+    M_pay = 10              #[kg] mass of the payload
+
+    #propulsion parameters
+    massf_req = 7           #[SCCM] massflow required for a functional engine
+    intake_eff = 0.4        #[-] intake efficicency
+    T_D = 1.1               #[-] Thrust to drag ratio
+
+    #geometrical parameters
+    aspect_rat = 5          #[-] Aspect ratio of the intake, assumed to be equal for the outer shell
+    body_frac = 0.8         #[-] Fraction of body that can be used for solar panels
+    area_rat = 1.2          #[-] Ratio between intake area and frontal area
+
+    #power parameters
+    P_misc = 200            #[W] power required for other subsystems
+    battery_dens = 250      #[Wh/kg] power density of the batteries (only for <100W/kg)
+    battery_deg = 0.8       #[-] battery degradation factor over lifetime
+    DOD = 0.25              #[-] depth of discharge
+    number_batt = 2        #[-] number of battery packs
+
+    #Design specfification computation
+    #compute camera resolution performance
+    cam_perf = cam_res(cam_alt, res, h)
+
+    #compute orbital parameters from desired orbit
+    a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
+    cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
+    #compute data rate required
+    R = 40*10**6                   #[bps] data rate required during communications
+
+    #compute power required for communications
+    P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N)
+
+    #compute mass assigned to the communication system
+    M_comm, V_comm = comms_mass(P_comms, A_antenna, rho_antenna)
+
+    #find power required during eclipse and day
+    P_other_day = P_comms+P_pay+P_misc
+    P_other_ecl = P_comms+P_misc
+
+    #Size the solar panels, intake, also compute drag and thrust
+    thrust, drag_tot, panelA_tot, panelA_out, panelA_body, panelM, intakeA, frontalA, length, width_panel = sizing(density, massf_req, V[1]*1000., area_rat, P_other_day, P_other_ecl, intake_eff, T_D, aspect_rat, body_frac)
+
+    #battery mass required
+    M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/3600/battery_dens/DOD
+
+    if M_batt*100<P_other_ecl+thrust_power(thrust):
+        print ("BATTERIES CANT PROVIDE REQUIRED POWER< USE LESS BATTERY PACKS")
+
+    else:
+        M_batt = M_batt*number_batt
+
+        #result presentation
+        print ("-------------------------------Result for", names[0],"---------------------------")
+        print (" ")
+        print ("                                -Power budget-                        ")
+        print ("Power to operate engine = ",  thrust_power(thrust), "[W]")
+        print ("Power for communication system = ", P_comms, "[W]")
+        print ("Power for payload operations = ", P_pay, "[W]")
+        print ("Power for other subsystems = ", P_misc, "[W]")
+        print (" ")
+        print ("                                -Mass budget-                        ")
+        print ("Mass for solar panels =", panelM, "[kg]")
+        print ("Mass for batteries =", M_batt, "[kg]")
+        print ("Mass for power management system = ", 0.333333*(panelM+M_batt), "[kg]")
+        print ("Mass for communication system =", M_comm, "[kg]")
+        print ("Mass for payload =", M_pay, "[kg]")
+        print (" ")
+        print ("                                -System characteristics-                        ")
+        print ("Intake size =", intakeA, "[m^2]")
+        print ("Frontal area =", frontalA, "[m^2]")
+        print ("Thrust provided by the engine =", thrust, "[N]")
+        print ("Drag experienced by the system =", drag_tot, "[N]")
+        print ("Length of the satellite = ", length, "[m]")
+        print ("Width of solar panels extending from body = ", width_panel, "[m]")
+        print ("Achieved payload resolution =", cam_perf, "[m/pixel]")
+        print ("Total solar panel area = ", panelA_tot, "[m^2]" )
+
 
 if concepts[1]:
     print ("-----------------------------------------------------------------------")
