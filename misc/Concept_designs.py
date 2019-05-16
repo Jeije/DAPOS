@@ -285,7 +285,7 @@ def sizing(dens, massf_req, velocity, area_rat, P_other_day, P_other_ecl, intake
     width_panel = length the solar panels extend outside the body [m]"""
 
     #change massflow to kg/s
-    massf_req= 7/45.37/(10**6)
+    massf_req= massf_req/45.37/(10**6)
 
     #compute intake and frontal area based on the required massflow
     intakeA = massf_req/dens/velocity/intake_eff
@@ -347,7 +347,7 @@ def sizing(dens, massf_req, velocity, area_rat, P_other_day, P_other_ecl, intake
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
-concepts = [True, True, True]
+concepts = [False, True, False]
 names = ["Paylöd", "Grav", "supposedly cool"]
 
 
@@ -459,6 +459,102 @@ if concepts[0]:
 
     
 if concepts[1]:
-    print ("-----------------------------------------------------------------------")
+    #input of the concept
+    #environmental inptus
+    selected = 3
+    hlist = [140, 150, 160, 170, 180, 190, 200] ##list of considered altitude
+    denslist  = [3.1*10**-9, 2*10**-9, 1.1*10**-9, 9.4*10**-10, 6.5*10**-10, 4*10**-10, 2.5*10**-10] #list of maxmimum densities at the presented altitudes
+    dens_ratios = [0.7529, 0.678486, 0.60714, 0.54016, 0.4783, 0.422, 0.371698]
+    h = hlist[selected-1]                 #[km] altitude selected from [160, 170, 180, 190, 200]
+    density = denslist[selected-1]*1.2   #[kg/m^3] density for which the system is designed (20-25 % added for uncertainty in reading of graph)
+    dens_rat = dens_ratios[selected-1]
+    
+    #communication inputs
+    frequency = 36*10**9    #[Hz] frequency at which communincation is done
+    G_trans = 5             #[dB] gain of the transmitter used
+    D_rec = 1               #[m] diameter of the reciever antenna
+    Ts = 700                #[K] system noise temperature
+    E_N = 10                #[dB] signal to noise ratio desired for communications
+    A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
+    rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
+    
+    #camera specifications
+    cam_alt = 500           #[km] altitude at which the camera selected was tested
+    res = 0.6               #[m/pixel] resolution obtained at the tested altitude
+    P_pay = 0              #[W] power required to operate payload
+    M_pay = 0              #[kg] mass of the payload
+    
+    #propulsion parameters
+    massf_req = 7/dens_rat           #[SCCM] massflow required for a functional engine
+    intake_eff = 0.4        #[-] intake efficicency
+    T_D = 1.1               #[-] Thrust to drag ratio
+    
+    #geometrical parameters
+    aspect_rat = 5          #[-] Aspect ratio of the intake, assumed to be equal for the outer shell
+    body_frac = 0.8         #[-] Fraction of body that can be used for solar panels
+    area_rat = 1.2          #[-] Ratio between intake area and frontal area
+    
+    #power parameters
+    P_misc = 200            #[W] power required for other subsystems
+    battery_dens = 250      #[Wh/kg] power density of the batteries (only for <100W/kg)
+    battery_deg = 0.8       #[-] battery degradation factor over lifetime
+    DOD = 0.25              #[-] depth of discharge
+    number_batt = 2        #[-] number of battery packs
+    
+    #Design specfification computation
+    #compute camera resolution performance
+    cam_perf = cam_res(cam_alt, res, h)
+    
+    #compute orbital parameters from desired orbit
+    a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
+    cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
+    #compute data rate required
+    R = 40*10**6                   #[bps] data rate required during communications
+    
+    #compute power required for communications
+    P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N)
+    
+    #compute mass assigned to the communication system
+    M_comm, V_comm = comms_mass(P_comms, A_antenna, rho_antenna)
+    
+    #find power required during eclipse and day
+    P_other_day = P_comms+P_pay+P_misc
+    P_other_ecl = P_comms+P_misc
+    
+    #Size the solar panels, intake, also compute drag and thrust
+    thrust, drag_tot, panelA_tot, panelA_out, panelA_body, panelM, intakeA, frontalA, length, width_panel = sizing(density, massf_req, V[1]*1000., area_rat, P_other_day, P_other_ecl, intake_eff, T_D, aspect_rat, body_frac)
+           
+    #battery mass required
+    M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/3600/battery_dens/DOD
+    
+    if M_batt*100<P_other_ecl+thrust_power(thrust):
+        print ("BATTERIES CANT PROVIDE REQUIRED POWER< USE LESS BATTERY PACKS")
+    
+    else:
+        M_batt = M_batt*number_batt
+        
+    #result presentation
+    print ("-------------------------------Result for", names[1],"---------------------------")
+    print (" ")
+    print ("                                -Power budget-                        ")
+    print ("Power to operate engine = ",  thrust_power(thrust), "[W]")
+    print ("Power for communication system = ", P_comms, "[W]")
+    print ("Power for other subsystems = ", P_misc, "[W]")
+    print (" ")
+    print ("                                -Mass budget-                        ")
+    print ("Mass for solar panels =", panelM, "[kg]")
+    print ("Mass for batteries =", M_batt, "[kg]")
+    print ("Mass for power management system = ", 0.333333*(panelM+M_batt), "[kg]")
+    print ("Mass for communication system =", M_comm, "[kg]")
+    print (" ")
+    print ("                                -System characteristics-                        ")
+    print ("Intake size =", intakeA, "[m^2]")
+    print ("Frontal area =", frontalA, "[m^2]")
+    print ("Thrust provided by the engine =", thrust, "[N]")
+    print ("Drag experienced by the system =", drag_tot, "[N]")
+    print ("Length of the satellite = ", length, "[m]")
+    print ("Width of solar panels extending from body = ", width_panel, "[m]")
+    print ("Total solar panel area = ", panelA_tot, "[m^2]" )
+
 if concepts[2]:
     print ("-----------------------------------------------------------------------")
