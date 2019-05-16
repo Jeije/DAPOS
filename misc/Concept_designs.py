@@ -343,7 +343,7 @@ def sizing(dens, massf_req, velocity, area_rat, P_other_day, P_other_ecl, intake
 
         return thrust, drag_sat+drag_panel, panelA,panelA_out, panelA-panelA_out, panelM, intakeA, frontalA, length, width_panel
 
-def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min):
+def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min, incl, concept):
 
     """Compute the contact time with the ground station, istantaneous position parameters
 
@@ -390,12 +390,19 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
     lambdaMAX= 90-etaMAX-elevation_min
     elevation_max= 180-elevation_min
     
-    #lat_pole= 90 #[deg]
-    
-    lambdaMIN=7 #[deg]   #assumption (can be calculated using the inclination and ascending node of the S/C from SMAD p 116)
+    if concepts[1]:
+        lat_pole= 90-incl #[deg]
+        lat_pole_rad=np.deg2rad(lat_pole)
+        long_pole= 100 #L_node-90
+        Dlong= np.abs(long_pole-longitude_ground)
+        Dlong_rad= np.deg2rad(Dlong)
+        lambdaMIN= np.arcsin(    np.sin(lat_pole_rad)*np.sin(latitude_ground_rad)+np.cos(lat_pole_rad)*np.cos(latitude_ground_rad)*np.cos(Dlong_rad)     )
+        print(lambdaMIN)
+    if concepts[0]:
+        lambdaMIN=7 #[deg]   #assumption (can be calculated using the inclination and ascending node of the S/C from SMAD p 116)
     lambdaMIN_rad=np.deg2rad(lambdaMIN)
     lambdaMAX_rad=np.deg2rad(lambdaMAX)
-    contact_time =(t_o/180)*np.rad2deg(np.arccos(np.cos(lambdaMAX)/np.cos(lambdaMIN))) #[s] Contact time with the ground station
+    contact_time =(t_o/180)*np.rad2deg(np.arccos(np.cos(lambdaMAX_rad)/np.cos(lambdaMIN_rad))) #[s] Contact time with the ground station
     
     return elevation, contact_time
 
@@ -477,7 +484,7 @@ if concepts[0]:
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
     
     #compute contact time
-    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min)
+    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min, incl, concepts)
    
     #compute data rate required
     datarate_imaging = 2632.*10.**6. #[bps]
@@ -599,7 +606,7 @@ if concepts[1]:
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
     
     #compute contact time
-    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min)
+    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min, incl, concepts)
    
     #compute data rate required
     datarate_imaging = 2632.*10.**6. #[bps]
