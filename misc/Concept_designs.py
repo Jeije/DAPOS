@@ -11,7 +11,7 @@ import numpy as np
 
 
 def panel_area(t_o, t_e, pr_day, pr_eclipse, theta = 0):
-    """COmpute the panel area needed for operations
+    """Compute the panel area needed for operations
 
     INPUTS
     t_o = orbital time [sec]
@@ -81,7 +81,7 @@ def comms_mass(power_transmitter, area_antenna, dens_antenna):
 
    return total_mass, vol_trans
 
-def comms(h, freq, G_trans, D_reciever, Ts, R, E_N):
+def comms(h, freq, G_trans, D_reciever, Ts, R, E_N, rain):
     """Link budget in order to calculate the power required for the transmitter
 
     INPUT
@@ -92,21 +92,26 @@ def comms(h, freq, G_trans, D_reciever, Ts, R, E_N):
     Ts = system noise temperature [K]
     R = data rate during communications [bps]
     E_N = signal to noise ratio [dB]
+    Rain = rain attentuation losses [dB] from table page 534 smad using optimal elevation angle and iterative estimation of the power
 
     OUTPUT
     power required for transmitter [W]"""
 
     #Characterisics of the system
-    dish_eff = 0.5  #efficiency of the dish of the recieving station
+    dish_eff = 0.55  #efficiency of the dish of the recieving station
 
     #Losses and gains
     line = 0.89     #line losses [dB]
-    rain = 4+3/13*(freq*10**(-9)-27)    #rain attentuation losses [dB], TO BE ADAPTED FOR ALL f
     space = 147.55-20*np.log10(h*10**3)-20*np.log10(freq)   #space losses [dB]
     G_rec = -159.59+20*np.log10(D_reciever)+20*np.log10(freq)+10*np.log10(dish_eff) #gain of the recieving antenna [dB]
     G_trans = G_trans
+    
+    #[103] A New Approach for Enhanced Communication to LEO Satellites
+    E_opt= 45.-0.00446*h #[deg]     optimal elevation angle for communications
+    
+    P= 10.**((E_N-line-G_trans-space-rain-G_rec-228.6+10.*np.log10(Ts)+10.*np.log10(R))/10.) #[W]
 
-    return 10**((E_N-line-G_trans-space-rain-G_rec-228.6+10*np.log10(Ts)+10*np.log10(R))/10)
+    return P
 
 def thrust_power(T):
     """Compute the power required [W] to provide a certain thrust for RIT ion thruster
@@ -338,7 +343,61 @@ def sizing(dens, massf_req, velocity, area_rat, P_other_day, P_other_ecl, intake
 
         return thrust, drag_sat+drag_panel, panelA,panelA_out, panelA-panelA_out, panelM, intakeA, frontalA, length, width_panel
 
+def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min):
 
+    """Compute the contact time with the ground station, istantaneous position parameters
+
+    INPUT
+    longitude_ground = [deg] longitude of ground station
+    latitude_ground = [deg] latitude of ground station
+    longitude_sub = [deg] longitude of subsatellite point (groundtrack) GET DATA FROM ORBIT MODEL
+    latitude_sub = [deg] latitude of subsatellite point (groundtrack) GET DATA FROM ORBIT MODEL
+    elevation_min = [deg] minimum elevation angle at which the ground station is visible
+    
+    OUTPUT
+    
+    elevation = [deg] istantaneous elevation angle to the horizon of the ground station
+    contact_time = [sec] contact time with the ground station
+    
+    """
+
+    #INSTANTANEOUS POSITION OF S/C
+    #FROM SMAD PAG 109-111
+    
+    R_E= 6378 #[km]
+    rho_rad= np.arcsin(R_E/(R_E+h)) #[rad] angular radius of Earth 
+    rho=np.rad2deg(rho_rad) #[deg]
+    lambda_0=90-rho #[deg] angular radius measured at the centre of the earth of the region as seen from s/c
+    lambda_0_rad= np.deg2rad(lambda_0) #[rad]
+    D_max= R_E*np.tan(lambda_0_rad)#[km] distance to the horizon 
+    Delta_L= np.abs(longitude_sub-longitude_ground)
+    latitude_sub_rad=np.deg2rad(latitude_sub)
+    latitude_ground_rad=np.deg2rad(latitude_ground)
+    Delta_L_rad=np.deg2rad(Delta_L)
+    lambda_Earth_rad= np.arccos(   np.sin(latitude_sub_rad)*np.sin(latitude_ground_rad)+np.cos(latitude_sub_rad)*np.cos(latitude_ground_rad)*np.cos(Delta_L_rad)   ) #[rad] earth centered angle, measured from subsatellite point to target        
+    lambda_Earth=np.rad2deg(lambda_Earth_rad) #[deg]
+    eta_rad= np.arctan(  np.sin(rho_rad)*np.sin(lambda_Earth_rad)/(1-np.sin(rho_rad)*np.cos(lambda_Earth_rad))   ) #[rad] angle from nadir
+    eta= np.rad2deg(eta_rad)  #[deg] angle from nadir
+    elevation= 90- eta -lambda_Earth   #[deg] elevation angle
+    D=R_E*np.sin(lambda_Earth_rad)/np.sin(eta_rad) #[km]
+    
+    elevation_min_rad=np.deg2rad(elevation_min)
+    
+    #FROM NOW ON: ASSUMPTION OF CIRCULAR ORBIT
+    
+    etaMAX_rad= np.arcsin(  np.sin(rho_rad)*np.cos(elevation_min_rad)   ) #[rad] angle from nadir
+    etaMAX= np.rad2deg(etaMAX_rad)  #[deg] angle from nadir
+    lambdaMAX= 90-etaMAX-elevation_min
+    elevation_max= 180-elevation_min
+    
+    #lat_pole= 90 #[deg]
+    
+    lambdaMIN=7 #[deg]   #assumption (can be calculated using the inclination and ascending node of the S/C from SMAD p 116)
+    lambdaMIN_rad=np.deg2rad(lambdaMIN)
+    lambdaMAX_rad=np.deg2rad(lambdaMAX)
+    contact_time =(t_o/180)*np.rad2deg(np.arccos(np.cos(lambdaMAX)/np.cos(lambdaMIN))) #[s] Contact time with the ground station
+    
+    return elevation, contact_time
 
 
 
@@ -367,11 +426,12 @@ if concepts[0]:
     density = 1*10**-10     #[kg/m^3] density for which the system is designed
 
     #communication inputs
-    frequency = 36*10**9    #[Hz] frequency at which communincation is done
+    frequency = 8*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
     D_rec = 1               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
+    rain= 2                 #rain attentuation losses [dB]
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
 
@@ -409,7 +469,7 @@ if concepts[0]:
     R = 40*10**6                   #[bps] data rate required during communications
 
     #compute power required for communications
-    P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N)
+    P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N, rain)
 
     #compute mass assigned to the communication system
     M_comm, V_comm = comms_mass(P_comms, A_antenna, rho_antenna)
@@ -469,10 +529,11 @@ if concepts[1]:
     dens_rat = dens_ratios[selected-1]
     
     #communication inputs
-    frequency = 36*10**9    #[Hz] frequency at which communincation is done
+    frequency = 8*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
     D_rec = 1               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
+    rain= 2                 #rain attentuation losses [dB]
     E_N = 10                #[dB] signal to noise ratio desired for communications
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
@@ -500,6 +561,18 @@ if concepts[1]:
     DOD = 0.25              #[-] depth of discharge
     number_batt = 2        #[-] number of battery packs
     
+    #Ground station parameters
+    #ESA SVALBARD https://www.esa.int/Our_Activities/Navigation/Galileo/Galileo_IOV_ground_stations_Svalbard
+    #SvalSat and KSAT's Troll Satellite Station (TrollSat) in Antarctica are the only ground stations that can see a low altitude polar orbiting satellite (e.g., in sun-synchronous orbit) on every revolution as the earth rotates.
+    longitude_ground= 15.399 #[deg] Lt ground station (ESA Svalbard)
+    latitude_ground= 78.228 #[deg] delta_t ground station (ESA Svalbard)
+    elevation_min=5 #[deg] minimum elevation angle above the horizon to make contact with ground
+    
+    # ground track parameters TO BE UPDATED ONCE WE HAVE A MODEL    
+    longitude_sub= 185 #20 #[deg] Ls subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model 
+    latitude_sub= 10#90 #[deg] delta_s subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model 
+
+    
     #Design specfification computation
     #compute camera resolution performance
     cam_perf = cam_res(cam_alt, res, h)
@@ -507,11 +580,20 @@ if concepts[1]:
     #compute orbital parameters from desired orbit
     a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
+    
+    #compute contact time
+    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min)
+    
+   
     #compute data rate required
-    R = 40*10**6                   #[bps] data rate required during communications
+    datarate_imaging = 2632.*10.**6. #[bps]
+    compression_rat = 3./5.   #[-]
+    data_orbit = datarate_imaging*(t_o-t_e)*compression_rat     #data produced during orbit [bits]
+    R = data_orbit/contact_time    #[bps] data rate required during communications
+
     
     #compute power required for communications
-    P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N)
+    P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N, rain)
     
     #compute mass assigned to the communication system
     M_comm, V_comm = comms_mass(P_comms, A_antenna, rho_antenna)
