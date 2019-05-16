@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Thu May 16 14:14:28 2019
+
+@author: msjor
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Wed May 15 09:44:48 2019
 
 @author: msjor
@@ -15,7 +22,7 @@ from nrlmsise_00_dens import nlrmsise00_dens
 
 
 def panel_area(t_o, t_e, pr_day, pr_eclipse, theta = 0):
-    """Compute the panel area needed for operations
+    """COmpute the panel area needed for operations
 
     INPUTS
     t_o = orbital time [sec]
@@ -347,7 +354,7 @@ def sizing(dens, massf_req, velocity, area_rat, P_other_day, P_other_ecl, intake
 
         return thrust, drag_sat+drag_panel, panelA,panelA_out, panelA-panelA_out, panelM, intakeA, frontalA, length, width_panel
 
-def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min):
+def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min, incl, concept):
 
     """Compute the contact time with the ground station, istantaneous position parameters
 
@@ -394,12 +401,19 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
     lambdaMAX= 90-etaMAX-elevation_min
     elevation_max= 180-elevation_min
 
-    #lat_pole= 90 #[deg]
-
-    lambdaMIN=7 #[deg]   #assumption (can be calculated using the inclination and ascending node of the S/C from SMAD p 116)
+    if incl !=None:
+        lat_pole= 90-incl #[deg]
+        lat_pole_rad=np.deg2rad(lat_pole)
+        long_pole= 100 #L_node-90
+        Dlong= np.abs(long_pole-longitude_ground)
+        Dlong_rad= np.deg2rad(Dlong)
+        lambdaMIN= np.arcsin(    np.sin(lat_pole_rad)*np.sin(latitude_ground_rad)+np.cos(lat_pole_rad)*np.cos(latitude_ground_rad)*np.cos(Dlong_rad)     )
+        print(lambdaMIN)
+    if incl == None:
+        lambdaMIN=7 #[deg]   #assumption (can be calculated using the inclination and ascending node of the S/C from SMAD p 116)
     lambdaMIN_rad=np.deg2rad(lambdaMIN)
     lambdaMAX_rad=np.deg2rad(lambdaMAX)
-    contact_time =(t_o/180)*np.rad2deg(np.arccos(np.cos(lambdaMAX)/np.cos(lambdaMIN))) #[s] Contact time with the ground station
+    contact_time =(t_o/180)*np.rad2deg(np.arccos(np.cos(lambdaMAX_rad)/np.cos(lambdaMIN_rad))) #[s] Contact time with the ground station
 
     return elevation, contact_time
 
@@ -430,12 +444,12 @@ if concepts[0]:
     density = 1*10**-10     #[kg/m^3] density for which the system is designed
 
     #communication inputs
-    frequency = 8*10**9    #[Hz] frequency at which communincation is done
+    frequency = 36*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
-    D_rec = 1               #[m] diameter of the reciever antenna
+    D_rec = 3               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
-    rain= 2                 #rain attentuation losses [dB]
+    rain = 2
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
 
@@ -462,6 +476,16 @@ if concepts[0]:
     DOD = 0.25              #[-] depth of discharge
     number_batt = 2        #[-] number of battery packs
 
+    #Ground station parameters
+    #ESA SVALBARD https://www.esa.int/Our_Activities/Navigation/Galileo/Galileo_IOV_ground_stations_Svalbard
+    longitude_ground= 15.399 #[deg] Lt ground station (ESA Svalbard)
+    latitude_ground= 78.228 #[deg] delta_t ground station (ESA Svalbard)
+    elevation_min=5 #[deg] minimum elevation angle above the horizon to make contact with ground
+
+    # ground track parameters TO BE UPDATED ONCE WE HAVE A MODEL
+    longitude_sub= 185 #20 #[deg] Ls subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model
+    latitude_sub= 10#90 #[deg] delta_s subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model
+
     #Design specfification computation
     #compute camera resolution performance
     cam_perf = cam_res(cam_alt, res, h)
@@ -469,8 +493,15 @@ if concepts[0]:
     #compute orbital parameters from desired orbit
     a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
+
+    #compute contact time
+    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min, incl, concepts)
+
     #compute data rate required
-    R = 40*10**6                   #[bps] data rate required during communications
+    datarate_imaging = 2632.*10.**6. #[bps]
+    compression_rat = 3./5.   #[-]
+    data_orbit = datarate_imaging*(t_o-t_e)*compression_rat     #data produced during orbit [bits]
+    R = data_orbit/contact_time    #[bps] data rate required during communications
 
     #compute power required for communications
     P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N, rain)
@@ -524,29 +555,23 @@ if concepts[0]:
 if concepts[1]:
     #input of the concept
     #environmental inptus
-    selected = 3
+    selected = 5
     hlist = [140, 150, 160, 170, 180, 190, 200] ##list of considered altitude
     denslist  = [3.1*10**-9, 2*10**-9, 1.1*10**-9, 9.4*10**-10, 6.5*10**-10, 4*10**-10, 2.5*10**-10] #list of maxmimum densities at the presented altitudes
     dens_ratios = [0.7529, 0.678486, 0.60714, 0.54016, 0.4783, 0.422, 0.371698]
     h = hlist[selected-1]                 #[km] altitude selected from [160, 170, 180, 190, 200]
     density = denslist[selected-1]*1.2   #[kg/m^3] density for which the system is designed (20-25 % added for uncertainty in reading of graph)
     dens_rat = dens_ratios[selected-1]
+    R_e         = 6378.1           # km, Earth's radius (max)
 
     #communication inputs
-    frequency = 8*10**9    #[Hz] frequency at which communincation is done
+    frequency = 36*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
-    D_rec = 1               #[m] diameter of the reciever antenna
+    D_rec = 3               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
-    rain= 2                 #rain attentuation losses [dB]
     E_N = 10                #[dB] signal to noise ratio desired for communications
     A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
-
-    #camera specifications
-    cam_alt = 500           #[km] altitude at which the camera selected was tested
-    res = 0.6               #[m/pixel] resolution obtained at the tested altitude
-    P_pay = 0              #[W] power required to operate payload
-    M_pay = 0              #[kg] mass of the payload
 
     #propulsion parameters
     massf_req = 7/dens_rat           #[SCCM] massflow required for a functional engine
@@ -572,29 +597,33 @@ if concepts[1]:
     latitude_ground= 78.228 #[deg] delta_t ground station (ESA Svalbard)
     elevation_min=5 #[deg] minimum elevation angle above the horizon to make contact with ground
 
-    # ground track parameters TO BE UPDATED ONCE WE HAVE A MODEL
-    longitude_sub= 185 #20 #[deg] Ls subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model
-    latitude_sub= 10#90 #[deg] delta_s subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model
-
 
     #Design specfification computation
-    #compute camera resolution performance
-    cam_perf = cam_res(cam_alt, res, h)
 
     #compute orbital parameters from desired orbit
-    a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, False)
+    a, r_a, r_p, r,e, V, t_o, t_e, delta_V_tot, incl  = orbit(h, h, True)
     cycles = 10*365.25*24*3600/t_o          #number of battery charge discharge cycles
 
-    #compute contact time
-    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min)
+    #compute eclipse time based on sun-synchronous dusk-dawn
+    H = R_e/(R_e+h)
+    d_j = np.arccos(H)
+    j = (incl-90)/180*np.pi
+    d_1 = (d_j-j)*180/np.pi
+    d_2 = (-d_j-j)*180/np.pi
+    alpha_1 = np.arccos(np.sin(d_j)/np.sin(23.44/180*np.pi+j))
+    alpha_2 = np.arccos(np.sin(d_j)/np.sin(23.44/180*np.pi-j))
+    t_e_1 = alpha_1/np.pi*t_o
+    t_e_2 = alpha_2/np.pi*t_o
+    t_e = max(t_e_1, t_e_2)
 
+    #compute contact time
+    elevation, contact_time= elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_sub, elevation_min, incl, concepts)
 
     #compute data rate required
     datarate_imaging = 2632.*10.**6. #[bps]
     compression_rat = 3./5.   #[-]
     data_orbit = datarate_imaging*(t_o-t_e)*compression_rat     #data produced during orbit [bits]
     R = data_orbit/contact_time    #[bps] data rate required during communications
-
 
     #compute power required for communications
     P_comms = comms(h, frequency, G_trans, D_rec, Ts, R, E_N, rain)
@@ -603,7 +632,7 @@ if concepts[1]:
     M_comm, V_comm = comms_mass(P_comms, A_antenna, rho_antenna)
 
     #find power required during eclipse and day
-    P_other_day = P_comms+P_pay+P_misc
+    P_other_day = P_comms+P_misc
     P_other_ecl = P_comms+P_misc
 
     #Size the solar panels, intake, also compute drag and thrust
@@ -619,12 +648,14 @@ if concepts[1]:
         M_batt = M_batt*number_batt
 
     #result presentation
-    print ("-------------------------------Result for", names[1],"---------------------------")
+    print ("-------------------------------Result for", names[1],"at", h, "km","---------------------------")
     print (" ")
     print ("                                -Power budget-                        ")
     print ("Power to operate engine = ",  thrust_power(thrust), "[W]")
     print ("Power for communication system = ", P_comms, "[W]")
     print ("Power for other subsystems = ", P_misc, "[W]")
+    print ("-----------------------------------------------   +")
+    print ("Maximum power required =", thrust_power(thrust)+P_comms+P_misc, "[W]")
     print (" ")
     print ("                                -Mass budget-                        ")
     print ("Mass for solar panels =", panelM, "[kg]")
