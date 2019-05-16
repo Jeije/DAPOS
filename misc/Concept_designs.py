@@ -428,7 +428,7 @@ if concepts[0]:
     #communication inputs
     frequency = 8*10**9    #[Hz] frequency at which communincation is done
     G_trans = 5             #[dB] gain of the transmitter used
-    D_rec = 1               #[m] diameter of the reciever antenna
+    D_rec = 5               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
     rain= 2                 #rain attentuation losses [dB]
