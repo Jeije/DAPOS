@@ -2,13 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6386872b-afcd-41e4-918c-8d32c476d745" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/misc/prelim_calc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/f107a.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/nrlmsise_00_datapros.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/nrlmsise_00_time.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/orbit/orbit_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/nrlmsise_00_dens.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/nrlmsise_00_dens.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/ap_process/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/ap_process/data_extract.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/data_extract.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/data_extract.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/data_fill.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/data_fill.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/f107a.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/f107a.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/main.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +17,29 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/ap_process/data_extract.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="254">
+              <caret line="98" column="16" lean-forward="true" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/data_extract.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="357">
+              <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -49,20 +71,22 @@
         <option value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/f107a.py" />
         <option value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/data_fill.py" />
         <option value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/main.py" />
+        <option value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/ap_process/data_extract.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="974" />
-    <option name="height" value="1047" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -99,7 +123,15 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="atmos_model" type="462c0819:PsiDirectoryNode" />
               <item name="nlrmsise-00" type="462c0819:PsiDirectoryNode" />
-              <item name="dataprocess" type="462c0819:PsiDirectoryNode" />
+              <item name="ap_process" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="atmos_model" type="462c0819:PsiDirectoryNode" />
+              <item name="nlrmsise-00" type="462c0819:PsiDirectoryNode" />
+              <item name="sunflux_process" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
@@ -118,7 +150,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -141,18 +172,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.main">
-    <configuration name="data_fill" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.data_extract">
+    <configuration name="data_extract" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/ap_process" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/data_fill.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/ap_process/data_extract.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -165,6 +199,9 @@
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -206,6 +243,9 @@
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/orbit" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -225,6 +265,9 @@
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/misc" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -242,11 +285,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.data_fill" />
+        <item itemvalue="Python.data_extract" />
+        <item itemvalue="Python.data_extract" />
+        <item itemvalue="Python.data_extract" />
+        <item itemvalue="Python.data_extract" />
+        <item itemvalue="Python.data_extract" />
       </list>
     </recent_temporary>
   </component>
@@ -265,19 +308,22 @@
       <workItem from="1557676748153" duration="3338000" />
       <workItem from="1557684926249" duration="5544000" />
       <workItem from="1557733892282" duration="10144000" />
+      <workItem from="1558030158069" duration="2921000" />
+      <workItem from="1558039835110" duration="5703000" />
+      <workItem from="1558091945684" duration="603000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25055000" />
+    <option name="totallyTimeSpent" value="34282000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26066098" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13326226" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" weight="0.32936078" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32936078" />
@@ -290,14 +336,15 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50053304" side_tool="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49946696" visible="true" weight="0.32936078" />
-      <window_info anchor="right" id="Coverage" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Python Console" order="12" sideWeight="0.49946696" visible="true" weight="0.32286024" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" auto_hide="true" x="1211" y="109" width="566" height="537" id="SciView" order="3" show_stripe_button="false" type="FLOATING" weight="0.32995737" />
       <window_info anchor="right" x="0" y="0" width="434" height="856" id="Documentation" order="4" side_tool="true" weight="0.32995737" />
       <window_info anchor="right" id="Database" order="5" />
+      <window_info anchor="right" id="Coverage" order="6" side_tool="true" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,14 +460,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/data_extract.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="19" selection-start-column="19" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/data_fill.py">
+    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/data_fill.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="595">
           <caret line="35" selection-start-line="35" selection-end-line="35" />
@@ -430,7 +470,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/f107a.py">
+    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/f107a.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
@@ -450,7 +490,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/main.py">
+    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
@@ -487,6 +527,23 @@
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/ap_process/data_extract.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="98" column="16" lean-forward="true" selection-start-line="98" selection-start-column="16" selection-end-line="98" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos_model/nlrmsise-00/sunflux_process/data_extract.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
         </state>
       </provider>
     </entry>
