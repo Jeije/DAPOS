@@ -107,14 +107,13 @@ def comms(h, freq, G_trans, D_reciever, Ts, R, E_N, rain):
     power required for transmitter [W]"""
 
     #Characterisics of the system
-    dish_eff = 0.55  #efficiency of the dish of the recieving station
-
+    dish_eff = 0.6  #efficiency of the dish of the recieving station
+    Ts = Ts+290*(1-10**(rain/10))
     #Losses and gains
     line = 0.89     #line losses [dB]
     space = 147.55-20*np.log10(h*10**3)-20*np.log10(freq)   #space losses [dB]
     G_rec = -159.59+20*np.log10(D_reciever)+20*np.log10(freq)+10*np.log10(dish_eff) #gain of the recieving antenna [dB]
     G_trans = G_trans
-
     #[103] A New Approach for Enhanced Communication to LEO Satellites
     E_opt= 45.-0.00446*h #[deg]     optimal elevation angle for communications
 
@@ -408,7 +407,7 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
         Dlong= np.abs(long_pole-longitude_ground)
         Dlong_rad= np.deg2rad(Dlong)
         lambdaMIN= np.arcsin(    np.sin(lat_pole_rad)*np.sin(latitude_ground_rad)+np.cos(lat_pole_rad)*np.cos(latitude_ground_rad)*np.cos(Dlong_rad)     )
-        print(lambdaMIN)
+
     if incl == None:
         lambdaMIN=7 #[deg]   #assumption (can be calculated using the inclination and ascending node of the S/C from SMAD p 116)
     lambdaMIN_rad=np.deg2rad(lambdaMIN)
@@ -423,7 +422,7 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
-concepts = [False, True , False]
+concepts = [True, True , False]
 names = ["Paylöd", "Grävt", "supposedly cool"]
 
 
@@ -445,13 +444,13 @@ if concepts[0]:
 
     #communication inputs
     frequency = 19.7*10**9    #[Hz] frequency at which communincation is done
-    G_trans = 10             #[dB] gain of the transmitter used
+    G_trans = 12             #[dB] gain of the transmitter used
     D_rec = 5               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
     rain = -5
-    A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
-    rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
+    A_antenna = 0.0314         #[m^2] area of the antenna used on the spacecraft
+    rho_antenna = 5         #[kg/m^2] density of the antenna used on the spacecraft
 
     #camera specifications
     cam_alt = 500           #[km] altitude at which the camera selected was tested
@@ -539,6 +538,7 @@ if concepts[0]:
         print ("Mass for solar panels =", panelM, "[kg]")
         print ("Mass for batteries =", M_batt, "[kg]")
         print ("Mass for power management system = ", 0.25*(panelM+M_batt)/(1-0.25), "[kg]")
+        print ("Mass total power system =", (panelM+M_batt)*1.333333333, "[kg]")
         print ("Mass for communication system =", M_comm, "[kg]")
         print ("Mass for payload =", M_pay, "[kg]")
         print (" ")
@@ -567,12 +567,12 @@ if concepts[1]:
 
     #communication inputs
     frequency = 19.7*10**9    #[Hz] frequency at which communincation is done
-    G_trans = 10             #[dB] gain of the transmitter used
+    G_trans = 12             #[dB] gain of the transmitter used
     D_rec = 5               #[m] diameter of the reciever antenna
     Ts = 700                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
-    A_antenna = 0.2         #[m^2] area of the antenna used on the spacecraft
-    rho_antenna = 8         #[kg/m^2] density of the antenna used on the spacecraft
+    A_antenna = 0.0314          #[m^2] area of the antenna used on the spacecraft
+    rho_antenna = 5         #[kg/m^2] density of the antenna used on the spacecraft
     rain = -5
 
     #propulsion parameters
@@ -601,6 +601,9 @@ if concepts[1]:
     latitude_ground= 78.228 #[deg] delta_t ground station (ESA Svalbard)
     elevation_min=5 #[deg] minimum elevation angle above the horizon to make contact with ground
 
+    # ground track parameters TO BE UPDATED ONCE WE HAVE A MODEL
+    longitude_sub= 185 #20 #[deg] Ls subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model
+    latitude_sub= 10#90 #[deg] delta_s subsatellite point (groundtrack to centre of the earth) get INSTANTANEOUS data from orbit model
 
     #Design specfification computation
 
@@ -644,7 +647,7 @@ if concepts[1]:
 
     #battery mass required
     M_batt = (thrust_power(thrust)+P_other_ecl)/battery_deg*t_e/3600/battery_dens/DOD
-    print (M_batt*100-P_other_ecl-thrust_power(thrust))
+
     if M_batt*100<P_other_ecl+thrust_power(thrust):
 
         print ("BATTERIES CANT PROVIDE REQUIRED POWER< USE LESS BATTERY PACKS")
@@ -666,6 +669,7 @@ if concepts[1]:
     print ("Mass for solar panels =", panelM, "[kg]")
     print ("Mass for batteries =", M_batt, "[kg]")
     print ("Mass for power management system = ", 0.333333*(panelM+M_batt), "[kg]")
+    print ("Mass total power system =", (panelM+M_batt)*1.333333333, "[kg]")
     print ("Mass for communication system =", M_comm, "[kg]")
     print (" ")
     print ("                                -System characteristics-                        ")
