@@ -202,6 +202,7 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
     E_tot  = -mu / (2 * a) * 1e6                     # J/kg, specific energy
     T_ecl  = np.arcsin(R_e / a) / np.pi * P_orb              # s, eclipse time (max, 2D, circular
 
+    
     if lower_limit != upper_limit:
         # required delta V for station keeping per orbit (formula from SMAD)
         Per         = P_orb / (3600 * 24 * 365) # yr, period
@@ -218,9 +219,8 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
 
     if sun_sync:
         # inclination for a syn-synchronous orbit, see AE2230 lecture 1 p. 57
-        i     = np.arccos(-2/3 * P_orb/P_ES * 1/(J_2 * (R_e / r_p)**2)) # rad
+        i     = np.arccos(-2/3 * P_orb/P_ES * 1/(J_2 * (R_e / p)**2)) # rad
         i_deg = np.rad2deg(i) # deg
-
         # eclipse calculations (3D, maximum eclipse because R_e is max
         # (flattening), atmospheric inteference not taken into account (not
         # relevant for one orbit either, but it is for longer periods),
@@ -234,7 +234,6 @@ def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
         #S      = R_e*R_e*(1 + e*np.cos(theta))**2 + p*p*(cosPsi)**2 - p*p
         #T_in_e = time[np.where(np.logical_and(Psi > np.pi/2, S >= 0))]
         #T_ecl  = max(T_in_e) - min(T_in_e)               # s, eclipse time
-
     else:
         i_deg = None
 
