@@ -422,7 +422,7 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
-concepts = [True, True , False]
+concepts = [True, True, False]
 names = ["Paylöd", "Grävt", "supposedly cool"]
 
 
@@ -446,7 +446,7 @@ if concepts[0]:
     frequency = 19.7*10**9    #[Hz] frequency at which communincation is done
     G_trans = 12             #[dB] gain of the transmitter used
     D_rec = 5               #[m] diameter of the reciever antenna
-    Ts = 700                #[K] system noise temperature
+    Ts = 400                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
     rain = -5
     A_antenna = 0.0314         #[m^2] area of the antenna used on the spacecraft
@@ -569,7 +569,7 @@ if concepts[1]:
     frequency = 19.7*10**9    #[Hz] frequency at which communincation is done
     G_trans = 12             #[dB] gain of the transmitter used
     D_rec = 5               #[m] diameter of the reciever antenna
-    Ts = 700                #[K] system noise temperature
+    Ts = 400                #[K] system noise temperature
     E_N = 10                #[dB] signal to noise ratio desired for communications
     A_antenna = 0.0314          #[m^2] area of the antenna used on the spacecraft
     rho_antenna = 5         #[kg/m^2] density of the antenna used on the spacecraft
