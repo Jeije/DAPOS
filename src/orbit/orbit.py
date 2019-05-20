@@ -30,7 +30,7 @@ V_circ  = np.sqrt(miu_e/r)                                                 # m/s
 
 V_esc   = np.sqrt(2.*miu_e/r)                                              # m/s
 P       = 2.*np.pi*np.sqrt((r**3.)/miu_e)                                  # s
-V_ang   = 2.*np.pi*/P                                                      # rad/s
+V_ang   = 2.*np.pi/P                                                      # rad/s
 csi     = -miu_e/(2.*r)                                                    #J  satellite energy
 T_ecl   = (r/np.pi)*P                                                      # s max eclipse time
 s_node  = 2.*np.pi*(P/1436.07)                                             # rad  long btw successive ascending/descending nodes

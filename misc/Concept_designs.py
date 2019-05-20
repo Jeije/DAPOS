@@ -133,10 +133,6 @@ def power_thrust(P):
     #returns the thrust provided [N] based on a linear relation between thrust and power
     return -0.00069068+0.0000156*P
 
-def CD(A):
-    """"Compute C_D [-] of a cylinder in a rarified flow
-        A = frontal area [m^2]"""
-    CD = (1.+np.pi/6.*np.sqrt(A/np.pi))*2
     return CD
 
 def orbit(lower_limit, upper_limit, sun_sync, B=None, rho=None, T=None,
@@ -421,9 +417,12 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
+<<<<<<< HEAD
 concepts = [True, True, False]
+=======
+concepts = [True, False , False]
+>>>>>>> 7a044f535c14734b278b04029b06fe32af65c052
 names = ["Paylöd", "Grävt", "supposedly cool"]
-
 
 ######################################## General inputs #################################################
 #drag coefficients of different shapes, based on the projected area
@@ -433,13 +432,15 @@ CD_cyl = 2.6            #[-]            CD of cylinder of l/D =1, alpha= 0.95, T
 CD_plate = 2.35         #[-]            CD of flat plate, diffuse reflections
 panel_t = 0.05          #[m]
 min_intake = 0.         #[m^2] minimum intake area
+w = 0.001               #[m] thickness of skin intake
+mat_dens = 2800         #[kg/m^3] density of the material 
 
 ######################################## Complete designs of the concepts ###############################
 if concepts[0]:
     #input of the concept
     #environmental inptus
-    h = 250                 #[km] altitude
-    density = 1*10**-10     #[kg/m^3] density for which the system is designed
+    h = 205                 #[km] altitude
+    density = 3.115*10**-10     #[kg/m^3] density for which the system is designed
 
     #communication inputs
     frequency = 19.7*10**9    #[Hz] frequency at which communincation is done
@@ -460,12 +461,13 @@ if concepts[0]:
     #propulsion parameters
     massf_req = 7           #[SCCM] massflow required for a functional engine
     intake_eff = 0.4        #[-] intake efficicency
-    T_D = 1.1               #[-] Thrust to drag ratio
+    T_D = 1.2               #[-] Thrust to drag ratio
 
     #geometrical parameters
     aspect_rat = 5          #[-] Aspect ratio of the intake, assumed to be equal for the outer shell
     body_frac = 0.8         #[-] Fraction of body that can be used for solar panels
     area_rat = 1.2          #[-] Ratio between intake area and frontal area
+
 
     #power parameters
     P_misc = 200            #[W] power required for other subsystems
@@ -540,6 +542,9 @@ if concepts[0]:
         print ("Mass total power system =", (panelM+M_batt)*1.333333333, "[kg]")
         print ("Mass for communication system =", M_comm, "[kg]")
         print ("Mass for payload =", M_pay, "[kg]")
+        print ("Mass for structure = ", np.sqrt(frontalA/np.pi)*2*np.pi*w*mat_dens*length, "[kg]")
+        print ("-----------------------------------------------   +")
+        print ("Total mass that can be estimated =", M_comm+M_pay+(panelM+M_batt)*1.333333333+np.sqrt(frontalA/np.pi)*2*np.pi*w*mat_dens*length, "[W]")
         print (" ")
         print ("                                -System characteristics-                        ")
         print ("Intake size =", intakeA, "[m^2]")
@@ -670,6 +675,9 @@ if concepts[1]:
     print ("Mass for power management system = ", 0.333333*(panelM+M_batt), "[kg]")
     print ("Mass total power system =", (panelM+M_batt)*1.333333333, "[kg]")
     print ("Mass for communication system =", M_comm, "[kg]")
+    print ("Mass for structure = ", np.sqrt(frontalA/np.pi)*2*np.pi*w*mat_dens*length, "[kg]")
+    print ("-----------------------------------------------   +")
+    print ("Total mass that can be estimated =", M_comm+M_pay+(panelM+M_batt)*1.333333333+np.sqrt(frontalA/np.pi)*2*np.pi*w*mat_dens*length, "[W]")
     print (" ")
     print ("                                -System characteristics-                        ")
     print ("Intake size =", intakeA, "[m^2]")
