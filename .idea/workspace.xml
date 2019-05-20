@@ -43,34 +43,26 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/main.py">
+    <leaf>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_process.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+            <state relative-caret-position="204">
+              <caret line="12" selection-start-line="12" selection-end-line="12" />
               <folding>
-                <element signature="e#0#32#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/misc_func.py">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_extract.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="17" lean-forward="true" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/f107a.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="85">
+              <caret line="9" column="110" lean-forward="true" selection-start-line="9" selection-start-column="110" selection-end-line="9" selection-end-column="110" />
               <folding>
-                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#0#19#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -123,15 +115,15 @@
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/sunflux_process/main.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/main.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_process.py" />
-        <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/data_extract.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/__init__.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/misc_func.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/main.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/main.py" />
+        <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/data_extract.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -149,90 +141,42 @@
         <subPane>
           <expand>
             <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
+              <item name="DAPOS_main" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAPOS_main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
-              <item name="misc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
+              <item name="DAPOS_main" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAPOS_main" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
+              <item name="DAPOS_main" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAPOS_main" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="atmos" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="atmos" type="462c0819:PsiDirectoryNode" />
-              <item name="nlrmsise00_data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="atmos" type="462c0819:PsiDirectoryNode" />
-              <item name="nlrmsise00_data" type="462c0819:PsiDirectoryNode" />
-              <item name="AP_Indices" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="atmos" type="462c0819:PsiDirectoryNode" />
-              <item name="nlrmsise00_data" type="462c0819:PsiDirectoryNode" />
-              <item name="SolarFlux_Indices" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
+              <item name="DAPOS_main" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAPOS_main" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="atmos" type="462c0819:PsiDirectoryNode" />
               <item name="nrlmsise00" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
+              <item name="DAPOS_main" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAPOS_main" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="atmos" type="462c0819:PsiDirectoryNode" />
               <item name="nrlmsise00" type="462c0819:PsiDirectoryNode" />
               <item name="ap_process" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="atmos" type="462c0819:PsiDirectoryNode" />
-              <item name="nrlmsise00" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
+              <item name="DAPOS_main" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DAPOS_main" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="atmos" type="462c0819:PsiDirectoryNode" />
               <item name="nrlmsise00" type="462c0819:PsiDirectoryNode" />
               <item name="solarflux_process" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="comms" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DAPOS_Main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DAPOS_Main" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="orbit" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -275,6 +219,9 @@
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -294,6 +241,9 @@
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -313,13 +263,16 @@
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos/nrlmsise00" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/atmos/nrlmsise00/main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -375,8 +328,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
-        <item itemvalue="Python.main" />
-        <item itemvalue="Python.main" />
+        <item itemvalue="Python.data_extract" />
+        <item itemvalue="Python.data_extract" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.main" />
       </list>
@@ -404,17 +357,19 @@
       <workItem from="1558189852283" duration="712000" />
       <workItem from="1558193144697" duration="13372000" />
       <workItem from="1558275763469" duration="21406000" />
+      <workItem from="1558391789945" duration="346000" />
+      <workItem from="1558392243322" duration="16000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77263000" />
+    <option name="totallyTimeSpent" value="77625000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1380597" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.141258" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -429,7 +384,7 @@
       <window_info anchor="bottom" id="Database Changes" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50053304" side_tool="true" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="11" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="12" sideWeight="0.49946696" visible="true" weight="0.2708559" />
+      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49946696" visible="true" weight="0.2708559" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -622,101 +577,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2012">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="366" lean-forward="true" selection-start-line="366" selection-end-line="366" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2004">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="71" selection-start-line="5" selection-start-column="71" selection-end-line="5" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2010">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="71" selection-start-line="1" selection-start-column="64" selection-end-line="1" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/sunflux_process/f107a.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/sunflux_process/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_extract.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="23" lean-forward="true" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_process.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="42" column="61" lean-forward="true" selection-start-line="42" selection-start-column="61" selection-end-line="42" selection-end-column="61" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2012" />
+    <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2004" />
+    <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2010" />
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/sunflux_process/f107a.py" />
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/sunflux_process/main.py" />
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/nrlmsise00_calc.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
           <caret line="1" column="11" lean-forward="true" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/data_fill.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1228">
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/data_extract.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -731,13 +602,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/SolarFlux_Indices/nlrmsise-00_f107data.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18515">
-          <caret line="25362" column="17" lean-forward="true" selection-start-line="25362" selection-start-column="13" selection-end-line="25362" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/SolarFlux_Indices/nlrmsise-00_f107data.txt" />
     <entry file="file://$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1981">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2125">
@@ -752,13 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/misc_func.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="17" lean-forward="true" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -766,6 +624,20 @@
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/misc_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
         </state>
       </provider>
     </entry>
@@ -778,12 +650,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/main.py">
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
-          <caret line="24" column="25" lean-forward="true" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+          <caret line="24" column="29" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
           <folding>
-            <element signature="e#0#32#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/data_fill.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1118">
+          <caret line="93" column="34" selection-start-line="93" selection-start-column="34" selection-end-line="93" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/data_extract.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="48" column="52" selection-start-line="48" selection-start-column="52" selection-end-line="48" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_process.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_extract.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="9" column="110" lean-forward="true" selection-start-line="9" selection-start-column="110" selection-end-line="9" selection-end-column="110" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
           </folding>
         </state>
       </provider>

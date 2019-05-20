@@ -1,11 +1,11 @@
 import pandas as pd
 from calendar import monthrange
-from
+
 
 
 class DataImport(object):
 
-    def __init__(self, datafile: str = r'C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos\nlrmsise00_data\SolarFlux_Indices\nlrmsise-00_f107data.txt'):
+    def __init__(self, datafile: str = r'C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos\nlrmsise00_data\SolarFlux_Indices\nlrmsise00_f107data.txt'):
 
         self.__datafile = datafile
 
