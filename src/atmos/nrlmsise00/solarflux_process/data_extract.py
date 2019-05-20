@@ -1,9 +1,11 @@
 import pandas as pd
+from calendar import monthrange
+from
 
 
 class DataImport(object):
 
-    def __init__(self, datafile: str = r'C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos_model\nlrmsise-00_data\nlrmsise-00_f107data.txt'):
+    def __init__(self, datafile: str = r'C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos\nlrmsise00_data\SolarFlux_Indices\nlrmsise-00_f107data.txt'):
 
         self.__datafile = datafile
 
@@ -42,7 +44,9 @@ class DataImport(object):
 
         for row in self.__data:
             length = len(row)
-            dates.append(row[:8])
+            doy = self.monthtodoy(int(row[:8][0:4]), int(row[:8][4:6]), int(row[:8][6:8]))
+
+            dates.append(int(row[:8][0:4]+str(doy)))
 
             if length == 9 or ' .' in row:
                 solar_index.append(None)
@@ -56,6 +60,14 @@ class DataImport(object):
         }
         self.__data = pd.DataFrame.from_dict(data)
         # self.__data.set_index([i for i in range(size)])
+
+    @staticmethod
+    def monthtodoy(year: int, month: int, day: int):
+        tot_days = 0
+        for x in range(1, month):
+            nb_days = monthrange(year, x)[1]
+            tot_days += nb_days
+        return tot_days + day
 
 
 

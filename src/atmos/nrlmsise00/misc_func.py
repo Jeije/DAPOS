@@ -1,5 +1,4 @@
 from calendar import monthrange
-import numpy as np
 
 def monthtodoy(year:int,month:int,day:int):
     tot_days=0
