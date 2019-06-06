@@ -23,6 +23,7 @@ def save_csv(dataframe: pd.DataFrame, filepath: str = r"C:\Users\mauro\OneDrive\
 if __name__ == "__main__":
     data,years = extractdata()
     ap = returnap(data,years)
+    b = ap.return_aplst(44,10)
     aplst = ap.return_apdata()
     apdf = df(aplst)
     save_csv(apdf)

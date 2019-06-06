@@ -45,7 +45,7 @@ class ApDataPros(object):
                 else:
                     apdaily = int(x[56:59] + x[60:62]) / 1000
 
-                ap = [int(str(self.__yearlst[idx1])+str(idx2+1)), apdaily] + self.return_ap(idx1,idx2)
+                ap = [int(str(self.__yearlst[idx1])+str(idx2+1)), apdaily] + self.return_ap(idx1,idx2+1)
                 self.__apdata.append(ap)
 
 

@@ -16,10 +16,10 @@ class f107a_calc(object):
 
         for idx in range(len(self.__f107coll)):
             sm = 0
-            a  = 40
+            a  = 38
             b = 40
 
-            if idx < 40:
+            if idx < 38:
                 a = idx
 
             if len(self.__f107coll)-idx-1 < 40:

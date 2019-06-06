@@ -4,7 +4,7 @@ from f107a import f107a_calc
 import pandas as pd
 
 
-def extract_all_data(filepath: str = r"C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos\nlrmsise00_data\SolarFlux_Indices\nlrmsise-00_f107data.txt") -> pd.DataFrame:
+def extract_all_data(filepath: str = r"C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos\nlrmsise00_data\SolarFlux_Indices\nlrmsise00_f107data.txt") -> pd.DataFrame:
 
     DI = DataImport(filepath)
     NF = NanFiller(DI.return_data())

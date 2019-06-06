@@ -8,7 +8,7 @@ class NanFiller(object):
 
         self.__df = dataframe
 
-        self.__datecol = self.__df['Date']
+        self.__datecol = self.__df['date']
         self.__SI_col = np.array(self.__df['Solar Index'])
 
         self.__nanlist = []

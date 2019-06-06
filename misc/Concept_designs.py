@@ -417,11 +417,11 @@ def elevationangle(longitude_ground, latitude_ground, longitude_sub, latitude_su
 #Concept 1: payload performance with constant density
 #Concept 2: Low orbit with gravity measurement
 #Concept 3: Highly elliptic orbit concept
-<<<<<<< HEAD
+#<<<<<<< HEAD
 concepts = [True, True, False]
-=======
+#=======
 concepts = [True, False , False]
->>>>>>> 7a044f535c14734b278b04029b06fe32af65c052
+#>>>>>>> 7a044f535c14734b278b04029b06fe32af65c052
 names = ["Paylöd", "Grävt", "supposedly cool"]
 
 ######################################## General inputs #################################################

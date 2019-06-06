@@ -55,7 +55,7 @@ class DataImport(object):
                 solar_index.append(float(self.__stringsplitter(row)))
 
         data = {
-            'Date': dates,
+            'date': dates,
             'Solar Index': solar_index
         }
         self.__data = pd.DataFrame.from_dict(data)
