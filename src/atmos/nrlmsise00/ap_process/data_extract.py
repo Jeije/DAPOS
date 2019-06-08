@@ -1,17 +1,17 @@
 import pandas as pd
 import numpy as np
 
-from os import listdir
+import os
 from os.path import isfile, join
 
 
 class ApDataImport(object):
 
-    def __init__(self, path: str = r'C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos\nlrmsise00_data\AP_Indices'):
+    def __init__(self, path: str = r'\\'.join(os.getcwd().split('\\')[:-4]) + '\\data\\nrlmsise00_data\\AP_Indices'):
 
         self.__pathfile = path
 
-        self.__yearlst = [f for f in listdir(path) if isfile(join(path, f))]
+        self.__yearlst = [f for f in os.listdir(path) if isfile(join(path, f))]
         self.__pathlst = list(self.__yearlst)
 
         self.__data = []

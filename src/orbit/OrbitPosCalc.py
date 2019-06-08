@@ -16,9 +16,8 @@ import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 from poliastro.plotting import *
 
-
 class OrbitGroundTrack(object):
-    def __init__(self, dt:int=1000, orbvec:np.array=np.array([6583000.1,0.0,94.3,310.0,0,0]), plot = False, coordinate = 'spherical'):
+    def __init__(self, dt:int=1000, orbvec:np.array=np.array([6621000.1,0.0,94.3,180,0,0]), plot = False, coordinate = 'spherical'):
 
         re = 6.3781e3
 
@@ -54,6 +53,7 @@ class OrbitGroundTrack(object):
 
         if plot == True:
             self.GroundPlot()
+            #self.OrbitPlot()
 
     def return_orbit(self):
         return self.__ss
@@ -63,9 +63,9 @@ class OrbitGroundTrack(object):
 
     def sphericalpos(self, dt,re):
         for idx in range(dt):
-            self.__vals[idx][1] = self.__ss_itrs.spherical._values[idx][0]
-            self.__vals[idx][2] = self.__ss_itrs.spherical._values[idx][1]
-            self.__vals[idx][3] = self.__ss_itrs.spherical._values[idx][2] - re
+            self.__vals[idx][1] = self.__latlon_itrs.lat.to(u.deg).value[idx]
+            self.__vals[idx][2] = self.__latlon_itrs.lon.to(u.deg).value[idx]
+            self.__vals[idx][3] =self.__latlon_itrs.distance.value[idx] - re
 
     def cartesianpos(self,dt):
         for idx in range(dt):
@@ -85,9 +85,13 @@ class OrbitGroundTrack(object):
         ax = plt.axes(projection=ccrs.PlateCarree())
         ax.stock_img()
         ax.plot(self.__latlon_itrs.lon.to(u.deg), self.__latlon_itrs.lat.to(u.deg), 'b', transform=ccrs.Geodetic(), label='ITRS');
-        ax.legend(loc='upper center', shadow=True, fontsize='x-large')
+        ax.legend(loc='upper right', shadow=True, fontsize='x-large')
         ax.plot()
 
+    def OrbitPlot(self):
+        frame = OrbitPlotter3D()
+        #frame.plot(Orbit.from_body_ephem(Earth), label=Earth)
+        frame.plot(self.__ss, label="Earth Orbit")
 
 if __name__ == "__main__":
     a = OrbitGroundTrack(plot = True)

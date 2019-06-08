@@ -2,33 +2,28 @@ from src.atmos.nrlmsise00.misc_func import monthtodoy
 
 import numpy as np
 import pandas as pd
+import os
+import datetime as dt
 
 #This class returns the solar and geomagnetic indices at any given day
 
 class Indexer(object):
 
-    def __init__(self, year: int = 1994, month: int = 1, day: int = 10, sec: int = 0, doy = False):
-        self.__AP_filepath = r'C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos\nlrmsise00_data\nlrmsise00_AP_processed.txt'
-        self.__F107_filepath = r'C:\Users\mauro\OneDrive\AE Bachelor - TU Delft\Year 3\DSE - Local\DAPOS_Main\src\atmos\nlrmsise00_data\nlrmsise00_f107datapros.txt'
+    def __init__(self, date: dt.datetime):
+        self.__date = date
+
+        self.__AP_filepath = r'\\'.join(os.getcwd().split('\\')[:-3]) + '\\data\\nrlmsise00_dataprocessed\\nlrmsise00_AP_processed.txt'
+        self.__F107_filepath = r'\\'.join(os.getcwd().split('\\')[:-3]) + '\\data\\nrlmsise00_dataprocessed\\nlrmsise00_f107datapros.txt'
 
         self.__apdf = self.__loadcsv(self.__AP_filepath)
         self.__f107df = self.__loadcsv(self.__F107_filepath)
 
-        if doy == False:
-            self.__doy = self.__monthtodoy(year,month,day)
-        elif doy == True:
-            self.__doy = month
-        else:
-            print('Invalid Inputs')
-            print('Inputs: Year, Month, Day, sec')
-            exit(0)
+        self.__aplastdf = self.__valuefinder(self.__apdf, self.__date.year, self.__date.month, self.__date.day)
+        self.__f107df = self.__valuefinder(self.__f107df, self.__date.year, self.__date.month, self.__date.day - 1)
 
+        self.__f107 = self.__interpl(np.array(self.__f107df['F107']),24*60*60,60*60*self.__date.hour+60*self.__date.minute+self.__date.second)
+        self.__f107a = self.__interpl(np.array(self.__f107df['F107A']), 24*60*60, 60*60*self.__date.hour+60*self.__date.minute+self.__date.second)
 
-        self.__aplastdf = self.__valuefinder(self.__apdf, year, self.__doy)
-        self.__f107df = self.__valuefinder(self.__f107df, year, self.__doy - 1)
-
-        self.__f107 = self.__interpl(np.array(self.__f107df['F107']),24*60*60,sec)
-        self.__f107a = self.__interpl(np.array(self.__f107df['F107A']), 24 * 60 * 60, sec)
         self.__ap_daily = np.array(self.__aplastdf['ap_daily'])[0]
         self.__ap1 = np.array(self.__aplastdf['ap1'])[0]
         self.__ap2 = np.array(self.__aplastdf['ap2'])[0]
@@ -39,7 +34,7 @@ class Indexer(object):
 
 
     def return_indices(self):
-        return np.array([self.__f107,self.__f107a,self.__ap_daily,self.__ap1,self.__ap2,self.__ap3,self.__ap4,self.__apavg1,self.__apavg2])
+        return np.array([self.__date.isoformat(' '),self.__f107,self.__f107a,self.__ap_daily,self.__ap1,self.__ap2,self.__ap3,self.__ap4,self.__apavg1,self.__apavg2])
 
     def __monthtodoy(self,year:int, month:int, day:int):
         return monthtodoy(year,month,day)
@@ -47,10 +42,13 @@ class Indexer(object):
     def __loadcsv(self, filepath: str):
         return pd.read_csv(filepath)
 
-    def __valuefinder(self, dataframe: pd.DataFrame, year:int, doy:int):
-        indices1 = dataframe[dataframe.date == int(str(year)+str(doy))]
-        indices2 = dataframe[dataframe.date == int(str(year)+str(doy+1))]
+    def __valuefinder(self, dataframe: pd.DataFrame, year:int, month:int, day:int):
+        indices1 = dataframe[dataframe.date == dt.date(year,month,day).isoformat()]
+        indices2 = dataframe[dataframe.date == dt.date(year,month,day+1).isoformat()]
         indices = pd.concat([indices1,indices2])
+        print(indices)
+
+
         return indices
 
     def __interpl(self, data:np.array, dt:int, sec:int):
@@ -58,5 +56,7 @@ class Indexer(object):
 
 
 if __name__ == "__main__":
-    a = Indexer().return_indices()
+    date = dt.datetime(2013,2,3,12,0,0)
+    ut = 12*60*60+0*60+0
+    a = Indexer(date).return_indices()
 

@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from statistics import mean
+import datetime as dt
 
 class ApDataPros(object):
 
@@ -15,6 +16,8 @@ class ApDataPros(object):
 
         # self.__apappend()
 
+        print(self.return_aplst(63,34))
+        print(self.return_ap(63,34))
 
     def return_apdata(self):
         return self.__apdata
@@ -45,7 +48,8 @@ class ApDataPros(object):
                 else:
                     apdaily = int(x[56:59] + x[60:62]) / 1000
 
-                ap = [int(str(self.__yearlst[idx1])+str(idx2+1)), apdaily] + self.return_ap(idx1,idx2+1)
+                ap = [(dt.date(int(self.__yearlst[idx1]),1,1)+dt.timedelta(idx2)).isoformat(), apdaily] + self.return_ap(idx1, idx2 + 1)
+
                 self.__apdata.append(ap)
 
 
@@ -102,5 +106,5 @@ class ApDataPros(object):
 
 
     def __apcalc(self,ap:list):
-        return [int(ap[24]),int(ap[23]),int(ap[22]),int(ap[21]),float(mean(ap[13:20])),float(mean(ap[5:12]))]
+        return [int(ap[31]),int(ap[30]),int(ap[29]),int(ap[28]),int(ap[27]),int(ap[26]),int(ap[25]),int(ap[24]),int(ap[23]),int(ap[22]),int(ap[21]),float(mean(ap[13:20])),float(mean(ap[5:12]))]
 

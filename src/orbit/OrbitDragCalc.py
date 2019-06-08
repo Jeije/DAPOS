@@ -3,74 +3,63 @@ from src.atmos.nrlmsise00.IndexReturn import Indexer
 from src.atmos.nrlmsise00.denscalc import nlrmsise00
 
 import matplotlib.pyplot as plt
-import cartopy.crs as ccrs
-
 import numpy as np
 
+class OrbitAtmosCalc(object):
+    def __init__(self, dt:int=300,year:int=2002, month:int=10, day:int=15 ,sec:int=300, h:float=200,doy = False):
 
-year = 1970
-month = 2
-day = 30
-s = 0
+        self.__indices = Indexer(year,month,day,sec).return_indices()
 
+        if doy == True:
+            self.__indices = Indexer(year,month,0,sec,doy=True).return_indices()
 
-Indices = Indexer(year,month,day,s).return_indices()
-Pos = OrbitGroundTrack(1000).return_df()
-lat = np.array(Pos['Lat [deg]'])
-lon = np.array(Pos['Lon [deg]'])
-sec = np.array(Pos['Time [s]'])
-h = np.array(Pos['Height [km]'])
+        self.__pos = OrbitGroundTrack(dt,np.array([6371000+h*1000,0.0,94.3,180,0,0])).return_df()
 
-anslst = []
+        self.__inputs = np.zeros([dt,13])
+        self.__vals = np.zeros([dt,11])
+        self.__pros = np.zeros([3,11])
 
-for i in range(len(lat)):
-    ans = nlrmsise00(year,month,day,sec[i],h[i],lat[i],lon[i],Indices)
-    anslst.append(ans.d[5])
-
-a = np.array(anslst)
-
-# plt.plot(sec,anslst)
-# plt.ylabel('Atmospheric Density [kg/m^3]')
-# plt.xlabel('Time [s]')
-
-# # Plotting the groundtrack
-# fig, ax = plt.subplots()
-# ax = plt.axes(projection=ccrs.PlateCarree())
-# ax.stock_img()
-# ax.plot(lon, lat, 'b', transform=ccrs.Geodetic(),
-#         label='ITRS')
-# ax.legend(loc='upper center', shadow=True, fontsize='x-large')
-# ax.plot()
+        self.atmoscalc(dt,year,month,day,sec,self.__indices,self.__pos)
+        self.avgcalc(self.__vals)
 
 
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.collections import LineCollection
-from matplotlib.colors import ListedColormap, BoundaryNorm
+    def return_vals(self):
+        return self.__vals
 
+    def return_inputs(self):
+        return self.__inputs
 
-# Create a set of line segments so that we can color them individually
-# This creates the points as a N x 1 x 2 array so that we can stack points
-# together easily to get the segments. The segments array for line collection
-# needs to be (numlines) x (points per line) x 2 (for x and y)
-points = np.array([lon, lat]).T.reshape(-1, 1, 2)
-segments = np.concatenate([points[:-1], points[1:]], axis=1)
+    def return_pros(self):
+        return self.__pros
 
-fig, ax = plt.subplots()
-ax = plt.axes(projection=ccrs.PlateCarree())
-ax.stock_img()
-ax.plot(lon, lat, 'b', transform=ccrs.Geodetic(),
-        label='ITRS');
-ax.legend(loc='upper center', shadow=True, fontsize='x-large')
+    def return_simon(self):
+        for i in range(len(np.array(self.__pos['Lat [deg]']))):
+            print(self.__vals[i][5],np.array(self.__pos['Lat [deg]'])[i],np.array(self.__pos['Lat [deg]'])[i])
 
-# Create a continuous norm to map from data points to colors
-norm = plt.Normalize(a.min(), a.max())
-lc = LineCollection(segments, cmap='viridis', norm=norm)
-# Set the values used for colormapping
-lc.set_array(a)
-lc.set_linewidth(2)
-line = ax.add_collection(lc)
-fig.colorbar(line, ax=ax)
+    def atmoscalc(self,dt,year,month,day,sec,indices:np.array,pos:np.array):
+        for i in range(dt):
+            env = nlrmsise00(year,month,day,sec+np.array(pos['Time [s]'])[i],np.array(pos['Height [km]'])[i],np.array(pos['Lat [deg]'])[i],
+                             np.array(pos['Lat [deg]'])[i],indices)
+            self.__inputs[i][0]=year
+            self.__inputs[i][1]=month
+            self.__inputs[i][2]=day
+            self.__inputs[i][3]=sec+np.array(pos['Time [s]'])[i]
+            self.__inputs[i][4:13]=indices
 
+            self.__vals[i][0:9]=env.d
+            self.__vals[i][9:11]=env.t
 
-plt.show()
+    def avgcalc(self,vals:np.array):
+        row_num = vals.shape[1]
+        for i in range(row_num):
+            avg = np.average(vals[:,i])
+            min = np.amin(vals[:,i])
+            max = np.amax(vals[:,i])
+            self.__pros[:,i]=np.array([avg,min,max])
+
+if __name__ == "__main__":
+    a = OrbitAtmosCalc()
+    b = a.return_vals()
+    c = a.return_inputs()
+    d = a.return_pros()
+    e = a.return_simon()
