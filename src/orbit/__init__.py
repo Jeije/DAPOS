@@ -1,2 +1,1 @@
-from .OrbitPosCalc import OrbitGroundTrack
-from src.atmos.nrlmsise00.IndexReturn import Indexer
+from src.orbit.SatGroundTrack.GroundTrack2 import OrbitGroundTrack
