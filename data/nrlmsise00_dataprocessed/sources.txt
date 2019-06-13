@@ -1,0 +1,3 @@
+'''AP Indices obtained form: ftp://ftp.ngdc.noaa.gov/STP/GEOMAGNETIC_DATA/INDICES/KP_AP'''
+'''Solar Flux Indices obtained from: https://www.ngdc.noaa.gov/stp/space-weather/solar-data/
+solar-features/solar-radio/noontime-flux/penticton/penticton_observed/listings/listing_drao_noontime-flux-observed_daily.txt'''
