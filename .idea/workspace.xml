@@ -2,90 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6386872b-afcd-41e4-918c-8d32c476d745" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/data/nrlmsise00_dataprocessed/sources.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/orbit/OrbitRangeCalc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1950" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1950" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1951" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1951" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1952" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1952" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1953" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1953" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1954" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1954" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1955" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1955" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1956" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1956" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1957" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1957" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1958" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1958" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1959" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1959" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1960" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1960" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1961" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1961" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1962" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1962" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1963" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1963" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1964" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1964" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1965" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1965" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1966" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1966" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1967" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1967" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1968" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1968" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1969" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1969" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1970" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1970" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1971" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1971" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1972" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1972" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1973" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1973" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1974" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1974" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1975" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1975" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1976" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1976" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1977" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1977" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1978" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1978" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1979" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1979" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1980" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1980" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1981" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1981" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1982" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1982" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1983" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1983" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1984" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1984" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1985" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1985" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1986" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1986" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1987" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1987" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1988" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1988" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1989" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1989" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1990" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1990" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1991" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1991" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1992" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1992" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1993" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1993" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1994" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1994" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1996" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1996" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1997" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1997" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1998" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1998" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/1999" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/1999" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2000" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2001" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2001" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2002" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2002" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2003" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2003" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2004" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2004" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2005" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2005" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2006" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2006" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2007" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2007" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2008" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2008" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2009" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2009" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2010" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2010" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2011" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2011" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2012" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2012" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2013" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2013" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2014" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2014" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2015" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2015" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2016" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2016" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2017" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2017" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/AP_Indices/2018" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2018" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/SolarFlux_Indices/nlrmsise00_f107data.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_data/SolarFlux_Indices/nlrmsise00_f107data.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/nlrmsise00_AP_processed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_dataprocessed/nlrmsise00_AP_processed.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nlrmsise00_data/nlrmsise00_f107datapros.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/nrlmsise00_dataprocessed/nlrmsise00_f107datapros.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexReturn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexReturn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_extract.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_extract.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_process.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/data_process.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nrlmsise00/denscalc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos/nrlmsise00/denscalc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/data_extract.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/data_extract.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/other.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/.idea/other.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/src.iml" beforeDir="false" afterPath="$PROJECT_DIR$/src/.idea/src.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/IndexReturn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/IndexReturn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/orbit/OrbitDragCalc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/orbit/OrbitDragCalc.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/orbit/OrbitPosCalc.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/orbit/OrbitPosCalc.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/orbit/SatGroundTrack/GroundTrack.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/orbit/SatGroundTrack/GroundTrack.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -109,26 +33,103 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/orbit/OrbitDragCalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1343">
-              <caret line="79" column="24" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="24" />
+            <state relative-caret-position="357">
+              <caret line="23" column="41" lean-forward="true" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="57" selection-start-line="11" selection-start-column="57" selection-end-line="11" selection-end-column="57" />
               <folding>
-                <element signature="e#1#65#0" expanded="true" />
+                <element signature="e#0#54#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/orbit/SatGroundTrack/GroundTrack.py">
+        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/BestFitCalc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" column="3" lean-forward="true" selection-start-line="10" selection-end-line="26" selection-end-column="3" />
+            <state relative-caret-position="68">
+              <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="511">
+              <caret line="42" selection-end-line="42" />
               <folding>
-                <element signature="e#33#51#0" expanded="true" />
+                <element signature="e#0#37#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/__init__.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/f107a.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="459">
+              <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/BestFitSin.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="14" column="53" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/ap_process/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret selection-end-column="44" />
+              <folding>
+                <element signature="e#45#123#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/nrlmsise00_dataprocessed/nrlmsise00_f107datapros.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="9" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -163,10 +164,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/dataprocess/main.py" />
-        <option value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/ap_process/data_extract.py" />
-        <option value="$PROJECT_DIR$/src/atmos_model/nlrmsise-00/__init__.py" />
-        <option value="$PROJECT_DIR$/src/atmos_model/__init__.py" />
         <option value="$PROJECT_DIR$/src/main.py" />
         <option value="$PROJECT_DIR$/src/orbit/orbitdecay.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/nrlmsise_00_time.py" />
@@ -178,7 +175,6 @@
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/solarflux_process/f107a.py" />
         <option value="$PROJECT_DIR$/src/atmos/nlrmsise00_data/nlrmsise00_AP_processed.txt" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/main.py" />
-        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
         <option value="$PROJECT_DIR$/src/atmos/nlrmsise00_data/nlrmsise00_f107datapros.txt" />
         <option value="$PROJECT_DIR$/src/orbit/orbit_test.py" />
         <option value="$PROJECT_DIR$/misc/Concept_designs.py" />
@@ -199,21 +195,26 @@
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/ap_process/main.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexReturn.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/main.py" />
-        <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/data_extract.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/model/__init__.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/denscalc.py" />
         <option value="$PROJECT_DIR$/src/atmos/__init__.py" />
         <option value="$PROJECT_DIR$/src/orbit/OrbitPosCalc.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/model/nrlmsise_00_header.py" />
-        <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/IndexReturn.py" />
         <option value="$PROJECT_DIR$/src/orbit/OrbitPos/OrbitPosCalc.py" />
         <option value="$PROJECT_DIR$/src/orbit/OrbitPos/SideAngleSide.py" />
         <option value="$PROJECT_DIR$/src/orbit/OrbitPos/GroundTrck.py" />
         <option value="$PROJECT_DIR$/src/orbit/SatGroundTrack/GroundTrck.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/AtmosCalc.py" />
         <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/ap_process/main.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch2.py" />
         <option value="$PROJECT_DIR$/src/orbit/SatGroundTrack/GroundTrack.py" />
         <option value="$PROJECT_DIR$/src/orbit/OrbitDragCalc.py" />
+        <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/data_extract.py" />
+        <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/IndexReturn.py" />
+        <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/BestFitSin.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+        <option value="$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/BestFitCalc.py" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/test.py" />
       </list>
     </option>
   </component>
@@ -231,7 +232,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -243,12 +243,6 @@
               <item name="MAIN" type="b2602c69:ProjectViewProjectNode" />
               <item name="MAIN" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MAIN" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MAIN" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="atmosorbitdata" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MAIN" type="b2602c69:ProjectViewProjectNode" />
@@ -301,19 +295,39 @@
               <item name="MAIN" type="b2602c69:ProjectViewProjectNode" />
               <item name="MAIN" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="orbit" type="462c0819:PsiDirectoryNode" />
+              <item name="atmos" type="462c0819:PsiDirectoryNode" />
+              <item name="nrlmsise00" type="462c0819:PsiDirectoryNode" />
+              <item name="IndexFindr" type="462c0819:PsiDirectoryNode" />
+              <item name="solarflux_process" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MAIN" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MAIN" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="atmos" type="462c0819:PsiDirectoryNode" />
+              <item name="nrlmsise00" type="462c0819:PsiDirectoryNode" />
+              <item name="SolarActAnalysis" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="MAIN" type="b2602c69:ProjectViewProjectNode" />
               <item name="MAIN" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="orbit" type="462c0819:PsiDirectoryNode" />
-              <item name="SatGroundTrack" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MAIN" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+            </path>
+            <path>
+              <item name="MAIN" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Scratches and Consoles" type="1a2a3e82:ScratchProjectViewPane$MyProjectNode" />
+              <item name="Scratches" type="d62648e6:ScratchProjectViewPane$MyRootNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -354,37 +368,21 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.GroundTrack">
-    <configuration name="GroundTrack" type="PythonConfigurationType" factoryName="Python" temporary="true">
+  <component name="RunManager" selected="Python.test">
+    <configuration name="BestFitCalc" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/orbit/SatGroundTrack" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/orbit/SatGroundTrack/GroundTrack.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="OrbitDragCalc" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="DAPOS_Main" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/orbit" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/orbit/OrbitDragCalc.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/BestFitCalc.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -415,25 +413,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="DAPOS_Main" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/ap_process" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/ap_process/main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="DAPOS_Main" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -456,13 +435,57 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="scratch2" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="DAPOS_Main" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="DAPOS_Main" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.GroundTrack" />
-        <item itemvalue="Python.OrbitDragCalc" />
-        <item itemvalue="Python.OrbitDragCalc" />
-        <item itemvalue="Python.OrbitDragCalc" />
-        <item itemvalue="Python.OrbitDragCalc" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -510,12 +533,15 @@
       <workItem from="1560009212261" duration="10875000" />
       <workItem from="1560079244680" duration="29785000" />
       <workItem from="1560168643321" duration="3841000" />
-      <workItem from="1560203913587" duration="17642000" />
+      <workItem from="1560203913587" duration="30284000" />
+      <workItem from="1560326080554" duration="18379000" />
+      <workItem from="1560370705478" duration="8671000" />
+      <workItem from="1560419265400" duration="2161000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="254849000" />
+    <option name="totallyTimeSpent" value="296702000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -530,7 +556,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3272921" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.33848614" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Thumbnails" order="0" weight="0.32936078" />
@@ -546,7 +572,7 @@
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5010661" side_tool="true" weight="0.2708559" />
       <window_info anchor="bottom" id="Terminal" order="12" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="13" sideWeight="0.4989339" visible="true" weight="0.283857" />
+      <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.4989339" visible="true" weight="0.283857" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="14" weight="0.32936078" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -603,86 +629,11 @@
     <SUITE FILE_PATH="coverage/DAPOS_Main$nrlmsise_00_dens.coverage" NAME="nrlmsise_00_dens Coverage Results" MODIFIED="1557479689947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/atmos_model/nlrmsise-00" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/nrlmsise00_data/AP_Indices/2018">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="40" selection-start-line="18" selection-start-column="40" selection-end-line="18" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/misc/Concept_designs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="691" column="30" selection-start-line="691" selection-start-column="30" selection-end-line="691" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/comms/cam res.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/orbit/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="52" lean-forward="true" selection-start-line="1" selection-start-column="52" selection-end-line="1" selection-end-column="52" />
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/propulsion/vhleo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/model/nrlmsise_00_data.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/Graph Plotter.py" />
     <entry file="file://$USER_HOME$/Anaconda3/envs/Python3.6Env/Lib/site-packages/pandas/io/parsers.py" />
-    <entry file="file://$PROJECT_DIR$/data/nrlmsise00_dataprocessed/sources.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="72" selection-start-line="2" selection-start-column="72" selection-end-line="2" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/nrlmsise00_data/SolarFlux_Indices/nlrmsise00_f107data.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="355">
           <caret line="24505" column="17" lean-forward="true" selection-start-line="24505" selection-start-column="17" selection-end-line="24505" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/nrlmsise00_dataprocessed/nrlmsise00_f107datapros.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1039">
-          <caret line="24141" column="41" lean-forward="true" selection-start-line="24140" selection-start-column="17" selection-end-line="24141" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -734,47 +685,10 @@
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/ap_process/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/f107a.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/data_fill.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1751">
-          <caret line="103" lean-forward="true" selection-start-line="103" selection-end-line="103" />
-          <folding>
-            <element signature="e#0#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/data_extract.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/concept4_orbitTD.py" />
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/misc_func.py" />
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/model/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="44" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/model/nrlmsise_00.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -857,33 +771,110 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/atmosorbitdata/94.7.txt" />
+    <entry file="file://$PROJECT_DIR$/data/atmosorbitdata/94.7,200.0,12.77,-91.37,86.7,80.75696202531647,0.0.txt" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch2.py" />
+    <entry file="file://$PROJECT_DIR$/data/atmosorbitdata/94.7,200.0,12.77,-91.37,85.0056863425926,80.89447519631976,0.0.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/atmosorbitdata/94.7,200.0,12.77,-91.37,86.7,80.75696202531647,0.0.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-27135" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/atmosorbitdata/94.7,200.0,12.77,-91.37,86.59676041666667,80.76534111286921,0.0.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/nrlmsise00_dataprocessed/sources.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="127" selection-start-line="2" selection-start-column="127" selection-end-line="2" selection-end-column="127" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/AtmosCalc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="38" column="36" lean-forward="true" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
+        <state relative-caret-position="-289">
+          <caret line="45" column="90" selection-start-line="45" selection-start-column="90" selection-end-line="45" selection-end-column="90" />
           <folding>
             <element signature="e#46#156#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/IndexReturn.py">
+    <entry file="file://$PROJECT_DIR$/src/orbit/SatGroundTrack/GroundTrack.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="32" column="60" lean-forward="true" selection-start-line="32" selection-start-column="60" selection-end-line="32" selection-end-column="60" />
+        <state relative-caret-position="544">
+          <caret line="32" column="26" lean-forward="true" selection-start-line="32" selection-start-column="26" selection-end-line="32" selection-end-column="26" />
           <folding>
             <element signature="e#33#51#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/atmosorbitdata/94.7.txt">
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/data_extract.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6171" />
+        <state relative-caret-position="765">
+          <caret line="45" column="24" lean-forward="true" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/atmosorbitdata/94.7,200.0,12.77,-91.37,86.7,80.75696202531647,0.0.txt">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/data_fill.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1751">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/IndexReturn.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+          <folding>
+            <element signature="e#33#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/envs/Python3.7Env/Lib/site-packages/statsmodels/tsa/base/tsa_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="478" selection-start-line="478" selection-end-line="478" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/f107a.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/BestFitSin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="14" column="53" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/solarflux_process/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="44" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/IndexFindr/ap_process/main.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -895,22 +886,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/orbit/SatGroundTrack/GroundTrack.py">
+    <entry file="file://$PROJECT_DIR$/data/nrlmsise00_dataprocessed/nrlmsise00_f107datapros.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="3" lean-forward="true" selection-start-line="10" selection-end-line="26" selection-end-column="3" />
-          <folding>
-            <element signature="e#33#51#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="153">
+          <caret line="9" column="9" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/atmos/nrlmsise00/SolarActAnalysis/BestFitCalc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/orbit/OrbitDragCalc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1343">
-          <caret line="79" column="24" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="24" />
+        <state relative-caret-position="357">
+          <caret line="23" column="41" lean-forward="true" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="57" selection-start-line="11" selection-start-column="57" selection-end-line="11" selection-end-column="57" />
           <folding>
-            <element signature="e#1#65#0" expanded="true" />
+            <element signature="e#0#54#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="42" selection-end-line="42" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
           </folding>
         </state>
       </provider>

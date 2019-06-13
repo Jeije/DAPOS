@@ -74,7 +74,7 @@ class Indexer(object):
 
 if __name__ == "__main__":
     '''Check Indices for 2013/02/03 - 23:00:00'''
-    date = dt.datetime(2013,2,3,23,0,0)
+    date = dt.datetime(2013,2,10,15,0,0)
 
     '''Useful Values for Code Verification against Matlab Script'''
     doy = (date-dt.datetime(date.year,1,1,date.hour,date.minute,date.second)).days+1

@@ -26,7 +26,6 @@ If n = 0, it will determine the revolutions within one day
 for each discretization step along the requested orbit
 '''
 
-
 class GroundTrackCalc(object):
     def __init__(self, dt:int=1000, inc:float= 94.3*u.deg, h:float= 200*u.km, lat0:float= 12.77*u.deg,
                  longi0:float= -91.397*u.deg, n:int= 1, plot = False):
@@ -173,16 +172,18 @@ class GroundTrackCalc(object):
         ax.plot(self.alpha, self.latP, 'b', transform=ccrs.Geodetic(), label='ITRS')
         ax.plot()
 
-if __name__ == "__main__":
-    # '''Testing Program Against Reference Values'''
-    # '''Setting Constants of Test'''
-    # rho1 = 40
-    # rho2 = 20
-    # phi1 = 5
-    # phi2 = 300
-    # w1 = 1
-    # w2 = 3
-    # '''Answer: 56.08, 37.05, 1.132, 334.66'''
-    # a = GroundTrackCalc(plot=False).ground_track(w1,w2,rho1,rho2,phi1,phi2,0)
 
-    b = GroundTrackCalc(n=0,plot=True).return_data()
+if __name__ == "__main__":
+    '''Testing Program Against Reference Values'''
+    '''Setting Constants of Test'''
+    rho1 = 40
+    rho2 = 20
+    phi1 = 5
+    phi2 = 90
+    w1 = 1
+    w2 = 3
+    '''Answer: 56.08, 37.05, 1.132, 334.66'''
+    a = GroundTrackCalc(plot=False).ground_track(w1,w2,rho1,rho2,phi1,phi2,0)
+
+    b = GroundTrackCalc(n=1,plot=True)
+    c = b.return_data()
